@@ -41,7 +41,17 @@ deploy_kcp_func()
 	cp /opt/github/ubuntuCfg/pi3/launch/kcp.sh ~/
 }
 
+enable_hwclock_func()
+{
+	sudo cp /boot/config.txt /boot/config_txt_bak
+	sudo sed -i 's/^#dtoverlay=lirc-rpi$/dtoverlay=i2c-rtc,ds1307/' /boot/config.txt
+	sudo sed -i '/exit 0/i\hwclock -s' /etc/rc.local
+}
+
 case $1 in
+	"enable_hwclock") echo "hwclock enable..."
+		enable_hwclock_func
+	;;
 	"deploy_basic") echo "Deploying basic tools ..."
 		install_basic_tools
 		cd ~/
