@@ -40,6 +40,51 @@ install_libedit_func()
 
 }
 
+install_google_re2_func()
+{
+    #rm -rf re2
+    git clone https://github.com/google/re2.git
+    pushd re2
+    make
+    make test
+    sudo make install
+    make testinstall
+    popd
+}
+
+install_pandoc_func()
+{
+    sudo apt-get -y install haskell-platform
+    sudo apt-get -y install texlive
+    sudo apt-get -y install pandoc
+}
+
+install_ragel_func()
+{
+    rm -rf ragel-6.10 ragel-6.10.tar.gz
+    wget -c http://www.colm.net/files/ragel/ragel-6.10.tar.gz
+    tar -zxf ragel-6.10.tar.gz
+
+    pushd ragel-6.10
+    ./configure
+    make
+    sudo make install
+    popd
+}
+
+install_powerDNS_func()
+{
+    sudo apt-get install g++ libboost-all-dev libtool make pkg-config libmysqlclient-dev libssl-dev virtualenv
+    sudo apt-get install lua5.3 luajit bison flex
+    rm -rf pdns
+    git clone https://github.com/PowerDNS/pdns.git
+    pushd pdns/pdns/dnsdistdist
+    autoreconf -i
+    ./configure
+    make
+    popd
+}
+
 mkdir -p /opt/github/powerDNS
 cd /opt/github/powerDNS
 
@@ -50,13 +95,28 @@ case $1 in
     "install_lua") echo "install lua..."
             install_lua_func
     ;;
-    "install_libedit") echo "install install libedit..."
+    "install_libedit") echo "install libedit..."
             install_libedit_func
+    ;;
+    "install_google_re2") echo "install google re2..."
+            install_google_re2_func
+    ;;
+    "install_pandoc") echo "install pandoc..."
+            install_pandoc_func
+    ;;
+    "install_ragel") echo "install ragel..."
+            install_ragel_func
+    ;;
+    "install_powerDNS") echo "install powerDNS..."
+            install_powerDNS_func
     ;;
 	"install") echo "Installing all..."
             install_boost_func
             install_lua_func
             install_libedit_func
+            install_google_re2_func
+            install_pandoc_func
+            install_ragel_func
 	;;
 	*) echo "unknow cmd"
 esac
