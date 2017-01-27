@@ -1,0 +1,52 @@
+
+sudo apt-get install vim
+sudo apt-get install git
+sudo apt-get install gccgo-5
+sudo update-alternatives --set go /usr/bin/go-5
+git clone https://github.com/golang/go.git
+
+sudo apt-get install tree
+sudo apt-get install openssh-server
+
+[install nfs server]
+sudo apt install nfs-kernel-server
+sudo vim /etc/exports
+/opt/ums    *(rw,sync,no_root_squash,no_subtree_check)
+sudo systemctl start nfs-kernel-server.service
+//Mac mount: sudo mount -t nfs -o rw,resvport 172.16.197.180:/opt/ums ums
+
+[install samba server]
+sudo apt-get install samba
+sudo vim /etc/samba/smb.conf
+sudo systemctl restart smbd.service nmbd.service 
+//Mac mount: mount_smbfs //ray:ray@172.16.197.180/ums ums
+
+
+[install mongodb]
+tar -zxf mogodb*.tar.gz -C /opt/mongodb
+vim ./.bashrc --> export /opt/mongodb/$VERSION/bin to PATH
+alias imongod="mongod --dbpath /opt/mongodb/data/db"
+wget  https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json
+mongoimport --db test --collection restaurants --drop --file ./primer-dataset.json
+//create user for user administration
+mongo
+use admin
+db.createUser({user:"iAdmin", pwd:"iAdmin", roles:[{role: "userAdminAnyDatabase", db: "admin"}]})
+//create user for test db
+use test
+db.createUser({user: "iTester", pwd: "iTester", roles:[{role: "readWrite", db: "test"},{role:"read", db:"reporting"}]})
+exit
+// relaunch mongo db
+imongo --auth
+// testing
+mongo
+use test
+db.auth("iTester","iTester")
+
+
+
+
+
+
+
+
