@@ -1,3 +1,6 @@
+sudo apt-get update
+sudo apt-get install automake autogen autoconf
+sudo apt-get install build-essential
 
 sudo apt-get install vim
 sudo apt-get install git
@@ -28,20 +31,13 @@ vim ./.bashrc --> export /opt/mongodb/$VERSION/bin to PATH
 alias imongod="mongod --dbpath /opt/mongodb/data/db"
 wget  https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json
 mongoimport --db test --collection restaurants --drop --file ./primer-dataset.json
-//create user for user administration
 mongo
 use admin
+//create user for user administration
 db.createUser({user:"iAdmin", pwd:"iAdmin", roles:[{role: "userAdminAnyDatabase", db: "admin"}]})
-//create user for test db
-use test
-db.createUser({user: "iTester", pwd: "iTester", roles:[{role: "readWrite", db: "test"},{role:"read", db:"reporting"}]})
-exit
-// relaunch mongo db
-imongo --auth
-// testing
-mongo
-use test
-db.auth("iTester","iTester")
+db.createUser({user:"useradmin", pwd:"&Useradmin", roles:[{role: "userAdminAnyDatabase", db: "admin"}]})
+//create user for db administration
+db.createUser({user:"dbadmin", pwd:"&Dbadmin", roles:[{role: "dbAdminAnyDatabase", db: "admin"},{role: "readWriteAnyDatabase", db: "admin"},{role: "clusterAdmin", db: "admin"}]})
 
 
 
