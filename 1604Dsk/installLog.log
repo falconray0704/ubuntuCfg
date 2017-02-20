@@ -56,6 +56,17 @@ alias idea="idea.sh&"
 //config: follow /opt/prog/inteliJ/idea-IU-163.12024.16/Install-Linux-tar.txt
 
 
+[install polipo + shadowsocks]
+sudo apt-get install libpcre3 libpcre3-dev
+sudo apt-get install asciidoc
+sudo apt-get install zlib1g-dev
+sudo apt-get install libssl-dev
+sudo apt-get install polipo
+sudo make
+sudo make install
+
+
+
 
 
 
