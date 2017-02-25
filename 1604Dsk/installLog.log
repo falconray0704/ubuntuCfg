@@ -121,13 +121,30 @@ sudo systemctl start shadowsocks.service
 sudo systemctl enable shadowsocks.service
 
 [build up webRTC env]
-//install depot_tool
-mkdir -p /opt/github/webRTC
-cd /opt/github/webRTC
-git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git --config http.proxy=127.0.0.1:8123
+<1>install depot_tool
+mkdir -p /md/proj/webRTC
+cd /md/proj/webRTC
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git --config http.proxy=192.168.179.1:8123
 vim ~/.bashrc:
-export PATH=/opt/github/webRTC/depot_tools:$PATH
-wget https://code.google.com/p/chromium/codesearch#chromium/src/build/install-build-deps.sh
+export PATH=/md/proj/webRTC/depot_tools:$PATH
+<2>config gsutil proxy env
+//follow:
+//(1) https://cloud.google.com/storage/docs/gsutil/commands/config
+//(2) https://groups.google.com/a/chromium.org/forum/#!msg/chromium-packagers/0eE3oC3lBFw/Ykg1ueIKAQAJ
+vim ~/.boto:
+[Boto]
+  proxy=192.168.179.1
+  proxy_port=1080
+<3>export proxy env
+export http_proxy=socks5://192.168.179.1:1080
+export https_proxy=socks5://192.168.179.1:1080
+export sock5_proxy=socks5://192.168.179.1:1080
+export NO_AUTH_BOTO_CONFIG=~/.boto 
+<4> fetch code
+mkdir webrtc-checkout
+cd webrtc-checkout
+fetch --nohooks webrtc
+gclient sync
 
 
 
@@ -146,7 +163,6 @@ make
 sudo make install
 //test multi-thread compression
 tar -cJf webRTC.tar.xz webRTC -T0
-
 
 
 
