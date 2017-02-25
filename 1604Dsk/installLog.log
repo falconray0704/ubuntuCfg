@@ -120,6 +120,31 @@ sudo vim /lib/systemd/system/shadowsocks.service
 sudo systemctl start shadowsocks.service
 sudo systemctl enable shadowsocks.service
 
+[build up webRTC env]
+//install depot_tool
+mkdir -p /opt/github/webRTC
+cd /opt/github/webRTC
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git --config http.proxy=127.0.0.1:8123
+vim ~/.bashrc:
+export PATH=/opt/github/webRTC/depot_tools:$PATH
+wget https://code.google.com/p/chromium/codesearch#chromium/src/build/install-build-deps.sh
+
+
+
+
+[upgrade xz to 5.2.3]
+//uninstall the privious version
+sudo apt-get remove xz-utils
+//get source code
+cd /opt/prog
+wget http://tukaani.org/xz/xz-5.2.3.tar.bz2
+//install
+tar -jxf xz-5.2.3.tar.bz2 
+cd xz-5.2.3/
+./configure
+make
+sudo make install
+
 
 
 
