@@ -144,6 +144,9 @@ cd xz-5.2.3/
 ./configure
 make
 sudo make install
+//test multi-thread compression
+tar -cJf webRTC.tar.xz webRTC -T0
+
 
 
 
