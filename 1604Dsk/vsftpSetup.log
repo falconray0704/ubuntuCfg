@@ -1,0 +1,62 @@
+
+//refer to:
+http://wiki.ubuntu.org.cn/Vsftpd
+http://wiki.ubuntu.org.cn/Vsftpd%E5%AE%9E%E4%BE%8B
+
+<1> install vsftpd
+sudo apt-get update
+sudo apt-get install vsftpd
+//check it running
+sudo netstat -npltu | grep 21
+
+<2> create special ftp user
+sudo useradd -m sFtp -s /bin/bash
+sudo usermod -a -G ftp sFtp
+sudo passwd sFtp
+
+<3> make dir for anonymous
+mkdir -p /opt/anonFtp
+sudo chown nobody:nogroup /opt/anonFtp/
+
+<4> configuration
+vim /etc/vsftpd.conf 
+anonymous_enable=YES
+local_enable=YES
+write_enable=YES
+local_umask=022
+
+chroot_local_user=YES
+chroot_list_enable=YES
+
+allow_writeable_chroot=YES
+#
+# Point users at the directory we created earlier.
+anon_root=/opt/anonFtp
+#
+# Stop prompting for a password on the command line.
+no_anon_password=YES
+#
+# Show the user and group as ftp:ftp, regardless of the owner.
+hide_ids=YES
+pasv_enable=Yes
+pasv_min_port=40000
+pasv_max_port=40100
+
+userlist_deny=NO
+userlist_enable=YES
+
+vim /etc/vsftpd.chroot_list
+# make it empty if you want to make local users are able to chroot()
+
+
+vim /etc/vsftpd.user_list
+sFtp
+anonymous
+
+<5> relaunch vsftpd
+service vsftpd restart
+
+
+
+
+
