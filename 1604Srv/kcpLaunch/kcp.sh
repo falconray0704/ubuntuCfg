@@ -29,7 +29,7 @@ start()
 	do
 		#echo ${idx}
 		p5="1 4"
-		p4="2"
+		p4="2 5"
 		p3="7"
 		p2="3 6 9"
 		p1="2 5 8"
@@ -45,7 +45,7 @@ start()
 						do
 							port=${idx5}${idx4}${idx3}${idx2}${idx1}
 							#echo "port:${port}"
-							/opt/gows/src/github.com/xtaci/kcptun/server_linux_amd64 -t "127.0.0.1:10000" -l ":${port}" -mode fast2 &
+							/opt/gows/src/github.com/xtaci/kcptun/server_linux_amd64 -t "127.0.0.1:10000" -l ":${port}" -mode fast3 &
 
 							echo "{" >> /run/gui-config.json
 							echo "\"server\" : \"$ip\"," >> /run/gui-config.json
