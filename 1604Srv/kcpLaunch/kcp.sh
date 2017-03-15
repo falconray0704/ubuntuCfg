@@ -21,6 +21,9 @@ stop()
 
 start()
 {
+        echo "{" > /run/gui-config.json
+        echo "\"configs\" : [" >> /run/gui-config.json
+
 	declare -i idx=0
 	while [ $idx -lt $1 ]
 	do
@@ -42,7 +45,16 @@ start()
 						do
 							port=${idx5}${idx4}${idx3}${idx2}${idx1}
 							#echo "port:${port}"
-							/opt/gows/src/github.com/xtaci/kcptun/server_linux_amd64 -t "127.0.0.1:47147" -l ":${port}" -mode fast2 &
+							/opt/gows/src/github.com/xtaci/kcptun/server_linux_amd64 -t "127.0.0.1:10000" -l ":${port}" -mode fast2 &
+
+							echo "{" >> /run/gui-config.json
+							echo "\"server\" : \"$ip\"," >> /run/gui-config.json
+							echo "\"server_port\" : ${port}," >> /run/gui-config.json
+							echo "\"password\" : \"&Fuckgfw\"," >> /run/gui-config.json
+							echo "\"method\" : \"aes-256-cfb\"," >> /run/gui-config.json
+							echo "\"remarks\" : \"\"}" >> /run/gui-config.json
+							echo "," >> /run/gui-config.json
+							sync
 						done
 					done
 				done
@@ -50,6 +62,19 @@ start()
 		done
 		idx=${idx}+1
 	done
+
+	echo "]," >> /run/gui-config.json
+        echo "\"strategy\" : \"com.shadowsocks.strategy.ha\"," >> /run/gui-config.json
+        echo "\"index\" : -1," >> /run/gui-config.json
+        echo "\"global\" : false," >> /run/gui-config.json
+        echo "\"enabled\" : false," >> /run/gui-config.json
+        echo "\"shareOverLan\" : false," >> /run/gui-config.json
+        echo "\"isDefault\" : false," >> /run/gui-config.json
+        echo "\"localPort\" : 1080," >> /run/gui-config.json
+        echo "\"pacUrl\" : null," >> /run/gui-config.json
+        echo "\"useOnlinePac\" : false," >> /run/gui-config.json
+        echo "\"availabilityStatistics\" : false}" >> /run/gui-config.json
+
 }
 
 case $1 in
