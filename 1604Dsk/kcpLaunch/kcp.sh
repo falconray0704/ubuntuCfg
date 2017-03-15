@@ -27,7 +27,7 @@ start()
 	do
 		#echo ${idx}
 		p5="1 4"
-		p4="2"
+		p4="2 5"
 		p3="7"
 		p2="3 6 9"
 		p1="2 5 8"
@@ -42,7 +42,7 @@ start()
 						for idx1 in ${p1}
 						do
 							port=${idx5}${idx4}${idx3}${idx2}${idx1}
-                            ./client_linux_amd64 -r "${srvIP}:${port}" -l ":${port}" -mode fast2 &
+                            ./client_linux_amd64 -r "${srvIP}:${port}" -l ":${port}" -mode fast3 &
 						done
 					done
 				done
