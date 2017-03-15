@@ -2,6 +2,9 @@
 #/usr/local/kcp-server/kcp-server -l ":47369" -t "127.0.0.1:47147" --key "&Fuckgfw" &
 #/opt/gows/src/github.com/xtaci/kcptun/server_linux_amd64 -t "127.0.0.1:47147" -l ":14369" -mode fast2 &
 
+ip=`ifconfig | grep "inet addr" | awk '{print $2}' | grep -v 127 | sed 's/addr://'`
+echo "Server IP:$ip"
+
 #read ACTION
 #echo $ACTION
 
@@ -51,12 +54,15 @@ start()
 
 case $1 in
 	"start") echo "starting"
+		stop
 		start 1
 	;;
 	"stop") echo "stopping"
 		stop
 	;;
 	"restart") echo "restarting"
+		stop
+		start 1
 	;;
 	*) echo "unknow cmd"
 esac
