@@ -1,3 +1,8 @@
+[config apt-get to use proxy]
+vim /etc/apt/apt.conf
+//append following lines
+Acquire::http::Proxy "http://192.168.152.1:1080/";
+
 sudo apt-get update
 sudo apt-get install automake autogen autoconf
 sudo apt-get install build-essential
