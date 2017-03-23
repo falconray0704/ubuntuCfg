@@ -121,18 +121,25 @@ case $1 in
 	"start") echo "starting..."
             sudo gitlab-ctl stop
             sudo systemctl stop gitlab-runsvdir.service
+            sudo umount "/opt/${git_data_dir}"
+            exportedPath=`cat /etc/exports_gitlab_data_path`
+            sudo mount -t nfs -o rw,resvport 127.0.0.1:"${exportedPath}" "/opt/${git_data_dir}"
             sudo systemctl start gitlab-runsvdir.service
             sudo gitlab-ctl start
 	;;
 	"restart") echo "restarting..."
             sudo gitlab-ctl stop
             sudo systemctl stop gitlab-runsvdir.service
+            sudo umount "/opt/${git_data_dir}"
+            exportedPath=`cat /etc/exports_gitlab_data_path`
+            sudo mount -t nfs -o rw,resvport 127.0.0.1:"${exportedPath}" "/opt/${git_data_dir}"
             sudo systemctl start gitlab-runsvdir.service
             sudo gitlab-ctl start
 	;;
 	"stop") echo "stop..."
             sudo gitlab-ctl stop
             sudo systemctl stop gitlab-runsvdir.service
+            sudo umount "/opt/${git_data_dir}"
 	;;
 	*) echo "unknow cmd"
 esac
