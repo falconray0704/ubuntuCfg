@@ -106,7 +106,16 @@ case $1 in
             read isConfig
             if [ ${isConfig}x = "y"x ] || [ ${isConfig}x = "Y"x ]
             then
+                sudo gitlab-ctl stop
+                sudo systemctl stop gitlab-runsvdir.service
+
                 reconfig_gitlab_repo_location
+
+                sudo gitlab-ctl upgrade
+                sudo gitlab-ctl reconfigure
+
+                sudo systemctl start gitlab-runsvdir.service
+                sudo gitlab-ctl start
             fi
 	;;
 	*) echo "unknow cmd"
