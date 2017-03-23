@@ -118,6 +118,22 @@ case $1 in
                 sudo gitlab-ctl start
             fi
 	;;
+	"start") echo "starting..."
+            sudo gitlab-ctl stop
+            sudo systemctl stop gitlab-runsvdir.service
+            sudo systemctl start gitlab-runsvdir.service
+            sudo gitlab-ctl start
+	;;
+	"restart") echo "restarting..."
+            sudo gitlab-ctl stop
+            sudo systemctl stop gitlab-runsvdir.service
+            sudo systemctl start gitlab-runsvdir.service
+            sudo gitlab-ctl start
+	;;
+	"stop") echo "stop..."
+            sudo gitlab-ctl stop
+            sudo systemctl stop gitlab-runsvdir.service
+	;;
 	*) echo "unknow cmd"
 esac
 
