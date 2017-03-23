@@ -23,6 +23,12 @@ install_nfs_git_data_dir()
         sudo echo ${nfsServerExport} >> /etc/exports
         sudo service nfs-kernel-server restart
         sudo mount -t nfs -o rw,resvport 127.0.0.1:"${1}/${git_data_dir}" "/opt/${git_data_dir}"
+
+        sudo gitlab-ctl stop
+        sudo gitlab-ctl upgrade
+        sudo gitlab-ctl start
+
+
     else
         echo "${1} already be exported"
         exit 1
@@ -47,6 +53,19 @@ uninstall_nfs_git_data_dir()
     cat '/etc/exports' | sed /"${nfsServerExport}"/d > './exports.tmp'
 
     sudo cp ./exports.tmp /etc/exports
+}
+
+install_gitlab()
+{
+    sudo apt-get install curl openssh-server ca-certificates postfix
+    curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+    sudo apt-get install gitlab-ce
+    sudo gitlab-ctl reconfigure
+
+
+    sudo systemctl disable gitlab-runsvdir.service
+#    sudo systemctl enable gitlab-runsvdir.service
+
 }
 
 
@@ -77,20 +96,18 @@ reconfig_gitlab_repo_location()
 
 case $1 in
 	"install") echo "Installing..."
-
-
-
+            install_gitlab
+	;;
+	"uninstall") echo "Uninstall..."
+            uninstall_nfs_git_data_dir
+	;;
+	"reconfig") echo "Reconfig gitlab repo nfs path..."
             echo "Do you want to config gitlabRepo path mount to nfs server? [y/N]:"
             read isConfig
             if [ ${isConfig}x = "y"x ] || [ ${isConfig}x = "Y"x ]
             then
                 reconfig_gitlab_repo_location
             fi
-	;;
-	"uninstall") echo "Uninstall..."
-            uninstall_nfs_git_data_dir
-	;;
-	"reconfig") echo "Reconfig gitlab repo nfs path..."
 	;;
 	*) echo "unknow cmd"
 esac
