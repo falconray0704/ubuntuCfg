@@ -5,8 +5,12 @@ git_data_dir="gitlabRepo"
 install_nfs_git_data_dir()
 {
     echo "Local nfs gitlab data path:${1}/${git_data_dir} is going to be built up!"
+
     sudo mkdir -p "${1}/${git_data_dir}"
+    sudo chown -hR git "${1}/${git_data_dir}"
+
     sudo mkdir -p "/opt/${git_data_dir}"
+    sudo chown -hR git "/opt/${git_data_dir}"
 
     nfsServerExport="${1}/${git_data_dir} 127.0.0.1(rw,sync,no_root_squash,no_subtree_check)"
 
@@ -68,14 +72,6 @@ install_gitlab()
 
 }
 
-
-if [ $UID -ne 0 ]
-then
-    echo "Superuser privileges are required to run this script."
-    echo "e.g. \"sudo $0\""
-    exit 1
-fi
-
 reconfig_gitlab_repo_location()
 {
     sudo apt install nfs-kernel-server
@@ -92,7 +88,33 @@ reconfig_gitlab_repo_location()
     install_nfs_git_data_dir ${nfs_git_data_path}
     #config_git_data_dir '/md/gitlabRepo'
 
+    #git_data_dirs({ "default" => { "path" => "/var/opt/gitlab/git-data" } })
+    #gitlabRepoPath=$(echo "${nfs_git_data_path}/${git_data_dir}" | sed 's/\//\\\//g')
+    #cat /etc/gitlab/gitlab.rb | sed /"*git_data_dirs*\/var\/opt\/gitlab\/git-data"/d > './exports.tmp'
+
+    echo 'Please reconfig the "git_data_dirs" in /etc/gitlab/gitlab.rb, press any key to continue.'
+    read tmp
+    sudo vim /etc/gitlab/gitlab.rb
+    #sudo rsync -av /var/opt/gitlab/git-data/repositories ${nfs_git_data_path}/${git_data_dir}
+
 }
+
+if [ $UID -ne 0 ]
+then
+    echo "Superuser privileges are required to run this script."
+    echo "e.g. \"sudo $0\""
+    exit 1
+fi
+
+#/dev/sdb1 /md ext4
+isMounted=`cat '/etc/mtab' | grep '/dev/sdb1 /md ext4'`
+if [ ! -n "$isMounted" ]
+then
+    echo ${isMounted}
+    echo '/md does not be mounted, please check it first!'
+    exit 1
+fi
+
 
 case $1 in
 	"install") echo "Installing..."
@@ -140,6 +162,9 @@ case $1 in
             sudo gitlab-ctl stop
             sudo systemctl stop gitlab-runsvdir.service
             sudo umount "/opt/${git_data_dir}"
+	;;
+	"test") echo "testing..."
+            echo "test cmd."
 	;;
 	*) echo "unknow cmd"
 esac
