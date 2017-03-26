@@ -20,8 +20,16 @@ stop()
 
 start()
 {
-    echo "Please input remote kcp server IP:"
-    read srvIP
+    srvIP=
+    if [ -e "./srvIP" ]
+    then
+        srvIP=`cat ./srvIP`
+    fi
+    if [ ! -n "$srvIP" ]
+    then
+        echo "Please input remote kcp server IP:"
+        read srvIP
+    fi
 	declare -i idx=0
 	while [ $idx -lt $1 ]
 	do
@@ -42,7 +50,8 @@ start()
 						for idx1 in ${p1}
 						do
 							port=${idx5}${idx4}${idx3}${idx2}${idx1}
-                            ./client_linux_amd64 -r "${srvIP}:${port}" -l ":${port}" -mode fast3 &
+                            #./client_linux_amd64 -r "${srvIP}:${port}" -l ":${port}"  -sndwnd 40960 -rcvwnd 40960 -mode fast3 &
+                            ./client_linux_amd64 -r "${srvIP}:${port}" -l ":${port}"  -mode fast3 &
 						done
 					done
 				done
