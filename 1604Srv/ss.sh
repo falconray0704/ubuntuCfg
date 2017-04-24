@@ -14,7 +14,9 @@ cd /opt/github
 wget https://github.com/shadowsocks/shadowsocks-libev/archive/v2.6.2.tar.gz
 tar -zxf v2.6.2.tar.gz
 cd shadowsocks-libev-2.6.2
-./configure
+# static link
+LIBS="-lpthread -lm" LDFLAGS="-Wl,-static -static -static-libgcc" ./configure
+#./configure
 make
 sudo make install
 
