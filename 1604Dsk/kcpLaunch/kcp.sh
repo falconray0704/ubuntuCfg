@@ -34,11 +34,11 @@ start()
 	while [ $idx -lt $1 ]
 	do
 		#echo ${idx}
-		p5="1 4"
-		p4="2 5"
-		p3="7"
-		p2="3 6 9"
-		p1="2 5 8"
+		p5="5 2"
+		p4="7 8"
+		p3="4"
+		p2="2 5 8"
+		p1="3 6 9"
 		for idx5 in ${p5}
 		do
 			for idx4 in ${p4}
