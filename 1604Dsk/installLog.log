@@ -143,6 +143,16 @@ sudo make install
 XZ_OPT="-9e --threads=2" tar -Jcf webRTC.tar.xz webRTC
 
 
+[install freeSwitch env]
+sudo apt-get install build-essential automake autoconf 'libtool-bin|libtool' wget curl python 
+sudo apt-get install libspeex-dev libspeexdsp-dev libtiff5-dev yasm nasm liblua5.2-dev
+sudo apt-get install libopus-dev libsndfile-dev libavformat-dev libswscale-dev
+sudo apt-get install libavresample-dev libldns-dev libedit-dev portaudio19-dev
+sudo apt-get install uuid-dev zlib1g-dev 'libjpeg8-dev|libjpeg62-turbo-dev' libncurses5-dev 
+sudo apt-get install libssl-dev libpcre3-dev libcurl4-openssl-dev
+sudo apt-get install libsqlite3-dev perl libgdbm-dev libdb-dev bison libvlc-dev pkg-config
+
+
 
 
 
