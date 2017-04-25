@@ -29,10 +29,10 @@ start()
 	do
 		#echo ${idx}
 		p5="5 2"
-		p4="7 1"
+		p4="7 5 2 6"
 		p3="4"
-		p2="2 5 8"
-		p1="3 6 9"
+		p2="2 8"
+		p1="3 9"
 		for idx5 in ${p5}
 		do
 			for idx4 in ${p4}
