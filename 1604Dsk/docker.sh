@@ -38,23 +38,43 @@ config_proxy()
     fi
 }
 
+install_docker()
+{
+    sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo apt-key fingerprint 0EBFCD88
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
-sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo apt-key fingerprint 0EBFCD88
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    sudo apt-get update
+    sudo apt-get install docker-ce
+}
 
-sudo apt-get update
-sudo apt-get install docker-ce
+reconfig_docker_proxy()
+{
+    echo "Do you want to config http proxy for docker? [y/N]:"
+    read isConfigProxy
+    if [ ${isConfigProxy}x = "y"x ] || [ ${isConfigProxy}x = "Y"x ]
+    then
+        config_proxy
+    fi
+    sudo docker run hello-world
+}
 
-echo "Do you want to config http proxy for docker? [y/N]:"
-read isConfigProxy
-if [ ${isConfigProxy}x = "y"x ] || [ ${isConfigProxy}x = "Y"x ]
-then
-    config_proxy
-fi
+case $1 in
+	"install") echo "Installing..."
+            install_docker
+            reconfig_docker_proxy
+	;;
+	"reconfig_proxy") echo "Reconfig docker proxy..."
+            reconfig_docker_proxy
+	;;
+	"test") echo "testing..."
+            sudo docker run hello-world
+	;;
+	*) echo "unknow cmd"
+esac
 
 
-sudo docker run hello-world
+
 
 
