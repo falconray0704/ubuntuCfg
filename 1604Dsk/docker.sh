@@ -38,6 +38,7 @@ config_proxy()
     fi
 }
 
+
 install_docker()
 {
     sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
@@ -67,6 +68,12 @@ case $1 in
 	;;
 	"reconfig_proxy") echo "Reconfig docker proxy..."
             reconfig_docker_proxy
+	;;
+	"clear_proxy") echo "Clear docker proxy..."
+            sudo rm -rf /etc/systemd/system/docker.service.d/http-proxy.conf
+            sudo systemctl daemon-reload
+            sudo systemctl show --property=Environment docker
+            sudo systemctl restart docker
 	;;
 	"test") echo "testing..."
             sudo docker run hello-world
