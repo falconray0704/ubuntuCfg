@@ -46,7 +46,7 @@ start()
 							port=${idx5}${idx4}${idx3}${idx2}${idx1}
 							#echo "port:${port}"
 							#/opt/gows/src/github.com/xtaci/kcptun/server_linux_amd64 -t "127.0.0.1:10000" -l ":${port}" -sndwnd 40960 -rcvwnd 40960 -mode fast3 &
-							/opt/gows/src/github.com/xtaci/kcptun/server_linux_amd64 -t "127.0.0.1:10000" -l ":${port}" -mode fast3 &
+							/usr/local/bin/server_linux_amd64 -t "127.0.0.1:10000" -l ":${port}" -mode fast3 &
 
 							echo "{" >> /run/gui-config.json
 							echo "\"server\" : \"$ip\"," >> /run/gui-config.json
