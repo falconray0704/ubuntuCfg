@@ -64,7 +64,7 @@ start()
 		idx=${idx}+1
 	done
 	port=20000
-	/opt/gows/src/github.com/xtaci/kcptun/server_linux_amd64 -t "127.0.0.1:10000" -l ":${port}" -mode fast3 &
+	/usr/local/bin/server_linux_amd64 -t "127.0.0.1:10000" -l ":${port}" -mode fast3 &
 
 	echo "]," >> /run/gui-config.json
         echo "\"strategy\" : \"com.shadowsocks.strategy.ha\"," >> /run/gui-config.json
