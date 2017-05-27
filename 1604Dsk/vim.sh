@@ -8,6 +8,7 @@ sudo apt-get install tree
 sudo apt-get install openssh-server
 
 sudo apt-get install vim
+sudo apt-get install ctags
 #curl 'http://vim-bootstrap.com/generate.vim' --data 'langs=c&langs=javascript&langs=php&langs=html&langs=python&langs=perl&editor=vim' > ~/.vimrc
 cd ~/
 rm -rf .vimrc vim generate.vim
