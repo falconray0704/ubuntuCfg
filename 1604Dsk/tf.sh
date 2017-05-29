@@ -20,13 +20,35 @@ git clone https://github.com/tensorflow/tensorflow
 cd tensorflow
 git checkout r1.0
 
-sudo -H pip uninstall tensorflow
-bazel clean
-./configure
-bazel build --config=opt --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
-bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
-sudo -H pip install /tmp/tensorflow_pkg/tensorflow-1.0.1-cp27-cp27mu-linux_x86_64.whl
+install_cpu()
+{
+    sudo -H pip uninstall tensorflow
+    bazel clean
+    ./configure
+    bazel build --config=opt --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
+    bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+    sudo -H pip install /tmp/tensorflow_pkg/tensorflow-1.0.1-cp27-cp27mu-linux_x86_64.whl
+}
 
+install_gpu()
+{
+    sudo apt-get install libcupti-dev
+    sudo -H pip uninstall tensorflow
+    bazel clean
+    ./configure
+    bazel build --config=opt --config=cuda --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
+    bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+    sudo -H pip install /tmp/tensorflow_pkg/tensorflow-1.0.1-cp27-cp27mu-linux_x86_64.whl
+}
 
+case $1 in
+	"install_cpu") echo "Installing cpu version tensorflow ..."
+            install_cpu
+	;;
+	"install_gpu") echo "Installing GPU version tensorflow ..."
+            install_gpu
+	;;
+	*) echo "unknow cmd"
+esac
 
 
