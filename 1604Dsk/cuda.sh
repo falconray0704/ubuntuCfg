@@ -5,6 +5,9 @@ install_cuda_Toolkit()
     sudo dpkg -i cuda-repo-ubuntu1604-8-0-local-ga2_8.0.61-1_amd64.deb
     sudo apt-get update
     sudo apt-get install cuda
+
+    echo "export the following environment to your PATH:"
+    echo "export PATH=$PATH:/usr/local/cuda/bin"
 }
 
 install_cuda_cuDNN_5_1()
