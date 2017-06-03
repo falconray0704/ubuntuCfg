@@ -23,7 +23,7 @@ install_cuda_Toolkit
 install_cuda_cuDNN_5_1
 
 echo "export the following environment to your PATH:"
-echo "export PATH=$PATH:/usr/local/cuda/bin"
-echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
+echo 'export PATH=$PATH:/usr/local/cuda/bin'
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH'
 
 
