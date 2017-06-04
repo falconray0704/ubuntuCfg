@@ -171,9 +171,84 @@ install_openCV2()
 
 }
 
+install_openCV_cuda()
+{
+    # install requirements
+    sudo apt-get install build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+
+    # install optionals
+    sudo apt-get install  python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+
+    # install openGL requirements
+    sudo apt-get install freeglut3-dev mesa-common-dev  libgtkglext1 libgtkglext1-dev
+
+    # install java support requirements
+    sudo apt-get install ant
+
+    # install video support requirements
+    sudo apt-get install checkinstall yasm libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev libtbb-dev libqt4-dev libgtk2.0-dev libmp3lame-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils
+
+    mkdir -p /md/github/openCVs
+    cd /md/github/openCVs
+
+
+    # download openCV source code
+    #wget -c https://github.com/opencv/opencv/archive/2.4.13.2.tar.gz
+    rm -rf opencv-2.4.13.2
+    tar -zxf 2.4.13.2.tar.gz
+
+    # download openCV contrib support
+    #wget -c -O contrib_3.2.0.tar.gz https://github.com/opencv/opencv_contrib/archive/3.2.0.tar.gz
+    rm -rf opencv_contrib-3.2.0
+    tar -zxf contrib_3.2.0.tar.gz
+
+    # download openCV extra support
+    #wget -c -O ex_2.4.13.2.tar.gz https://github.com/opencv/opencv_extra/archive/2.4.13.2.tar.gz
+    rm -rf opencv_extra-2.4.13.2
+    tar -zxf ex_2.4.13.2.tar.gz
+
+    pwd
+    ls -al
+
+    echo "isContinue?"
+    read isContinue
+
+    cd opencv-2.4.13.2
+    mkdir release
+    cd release
+
+    cmake \
+        -D CMAKE_BUILD_TYPE=RELEASE \
+        -D CMAKE_INSTALL_PREFIX=/usr/local \
+        -D OPENCV_TEST_DATA_PATH=../../opencv_extra-2.4.13.2 \
+        -D WITH_CUDA=ON \
+        -D WITH_CUBLAS=ON \
+        -D CUDA_FAST_MATH=ON \
+        -D WITH_CUFFT=ON \
+        -D WITH_NVCUVID=ON \
+        -D WITH_V4L=ON \
+        -D WITH_LIBV4L=ON \
+        -D WITH_OPENGL=ON \
+        -D WITH_FFMPEG=ON \
+        -D INSTALL_C_EXAMPLES=ON \
+        -D BUILD_EXAMPLES=ON \
+        ..
+
+        #-D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-3.2.0/modules \
+        #-D BUILD_SHARED_LIBS=OFF
+
+    echo "isContinue?"
+    read isContinue
+
+    make -j$(nproc)
+    sudo make install
+
+
+}
+
 case $1 in
 	"install") echo "Installing openCV..."
-            install_openCV
+            install_openCV_cuda
 	;;
 	"uninstall") echo "Uninstalling openCV..."
 	;;
