@@ -243,6 +243,9 @@ install_openCV_cuda()
     make -j$(nproc)
     sudo make install
 
+    cd ~/.pyenv/versions/vpy2/lib/python2.7/site-packages
+    ln -s /usr/local/lib/python2.7/site-packages/cv2.so cv2.so
+
 
 }
 
