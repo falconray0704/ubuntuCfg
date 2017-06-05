@@ -253,7 +253,17 @@ install_openCV_cuda()
 
 case $1 in
 	"install") echo "Installing openCV..."
+        echo " "
+        echo "Before continue, you have to activate Python environment with numpy support."
+        echo "isContinue? [y/N]:"
+        read isContinue
+
+        if [ ${isContinue}x = "y"x ] || [ ${isContinue}x = "Y"x ]
+        then
             install_openCV_cuda
+        else
+            exit 1
+        fi
 	;;
 	"uninstall") echo "Uninstalling openCV..."
 	;;
