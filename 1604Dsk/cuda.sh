@@ -10,8 +10,10 @@ install_cuda_Toolkit_func()
 
 install_cuda_cuDNN_5_1_func()
 {
-    cd /md/etmp/nvidia/cudnn_5.1
+    rm -rf /md/etmp/nvidia/cudnn_5.1
+    cd /md/etmp/nvidia/
     tar -zxf cudnn-8.0-linux-x64-v5.1.tgz
+    cd /md/etmp/nvidia/cudnn_5.1
     sudo cp -a cuda/include/* /usr/local/cuda/include/
     sudo cp -a cuda/lib64/* /usr/local/cuda/lib64/
 
@@ -26,7 +28,6 @@ install_cuda_Video_Codec_SDK_func()
     unzip Video_Codec_SDK_8.0.14.zip
 
     ls -al Video_Codec_SDK_8.0.14
-    read isContinue
     sudo cp -r Video_Codec_SDK_8.0.14/Samples/common/inc/* /usr/include/
 }
 
