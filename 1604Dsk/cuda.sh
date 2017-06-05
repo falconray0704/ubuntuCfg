@@ -17,9 +17,18 @@ install_cuda_Toolkit_func()
 
 install_cuda_cuDNN_5_1_func()
 {
-    cd /md/etmp/nvidia/cudnn_5.1
+    mkdir -p /md/nvidia/cuDNNs/cuDNN_5_1
+    cd /md/nvidia/cuDNNs/cuDNN_5_1
+
+    cp /md/etmp/nvidia/cudnn_5.1/cudnn-8.0-linux-x64-v5.1.tgz ./
     rm -rf cuda
     tar -zxf cudnn-8.0-linux-x64-v5.1.tgz
+
+    echo "" >> ~/.bashrc
+    echo '# cuda ToolKit:' >> ~/.bashrc
+    echo 'export LD_LIBRARY_PATH=/md/nvidia/cuDNNs/cuDNN_5_1/cuda:$LD_LIBRARY_PATH' >> ~/.bashrc
+    echo "" >> ~/.bashrc
+
     sudo cp -a cuda/include/* /usr/local/cuda/include/
     sudo cp -a cuda/lib64/* /usr/local/cuda/lib64/
 
