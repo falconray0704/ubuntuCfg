@@ -36,14 +36,16 @@ install_cuda_cuDNN_5_1_func()
 
 install_cuda_Video_Codec_SDK_func()
 {
-    mkdir -p /md/nvidia
-    cd /md/nvidia
+    mkdir -p /md/nvidia/Video_Codec_SDKs
+    cd /md/nvidia/Video_Codec_SDKs
+
     rm -rf Video_Codec_SDK_8.0.14
     cp /md/etmp/nvidia/Video_Codec_SDK_8.0.14.zip ./
     unzip Video_Codec_SDK_8.0.14.zip
 
     ls -al Video_Codec_SDK_8.0.14
     sudo cp -r Video_Codec_SDK_8.0.14/Samples/common/inc/* /usr/include/
+
 }
 
 cd /md/etmp/nvidia
