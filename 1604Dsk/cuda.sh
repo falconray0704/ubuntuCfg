@@ -6,14 +6,20 @@ install_cuda_Toolkit_func()
     sudo apt-get update
     sudo apt-get install cuda
 
+    #echo "export the following environment to your PATH:"
+    echo "" >> ~/.bashrc
+    echo '# cuda ToolKit:' >> ~/.bashrc
+    echo 'export PATH=$PATH:/usr/local/cuda/bin' >> ~/.bashrc
+    echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
+    echo "" >> ~/.bashrc
+
 }
 
 install_cuda_cuDNN_5_1_func()
 {
-    rm -rf /md/etmp/nvidia/cudnn_5.1
-    cd /md/etmp/nvidia/
-    tar -zxf cudnn-8.0-linux-x64-v5.1.tgz
     cd /md/etmp/nvidia/cudnn_5.1
+    rm -rf cuda
+    tar -zxf cudnn-8.0-linux-x64-v5.1.tgz
     sudo cp -a cuda/include/* /usr/local/cuda/include/
     sudo cp -a cuda/lib64/* /usr/local/cuda/lib64/
 
@@ -51,8 +57,5 @@ case $1 in
 	*) echo "unknow cmd"
 esac
 
-echo "export the following environment to your PATH:"
-echo 'export PATH=$PATH:/usr/local/cuda/bin'
-echo 'export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH'
 
 
