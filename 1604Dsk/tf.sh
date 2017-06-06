@@ -38,12 +38,81 @@ install_gpu()
     install_dependence
 
     sudo apt-get install libcupti-dev
+
+    echo ""
+    echo "Accomplished dependence installation!"
+    echo "Continue to configure tensorflow? [y/N]:"
+    read isContinue
+
+    if [ ${isContinue}x = "y"x ] || [ ${isContinue}x = "Y"x ]
+    then
+        echo "Processing..."
+    else
+        exit 1
+    fi
+
     sudo -H pip uninstall tensorflow
     bazel clean
     ./configure
+
+    echo ""
+    echo "Accomplished tensorflow configure!"
+    echo "Continue to build tensorflow? [y/N]:"
+    read isContinue
+
+    if [ ${isContinue}x = "y"x ] || [ ${isContinue}x = "Y"x ]
+    then
+        echo "Processing..."
+    else
+        exit 1
+    fi
+
     bazel build --config=opt --config=cuda --cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" //tensorflow/tools/pip_package:build_pip_package
+
+    echo ""
+    echo "Accomplished tensorflow compile!"
+    echo "Continue to builed tensorflow pip package? [y/N]:"
+    read isContinue
+
+    if [ ${isContinue}x = "y"x ] || [ ${isContinue}x = "Y"x ]
+    then
+        echo "Processing..."
+    else
+        exit 1
+    fi
+
     bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+
+    echo ""
+    echo "Accomplished pip package buildup!"
+    echo "ls /tmp/tensorflow* is:"
+    ls /tmp/tensorflow*
+    echo "Continue to install pip package? [y/N]:"
+    read isContinue
+
+    if [ ${isContinue}x = "y"x ] || [ ${isContinue}x = "Y"x ]
+    then
+        echo "Processing..."
+    else
+        exit 1
+    fi
+
     sudo -H pip install /tmp/tensorflow_pkg/tensorflow-1.0.1-cp27-cp27mu-linux_x86_64.whl
+
+
+    echo ""
+    echo "Accomplished pip package installation!"
+    echo "Continue to build example for test GPU? [y/N]:"
+    read isContinue
+
+    if [ ${isContinue}x = "y"x ] || [ ${isContinue}x = "Y"x ]
+    then
+        echo "Processing..."
+    else
+        exit 1
+    fi
+    bazel build -c opt --config=cuda //tensorflow/cc:tutorials_example_trainer
+    bazel-bin/tensorflow/cc/tutorials_example_trainer --use_gpu
 }
 
 case $1 in
