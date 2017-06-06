@@ -273,8 +273,8 @@ install_openCV_cuda()
     sudo /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
     sudo ldconfig
 
-    cd ~/.pyenv/versions/vpy2/lib/python2.7/site-packages
-    ln -s /usr/local/lib/python2.7/site-packages/cv2.so cv2.so
+#    cd ~/.pyenv/versions/vpy2/lib/python2.7/site-packages
+#    ln -s /usr/local/lib/python2.7/site-packages/cv2.so cv2.so
 
 }
 
