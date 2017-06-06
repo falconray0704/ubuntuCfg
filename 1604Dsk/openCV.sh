@@ -191,6 +191,18 @@ install_openCV_cuda()
     mkdir -p /md/github/openCVs
     cd /md/github/openCVs
 
+    pwd
+    ls -al
+    echo ""
+    echo "Accomplished dependence installation, isContinue? [y/N]:"
+    read isContinue
+
+    if [ ${isContinue}x = "y"x ] || [ ${isContinue}x = "Y"x ]
+    then
+        echo "Processing..."
+    else
+        exit 1
+    fi
 
     # download openCV source code
     #wget -c https://github.com/opencv/opencv/archive/2.4.13.2.tar.gz
@@ -209,9 +221,16 @@ install_openCV_cuda()
 
     pwd
     ls -al
-
-    echo "isContinue?"
+    echo " "
+    echo "Is Continue to configure? [y/N]:"
     read isContinue
+
+    if [ ${isContinue}x = "y"x ] || [ ${isContinue}x = "Y"x ]
+    then
+        echo "Processing..."
+    else
+        exit 1
+    fi
 
     cd opencv-2.4.13.2
     mkdir release
@@ -237,8 +256,16 @@ install_openCV_cuda()
         #-D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-3.2.0/modules \
         #-D BUILD_SHARED_LIBS=OFF
 
-    echo "isContinue?"
+    echo " "
+    echo "Is Continue to compile? [y/N]:"
     read isContinue
+
+    if [ ${isContinue}x = "y"x ] || [ ${isContinue}x = "Y"x ]
+    then
+        echo "Processing..."
+    else
+        exit 1
+    fi
 
     make -j$(nproc)
     sudo make install
