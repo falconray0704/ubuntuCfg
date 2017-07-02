@@ -1,9 +1,9 @@
 #!/bin/bash
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install automake autogen autoconf
-sudo apt-get install build-essential
-sudo apt-get install git wget curl
-sudo apt-get install tree htop
-#sudo apt-get install openssh-server
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install automake autogen autoconf
+sudo apt-get -y install build-essential
+sudo apt-get -y install git wget curl
+sudo apt-get -y install tree htop vim
+#sudo apt-get -y install openssh-server
 
