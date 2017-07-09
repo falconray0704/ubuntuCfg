@@ -54,9 +54,9 @@ reconfig_docker_proxy()
 {
     echo "Do you want to config http proxy for docker? [y/N]:"
     read isConfigProxy
-    if [ ${isConfigProxy}x = "y"x ] || [ ${isConfigProxy}x = "Y"x ]
-    then
-        config_proxy
+    if [ ${isConfigProxy}x = "y"x ] || [ ${isConfigProxy}x = "Y"x ];then
+	config_proxy
+    else
     fi
     sudo docker run hello-world
 }
