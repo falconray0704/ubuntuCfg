@@ -5,10 +5,13 @@ apName=wlan0
 apSSID=piAP
 apPwd=piAP
 
+outInterface=eth0
+
 get_args()
 {
-	iw list
-	lshw -C network
+	#iw list
+	#lshw -C network
+	sudo lshw -C network | grep -E "-network|description|logical name|serial"
 	echo "Please input your AP device Name:"
 	read apName
 	echo "Please input your AP Mac address:"
@@ -94,6 +97,32 @@ enableAP_service()
 	#sudo systemctl start AP.service
 }
 
+enableAP_forward()
+{
+	sudo lshw -C network | grep -E "-network|description|logical name|serial"
+
+	echo "Please input your output deviceName(eg:eth0):"
+	read outInterface
+
+	echo "All AP packet will forward to: ${outInterface}"
+
+	echo "Is it correct? [y/N]"
+	read isCorrect
+
+	if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]; then
+		echo "Continue to config iptable rules...."
+	else
+		#echo "incorrect"
+		exit 1
+	fi
+
+	sudo iptables -F  
+	sudo iptables -X  
+	sudo iptables -t nat -F  
+	sudo iptables -t nat -X  
+	sudo iptables -t nat -A POSTROUTING -o ${outInterface} -j MASQUERADE 
+}
+
 if [ $UID -ne 0 ]
 then
     echo "Superuser privileges are required to run this script."
@@ -129,6 +158,9 @@ case $1 in
 			exit 1
 		fi
 
+	;;
+	"configIptables") echo "Configuring iptables..."
+		enableAP_forward
 	;;
 	"check") echo "Checking AP services..."
 		ps -ef | grep -E ".*hostapd|.*dnsmasq" | grep -v grep
