@@ -130,6 +130,9 @@ case $1 in
 		fi
 
 	;;
+	"check") echo "Checking AP services..."
+		ps -ef | grep -E ".*hostapd|.*dnsmasq" | grep -v grep
+	;;
 	"test") echo "test command..."
 		#unmanaged_devices
 		get_args
