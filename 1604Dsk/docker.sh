@@ -18,8 +18,7 @@ config_proxy()
     echo "Is it correct? [y/N]"
     read isCorrect
 
-    if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]
-    then
+    if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]; then
         sudo mkdir -p /etc/systemd/system/docker.service.d
         sudo chmod a+w /etc/systemd/system/docker.service.d
 
