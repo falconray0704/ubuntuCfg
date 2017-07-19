@@ -91,7 +91,7 @@ encapsulate_service()
 enableAP_service()
 {
 	sudo systemctl enable AP.service
-	sudo systemctl start AP.service
+	#sudo systemctl start AP.service
 }
 
 if [ $UID -ne 0 ]
@@ -117,6 +117,8 @@ case $1 in
 
 		echo "Please review configuration before enable AP service."
 		echo "Are those correct and reboot for continue?"
+		read isCorrect
+
 		if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]; then
 			echo "correct"
 			enableAP_service
