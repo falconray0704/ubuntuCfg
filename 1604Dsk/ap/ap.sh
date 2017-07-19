@@ -88,6 +88,12 @@ encapsulate_service()
 
 }
 
+enableAP_service()
+{
+	sudo systemctl enable AP.service
+	sudo systemctl start AP.service
+}
+
 if [ $UID -ne 0 ]
 then
     echo "Superuser privileges are required to run this script."
@@ -108,6 +114,18 @@ case $1 in
 		hostapd_config
 		dnsmasq_config
 		encapsulate_service
+
+		echo "Please review configuration before enable AP service."
+		echo "Are those correct and reboot for continue?"
+		if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]; then
+			echo "correct"
+			enableAP_service
+			
+			sudo reboot
+		else
+			#echo "incorrect"
+			exit 1
+		fi
 
 	;;
 	"test") echo "test command..."
