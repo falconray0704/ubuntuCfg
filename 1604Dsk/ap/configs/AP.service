@@ -9,7 +9,7 @@ After=sys-subsystem-net-devices-wlan0.device
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/sbin/ip link set dev wlan0 up
-ExecStart=/sbin/ip addr add 20.20.20.1/24 broadcast 20.20.20.255 dev wlan0
+ExecStart=/sbin/ip addr add 192.168.11.1/24 broadcast 192.168.11.255 dev wlan0
 ExecStart=/usr/sbin/hostapd -B /etc/hostapd/hostapd.conf
 ExecStart=/usr/sbin/dnsmasq -C /etc/dnsmasq_AP.conf
   
