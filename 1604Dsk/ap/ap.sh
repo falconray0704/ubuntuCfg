@@ -123,6 +123,38 @@ enableAP_forward()
 	sudo iptables -t nat -A POSTROUTING -o ${outInterface} -j MASQUERADE 
 }
 
+enableAP_forward_startup()
+{
+	sudo lshw -C network | grep -E "-network|description|logical name|serial"
+
+	echo "Please input your AP device Name:"
+	read apName
+	echo "Please input your output deviceName(eg:eth0):"
+	read outInterface
+
+	echo "All AP:${apName} packet will forward to: ${outInterface}"
+
+	echo "Is it correct? [y/N]"
+	read isCorrect
+
+	if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]; then
+		echo "Continue to config iptable rules...."
+	else
+		#echo "incorrect"
+		exit 1
+	fi
+
+	sudo iptables -t nat -A POSTROUTING -o ${outInterface} -j MASQUERADE  
+	sudo iptables -A FORWARD -i ${outInterface} -o ${apName} -m state --state RELATED,ESTABLISHED -j ACCEPT  
+	sudo iptables -A FORWARD -i ${apName} -o ${outInterface} -j ACCEPT 
+
+	sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
+
+	#sudo echo 'iptables-restore < /etc/iptables.ipv4.nat' >> /etc/rc.local
+	sudo echo 'up iptables-restore < /etc/iptables.ipv4.nat' >> /etc/network/interfaces
+
+}
+
 if [ $UID -ne 0 ]
 then
     echo "Superuser privileges are required to run this script."
@@ -161,6 +193,10 @@ case $1 in
 	;;
 	"configIptables") echo "Configuring iptables..."
 		enableAP_forward
+	;;
+	"configAutoIptables") echo "Configuring auto iptables..."
+		#sudo apt-get install iptables-persistent
+		enableAP_forward_startup
 	;;
 	"check") echo "Checking AP services..."
 		ps -ef | grep -E ".*hostapd|.*dnsmasq" | grep -v grep
