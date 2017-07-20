@@ -12,6 +12,7 @@ ExecStart=/sbin/ip link set dev wlan0 up
 ExecStart=/sbin/ip addr add 192.168.11.1/24 broadcast 192.168.11.255 dev wlan0
 ExecStart=/usr/sbin/hostapd -B /etc/hostapd/hostapd.conf
 ExecStart=/usr/sbin/dnsmasq -C /etc/dnsmasq_AP.conf
+ExecStart=/usr/local/bin/ss-tunnel -s '1.1.1.1' -p 9001 -m 'aes-256-cfb' -k '&Fuckgfw' -u -b '0.0.0.0' -l 1020 -L '8.8.8.8:53' -v 
   
 ExecStop=/sbin/ip addr flush dev wlan0
 ExecStop=/sbin/ip link set dev wlan0 down
