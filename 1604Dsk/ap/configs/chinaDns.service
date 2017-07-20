@@ -1,0 +1,12 @@
+[Unit]
+Description=ss-tunnel
+After=chinaDns.service
+ 
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/chinadns -m -c /usr/local/share/chnroute.txt -p 2053 -s 114.114.114.114,127.0.0.1:1053
+  
+[Install]
+WantedBy=multi-user.target
+

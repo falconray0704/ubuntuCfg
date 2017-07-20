@@ -144,6 +144,16 @@ enableAP_ss_forward()
 
 }
 
+service_chinadns_config()
+{
+	cp configs/chinaDns.service ./tmpConfigs/
+	sed -i "s/1053/${sstPort}/g" ./tmpConfigs/chinaDns.service
+	
+	echo "=================== after config ./tmpConfigs/chinaDns.service start ================="
+	cat ./tmpConfigs/chinaDns.service
+	echo "=================== after config ./tmpConfigs/chinaDns.service end ================="
+}
+
 service_sstunel_config()
 {
 	cp configs/ss-tunnel.service ./tmpConfigs/
@@ -169,6 +179,7 @@ ss_config()
 {
 	get_ssArgs
 	service_sstunel_config
+	service_chinadns_config
 }
 
 encapsulate_service()
@@ -254,6 +265,7 @@ commit_all_configs()
 	sudo cp ./tmpConfigs/AP.service /lib/systemd/system/
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
 		sudo cp ./tmpConfigs/ss-tunnel.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/chinaDns.service /lib/systemd/system/
 	fi
 }
 
@@ -264,6 +276,7 @@ enableAP_service()
 	sudo systemctl enable AP.service
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
 		sudo systemctl enable ss-tunnel.service
+		sudo systemctl enable chinaDns.service
 	fi
 }
 
@@ -314,7 +327,7 @@ case $1 in
 		enableAP_forward_startup
 	;;
 	"check") echo "Checking AP services..."
-		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*ss-tunnel" | grep -v grep
+		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*ss-tunnel|.*chinadns" | grep -v grep
 	;;
 	"test") echo "test command..."
 		#unmanaged_devices
