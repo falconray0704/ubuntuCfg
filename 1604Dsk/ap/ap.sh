@@ -20,7 +20,7 @@ get_ssArgs()
 	echo "Please input your SS server Port:"
 	read ssPort
 	echo "Please input your ss-tunnel Port:"
-	read ssPort
+	read sstPort
 
 	echo "Your SS IP:${ssIP} Port:${ssPort} ss-tunnel Port:${sstPort}"
 
@@ -145,7 +145,7 @@ enableAP_ss_forward()
 sstunel_config()
 {
 	sed -i "s/1.1.1.1/${ssIP}/g" ./tmpConfigs/AP.service
-	sed -i "s/9001/${ssPort}/g" ./tmpConfigs/AP.service
+	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/AP.service
 	#sed -i "s/1020/${sstPort}/g" ./tmpConfigs/AP.service
 }
 
@@ -186,7 +186,7 @@ enableAP_service()
 
 enableAP_forward()
 {
-	sudo lshw -C network | grep -E "-network|description|logical name|serial"
+	sudo lshw -C network | grep -E "-network|description|logical name"
 
 	echo "Please input your output deviceName(eg:eth0):"
 	read outInterface
@@ -212,7 +212,7 @@ enableAP_forward()
 
 enableAP_forward_startup()
 {
-	sudo lshw -C network | grep -E "-network|description|logical name|serial"
+	sudo lshw -C network | grep -E "-network|description|logical name"
 
 	echo "Please input your AP device Name:"
 	read apName
@@ -237,7 +237,7 @@ enableAP_forward_startup()
 
 	sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
 
-	sed -i '/iptables-restore < /etc/iptables.ipv4.nat/d' /etc/network/interfaces
+	sed -i '/iptables-restore < \/etc\/iptables.ipv4.nat/d' /etc/network/interfaces
 	#sudo echo 'iptables-restore < /etc/iptables.ipv4.nat' >> /etc/rc.local
 	sudo echo 'up iptables-restore < /etc/iptables.ipv4.nat' >> /etc/network/interfaces
 
@@ -273,7 +273,6 @@ case $1 in
 		enableAP_forward_startup
 		encapsulate_service
 
-		commit_all_configs
 
 		echo "Please review configuration before enable AP service."
 		echo "Are those correct and reboot for continue?"
@@ -281,6 +280,7 @@ case $1 in
 
 		if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]; then
 			echo "correct"
+			commit_all_configs
 			enableAP_service
 			
 			sudo reboot
