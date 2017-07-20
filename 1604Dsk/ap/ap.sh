@@ -9,9 +9,10 @@ apPwd=piAP
 
 ssIP="127.0.0.1"
 ssPort=9000
+ssrListenPort=62586
 
 sstPort=9001
-sstListenPort=1020
+sstListenPort=1053
 
 outInterface=eth0
 
@@ -132,7 +133,7 @@ enableAP_ss_forward()
 	sudo iptables -t nat -A SHADOWSOCKS -d 224.0.0.0/4 -j RETURN
 	sudo iptables -t nat -A SHADOWSOCKS -d 240.0.0.0/4 -j RETURN
 
-	sudo iptables -t nat -A SHADOWSOCKS -p tcp -j REDIRECT --to-ports ${ssPort}
+	sudo iptables -t nat -A SHADOWSOCKS -p tcp -j REDIRECT --to-ports ${ssrListenPort}
 	sudo iptables -t nat -A PREROUTING -p tcp -j SHADOWSOCKS
 	sudo iptables -t nat -A OUTPUT -p tcp -j SHADOWSOCKS
 
@@ -144,10 +145,21 @@ enableAP_ss_forward()
 
 }
 
+service_ss_redir_config()
+{
+	cp configs/ss-redir.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-redir.service
+	sed -i "s/9001/${ssPort}/g" ./tmpConfigs/ss-redir.service
+	
+	echo "=================== after config ./tmpConfigs/ss-redir.service start ================="
+	cat ./tmpConfigs/ss-redir.service
+	echo "=================== after config ./tmpConfigs/ss-redir.service end ================="
+}
+
 service_chinadns_config()
 {
 	cp configs/chinaDns.service ./tmpConfigs/
-	sed -i "s/1053/${sstPort}/g" ./tmpConfigs/chinaDns.service
+	sed -i "s/1053/${sstListenPort}/g" ./tmpConfigs/chinaDns.service
 	
 	echo "=================== after config ./tmpConfigs/chinaDns.service start ================="
 	cat ./tmpConfigs/chinaDns.service
@@ -159,6 +171,7 @@ service_sstunel_config()
 	cp configs/ss-tunnel.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel.service
 	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel.service
+	sed -i "s/1053/${sstListenPort}/g" ./tmpConfigs/ss-tunnel.service
 	
 	echo "=================== after config ./tmpConfigs/ss-tunnel.service start ================="
 	cat ./tmpConfigs/ss-tunnel.service
@@ -180,6 +193,7 @@ ss_config()
 	get_ssArgs
 	service_sstunel_config
 	service_chinadns_config
+	service_ss_redir_config
 }
 
 encapsulate_service()
@@ -228,8 +242,8 @@ enableAP_forward_startup()
 {
 	sudo lshw -C network | grep -E "-network|description|logical name"
 
-	echo "Please input your AP device Name:"
-	read apName
+	#echo "Please input your AP device Name:"
+	#read apName
 	echo "Please input your output deviceName(eg:eth0):"
 	read outInterface
 
@@ -251,6 +265,11 @@ enableAP_forward_startup()
 
 	sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
 
+	#if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
+		#enableAP_ss_forward
+	#fi
+
+
 	sed -i '/iptables-restore < \/etc\/iptables.ipv4.nat/d' /etc/network/interfaces
 	#sudo echo 'iptables-restore < /etc/iptables.ipv4.nat' >> /etc/rc.local
 	sudo echo 'up iptables-restore < /etc/iptables.ipv4.nat' >> /etc/network/interfaces
@@ -266,6 +285,7 @@ commit_all_configs()
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
 		sudo cp ./tmpConfigs/ss-tunnel.service /lib/systemd/system/
 		sudo cp ./tmpConfigs/chinaDns.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-redir.service /lib/systemd/system/
 	fi
 }
 
@@ -277,6 +297,7 @@ enableAP_service()
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
 		sudo systemctl enable ss-tunnel.service
 		sudo systemctl enable chinaDns.service
+		sudo systemctl enable ss-redir.service
 	fi
 }
 
@@ -299,9 +320,9 @@ case $1 in
 		unmanaged_devices
 		hostapd_config
 		dnsmasq_config
-		enableAP_forward_startup
 		encapsulate_service
 
+		enableAP_forward_startup
 
 		echo "Please review configuration before enable AP service."
 		echo "Are those correct and reboot for continue?"
@@ -327,7 +348,7 @@ case $1 in
 		enableAP_forward_startup
 	;;
 	"check") echo "Checking AP services..."
-		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*ss-tunnel|.*chinadns" | grep -v grep
+		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*ss-tunnel|.*chinadns|.*ss-redir" | grep -v grep
 	;;
 	"test") echo "test command..."
 		#unmanaged_devices
