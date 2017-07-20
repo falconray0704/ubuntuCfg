@@ -192,7 +192,7 @@ ss_config()
 {
 	get_ssArgs
 	service_sstunel_config
-	service_chinadns_config
+	#service_chinadns_config
 	service_ss_redir_config
 }
 
@@ -284,7 +284,7 @@ commit_all_configs()
 	sudo cp ./tmpConfigs/AP.service /lib/systemd/system/
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
 		sudo cp ./tmpConfigs/ss-tunnel.service /lib/systemd/system/
-		sudo cp ./tmpConfigs/chinaDns.service /lib/systemd/system/
+		#sudo cp ./tmpConfigs/chinaDns.service /lib/systemd/system/
 		sudo cp ./tmpConfigs/ss-redir.service /lib/systemd/system/
 	fi
 }
@@ -296,7 +296,7 @@ enableAP_service()
 	sudo systemctl enable AP.service
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
 		sudo systemctl enable ss-tunnel.service
-		sudo systemctl enable chinaDns.service
+		#sudo systemctl enable chinaDns.service
 		sudo systemctl enable ss-redir.service
 	fi
 }
@@ -315,6 +315,32 @@ case $1 in
 		sudo apt-get update
 		sudo apt-get install hostapd dnsmasq
 
+		get_args
+
+		unmanaged_devices
+		hostapd_config
+		dnsmasq_config
+		encapsulate_service
+
+		enableAP_forward_startup
+
+		echo "Please review configuration before enable AP service."
+		echo "Are those correct and reboot for continue?"
+		read isCorrect
+
+		if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]; then
+			echo "correct"
+			commit_all_configs
+			enableAP_service
+			
+			sudo reboot
+		else
+			#echo "incorrect"
+			exit 1
+		fi
+
+	;;
+	"reconfig") echo "Reconfig..."
 		get_args
 
 		unmanaged_devices
