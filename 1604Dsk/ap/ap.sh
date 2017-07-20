@@ -123,7 +123,7 @@ enableAP_ss_forward()
 
 	sudo iptables -t nat -N SHADOWSOCKS
 
-	sudo iptables -t nat -A SHADOWSOCKS -d ${ssIP}-j RETURN
+	sudo iptables -t nat -A SHADOWSOCKS -d ${ssIP} -j RETURN
 	sudo iptables -t nat -A SHADOWSOCKS -d 0.0.0.0/8 -j RETURN
 	sudo iptables -t nat -A SHADOWSOCKS -d 10.0.0.0/8 -j RETURN
 	sudo iptables -t nat -A SHADOWSOCKS -d 127.0.0.0/8 -j RETURN
@@ -138,7 +138,7 @@ enableAP_ss_forward()
 	sudo iptables -t nat -A OUTPUT -p tcp -j SHADOWSOCKS
 
 
-	sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
+	#sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
 
 	#sudo echo 'iptables-restore < /etc/iptables.ipv4.nat' >> /etc/rc.local
 	#sudo echo 'up iptables-restore < /etc/iptables.ipv4.nat' >> /etc/network/interfaces
@@ -263,12 +263,12 @@ enableAP_forward_startup()
 	sudo iptables -A FORWARD -i ${outInterface} -o ${apName} -m state --state RELATED,ESTABLISHED -j ACCEPT  
 	sudo iptables -A FORWARD -i ${apName} -o ${outInterface} -j ACCEPT 
 
+
+	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
+		enableAP_ss_forward
+	fi
+
 	sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
-
-	#if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
-		#enableAP_ss_forward
-	#fi
-
 
 	sed -i '/iptables-restore < \/etc\/iptables.ipv4.nat/d' /etc/network/interfaces
 	#sudo echo 'iptables-restore < /etc/iptables.ipv4.nat' >> /etc/rc.local
