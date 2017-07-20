@@ -1,5 +1,7 @@
 #!/bin/bash
 
+isConfigSS="N"
+
 apMac="xx:xx:xx:xx:xx:xx"
 apName=wlan0
 apSSID=piAP
@@ -142,46 +144,47 @@ enableAP_ss_forward()
 
 }
 
-sstunel_config()
+service_sstunel_config()
 {
-	sed -i "s/1.1.1.1/${ssIP}/g" ./tmpConfigs/AP.service
-	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/AP.service
-	#sed -i "s/1020/${sstPort}/g" ./tmpConfigs/AP.service
+	cp configs/ss-tunnel.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel.service
+	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel.service
+	
+	echo "=================== after config ./tmpConfigs/ss-tunnel.service start ================="
+	cat ./tmpConfigs/ss-tunnel.service
+	echo "=================== after config ./tmpConfigs/ss-tunnel.service end ================="
+}
+
+service_AP_config()
+{
+	cp configs/AP.service ./tmpConfigs/
+	sed -i "s/wlan0/${apName}/g" ./tmpConfigs/AP.service
+
+	echo "==================== after config ./tmpConfigs/AP.service start ==================="
+	cat ./tmpConfigs/AP.service
+	echo "==================== after config ./tmpConfigs/AP.service end   ==================="
 }
 
 ss_config()
 {
 	get_ssArgs
-	sstunel_config
+	service_sstunel_config
 }
 
 encapsulate_service()
 {
-	cp configs/AP.service ./tmpConfigs/
-	sed -i "s/wlan0/${apName}/g" ./tmpConfigs/AP.service
-
 
 	echo "Do you want to config SS?[y/N]:"
 	read isConfigSS
 
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
 		ss_config
-	else
-		sed -i '/ss-tunnel -s/d' ./tmpConfigs/AP.service
 	fi
 	
-	echo "==================== after cconfig ./tmpConfigs/AP.service start ==================="
-	cat ./tmpConfigs/AP.service
-	echo "==================== after cconfig ./tmpConfigs/AP.service end   ==================="
+	service_AP_config
 
 	#sudo cp ./tmpConfigs/AP.service /lib/systemd/system/
 
-}
-
-enableAP_service()
-{
-	sudo systemctl enable AP.service
-	#sudo systemctl start AP.service
 }
 
 enableAP_forward()
@@ -249,6 +252,19 @@ commit_all_configs()
 	sudo cp ./tmpConfigs/hostapd.conf /etc/hostapd/
 	sudo cp ./tmpConfigs/dnsmasq_AP.conf /etc/
 	sudo cp ./tmpConfigs/AP.service /lib/systemd/system/
+	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
+		sudo cp ./tmpConfigs/ss-tunnel.service /lib/systemd/system/
+	fi
+}
+
+enableAP_service()
+{
+	sudo systemctl daemon-reload	
+
+	sudo systemctl enable AP.service
+	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
+		sudo systemctl enable ss-tunnel.service
+	fi
 }
 
 if [ $UID -ne 0 ]
@@ -298,7 +314,7 @@ case $1 in
 		enableAP_forward_startup
 	;;
 	"check") echo "Checking AP services..."
-		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*ss-tunel" | grep -v grep
+		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*ss-tunnel" | grep -v grep
 	;;
 	"test") echo "test command..."
 		#unmanaged_devices
