@@ -1,0 +1,12 @@
+[Unit]
+Description=kcp-tunnel
+After=sshd.service
+ 
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/client_linux_amd64 -r '127.0.0.1:9001' -l ':61586'  -mode fast3
+  
+[Install]
+WantedBy=multi-user.target
+

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 isConfigSS="N"
+isConfigKCP="N"
 
 apMac="xx:xx:xx:xx:xx:xx"
 apName=wlan0
@@ -14,6 +15,8 @@ ssrListenPort=62586
 sstPort=9001
 sstListenPort=1053
 
+kcpPort=52483
+
 outInterface=eth0
 
 get_ssArgs()
@@ -24,6 +27,17 @@ get_ssArgs()
 	read ssPort
 	echo "Please input your ss-tunnel Port:"
 	read sstPort
+
+	echo "Do you want to config KCP tunnel?[y/N]:"
+	read isConfigKCP
+
+	if [ ${isConfigKCP}x = "Y"x ] || [ ${isConfigKCP}x = "y"x ]; then
+		echo "Please input your KCP server Port(eg:52483):"
+		read kcpPort
+		
+		echo "Your KCP server port is ${kcpPort}"
+	fi
+	
 
 	echo "Your SS IP:${ssIP} Port:${ssPort} ss-tunnel Port:${sstPort}"
 
@@ -145,11 +159,26 @@ enableAP_ss_forward()
 
 }
 
+service_kcp_config()
+{
+	cp configs/kcp-tunnel.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/kcp-tunnel.service
+	sed -i "s/9001/${kcpPort}/g" ./tmpConfigs/kcp-tunnel.service
+	
+	echo "=================== after config ./tmpConfigs/ss-redir.service start ================="
+	cat ./tmpConfigs/ss-redir.service
+	echo "=================== after config ./tmpConfigs/ss-redir.service end ================="
+}
+
 service_ss_redir_config()
 {
 	cp configs/ss-redir.service ./tmpConfigs/
-	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-redir.service
-	sed -i "s/9001/${ssPort}/g" ./tmpConfigs/ss-redir.service
+	if [ ${isConfigKCP}x = "Y"x ] || [ ${isConfigKCP}x = "y"x ]; then
+		sed -i "s/9001/61586/g" ./tmpConfigs/ss-redir.service
+	else
+		sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-redir.service
+		sed -i "s/9001/${ssPort}/g" ./tmpConfigs/ss-redir.service
+	fi
 	
 	echo "=================== after config ./tmpConfigs/ss-redir.service start ================="
 	cat ./tmpConfigs/ss-redir.service
@@ -193,6 +222,9 @@ ss_config()
 	get_ssArgs
 	service_sstunel_config
 	#service_chinadns_config
+	if [ ${isConfigKCP}x = "Y"x ] || [ ${isConfigKCP}x = "y"x ]; then
+		service_kcp_config
+	fi
 	service_ss_redir_config
 }
 
@@ -286,6 +318,9 @@ commit_all_configs()
 		sudo cp ./tmpConfigs/ss-tunnel.service /lib/systemd/system/
 		#sudo cp ./tmpConfigs/chinaDns.service /lib/systemd/system/
 		sudo cp ./tmpConfigs/ss-redir.service /lib/systemd/system/
+		if [ ${isConfigKCP}x = "Y"x ] || [ ${isConfigKCP}x = "y"x ]; then
+			sudo cp ./tmpConfigs/kcp-tunnel.service /lib/systemd/system/
+		fi
 	fi
 }
 
@@ -298,6 +333,9 @@ enableAP_service()
 		sudo systemctl enable ss-tunnel.service
 		#sudo systemctl enable chinaDns.service
 		sudo systemctl enable ss-redir.service
+		if [ ${isConfigKCP}x = "Y"x ] || [ ${isConfigKCP}x = "y"x ]; then
+			sudo systemctl enable kcp-tunnel.service
+		fi
 	fi
 }
 
@@ -374,7 +412,7 @@ case $1 in
 		enableAP_forward_startup
 	;;
 	"check") echo "Checking AP services..."
-		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*ss-tunnel|.*chinadns|.*ss-redir" | grep -v grep
+		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*ss-tunnel|.*chinadns|.*ss-redir|.*client_linux_amd64" | grep -v grep
 	;;
 	"test") echo "test command..."
 		#unmanaged_devices
