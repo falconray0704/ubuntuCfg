@@ -5,6 +5,7 @@ isConfigKCP="N"
 
 apMac="xx:xx:xx:xx:xx:xx"
 apName=wlan0
+apCh=6
 apSSID=piAP
 apPwd=piAP
 
@@ -12,6 +13,7 @@ ssIP="127.0.0.1"
 ssPort=9000
 ssrListenPort=62586
 
+ssTcpFast="N"
 sstPort=9001
 sstListenPort=1053
 
@@ -27,6 +29,8 @@ get_ssArgs()
 	read ssPort
 	echo "Please input your ss-tunnel Port:"
 	read sstPort
+	echo "Enable ss-redir tcp fast open[y/N]:"
+	read ssTcpFast
 
 	echo "Do you want to config KCP tunnel?[y/N]:"
 	read isConfigKCP
@@ -39,7 +43,7 @@ get_ssArgs()
 	fi
 	
 
-	echo "Your SS IP:${ssIP} Port:${ssPort} ss-tunnel Port:${sstPort}"
+	echo "Your SS IP:${ssIP} Port:${ssPort} ss-tunnel Port:${sstPort} ssTcpFast:${ssTcpFast}"
 
 	echo "Is it correct? [y/N]"
 	read isCorrect
@@ -62,6 +66,8 @@ get_args()
 	read apName
 	echo "Please input your AP Mac address:"
 	read apMac
+	echo "Please input your AP channel number(eg:6):"
+	read apCh
 	echo "Please input your AP SSID:"
 	read apSSID
 	echo "Please input your AP password:"
@@ -69,6 +75,7 @@ get_args()
 
 	echo "Your AP name is: ${apName}"
 	echo "Your AP Mac address is: ${apMac}"
+	echo "Your AP channel is: ${apCh}"
 	echo "Your AP SSID is: ${apSSID}"
 	echo "Your AP password is: ${apPwd}"
 
@@ -109,6 +116,7 @@ hostapd_config()
 	cp ./configs/hostapd.conf ./tmpConfigs/hostapd.conf
 	sed -i "s/interface=wlan0/interface=${apName}/g" ./tmpConfigs/hostapd.conf
 	sed -i "s/ssid=piAP/ssid=${apSSID}/g" ./tmpConfigs/hostapd.conf
+	sed -i "s/channel=6/channel=${apCh}/g" ./tmpConfigs/hostapd.conf
 	sed -i "s/wpa_passphrase=piAP/wpa_passphrase=${apPwd}/g" ./tmpConfigs/hostapd.conf
 
 	echo "================ after config ./tmpConfigs/hostapd.conf start ============================"
@@ -180,6 +188,10 @@ service_ss_redir_config()
 		sed -i "s/9001/${ssPort}/g" ./tmpConfigs/ss-redir.service
 	fi
 	
+	if [ ${ssTcpFast}x = "Y"x ] || [ ${ssTcpFast}x = "y"x ]; then
+		sed -i "s/isTcpFast/--fast-open/g" ./tmpConfigs/ss-redir.service
+	fi
+
 	echo "=================== after config ./tmpConfigs/ss-redir.service start ================="
 	cat ./tmpConfigs/ss-redir.service
 	echo "=================== after config ./tmpConfigs/ss-redir.service end ================="

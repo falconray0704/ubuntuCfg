@@ -5,7 +5,7 @@ After=sshd.service
 [Service]
 Type=simple
 RemainAfterExit=yes
-ExecStart=/usr/local/bin/ss-redir -s 127.0.0.1 -p 9001 -m aes-256-cfb -k '&Fuckgfw' -u -b '0.0.0.0' -l 62586
+ExecStart=/usr/local/bin/ss-redir -s 127.0.0.1 -p 9001 -m aes-256-cfb -k '&Fuckgfw' isTcpFast -u -b '0.0.0.0' -l 62586
   
 [Install]
 WantedBy=multi-user.target
