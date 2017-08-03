@@ -1,0 +1,12 @@
+[Unit]
+Description=ss-tunnel-8.8.4.4
+After=sshd.service
+ 
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/ss-tunnel -s 127.0.0.1 -p 9001 -m aes-256-cfb -k '&Fuckgfw' -u -b '0.0.0.0' -l 1053 -L '8.8.4.4:53'
+  
+[Install]
+WantedBy=multi-user.target
+

@@ -16,6 +16,8 @@ ssrListenPort=62586
 ssTcpFast="N"
 sstPort=9001
 sstListenPort=1053
+sstListenPort1=1053
+sstListenPort2=2053
 
 kcpPort=52483
 
@@ -209,13 +211,20 @@ service_chinadns_config()
 
 service_sstunel_config()
 {
-	cp configs/ss-tunnel.service ./tmpConfigs/
-	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel.service
-	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel.service
-	sed -i "s/1053/${sstListenPort}/g" ./tmpConfigs/ss-tunnel.service
+	cp configs/ss-tunnel-8.8.8.8.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
+	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
+	sed -i "s/1053/${sstListenPort1}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
+
+	cp configs/ss-tunnel-8.8.4.4.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
+	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
+	sed -i "s/1053/${sstListenPort2}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
 	
 	echo "=================== after config ./tmpConfigs/ss-tunnel.service start ================="
-	cat ./tmpConfigs/ss-tunnel.service
+	cat ./tmpConfigs/ss-tunnel-8.8.8.8.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-8.8.4.4.service
 	echo "=================== after config ./tmpConfigs/ss-tunnel.service end ================="
 }
 
@@ -327,7 +336,8 @@ commit_all_configs()
 	sudo cp ./tmpConfigs/dnsmasq_AP.conf /etc/
 	sudo cp ./tmpConfigs/AP.service /lib/systemd/system/
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
-		sudo cp ./tmpConfigs/ss-tunnel.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-8.8.8.8.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-8.8.4.4.service /lib/systemd/system/
 		#sudo cp ./tmpConfigs/chinaDns.service /lib/systemd/system/
 		sudo cp ./tmpConfigs/ss-redir.service /lib/systemd/system/
 		if [ ${isConfigKCP}x = "Y"x ] || [ ${isConfigKCP}x = "y"x ]; then
@@ -342,7 +352,8 @@ enableAP_service()
 
 	sudo systemctl enable AP.service
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
-		sudo systemctl enable ss-tunnel.service
+		sudo systemctl enable ss-tunnel-8.8.8.8.service
+		sudo systemctl enable ss-tunnel-8.8.4.4.service
 		#sudo systemctl enable chinaDns.service
 		sudo systemctl enable ss-redir.service
 		if [ ${isConfigKCP}x = "Y"x ] || [ ${isConfigKCP}x = "y"x ]; then
