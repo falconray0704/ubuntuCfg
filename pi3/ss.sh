@@ -75,6 +75,7 @@ check_bbr_func()
 
 enable_bbr_func()
 {
+    sed -i '/### bbr/d' /etc/sysctl.conf
     sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf
     sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
     echo '### bbr'
