@@ -71,7 +71,6 @@ check_bbr_func()
     sudo sysctl net.ipv4.tcp_congestion_control
     sudo sysctl net.core.default_qdisc
     sudo lsmod | grep bbr
-    sudo reboot
 }
 
 enable_bbr_func()
@@ -82,6 +81,8 @@ enable_bbr_func()
     echo "net.core.default_qdisc = fq" >> /etc/sysctl.conf
     echo "net.ipv4.tcp_congestion_control = bbr" >> /etc/sysctl.conf
     sysctl -p >/dev/null 2>&1
+
+    sudo reboot
 }
 
 case $1 in
