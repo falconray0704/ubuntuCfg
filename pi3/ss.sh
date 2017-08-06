@@ -65,6 +65,24 @@ git submodule update --init --recursive
 
 }
 
+check_bbr_func()
+{
+    sudo sysctl net.ipv4.tcp_available_congestion_control
+    sudo sysctl net.ipv4.tcp_congestion_control
+    sudo sysctl net.core.default_qdisc
+    sudo lsmod | grep bbr
+    sudo reboot
+}
+
+enable_bbr_func()
+{
+    sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf
+    sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
+    echo '### bbr'
+    echo "net.core.default_qdisc = fq" >> /etc/sysctl.conf
+    echo "net.ipv4.tcp_congestion_control = bbr" >> /etc/sysctl.conf
+    sysctl -p >/dev/null 2>&1
+}
 
 case $1 in
 	"install_ss_262") echo "Installing ss 2.6.2..."
@@ -74,6 +92,12 @@ case $1 in
 	"install_ss_latest") echo "Installing ss latest..."
 		install_dependence
 		install_ss_latest
+	;;
+	"enable_bbr") echo "Config for enable bbr..."
+        enable_bbr_func
+	;;
+	"check_bbr") echo "Checking for enable bbr..."
+        check_bbr_func
 	;;
 	*) echo "unknow cmd"
 esac
