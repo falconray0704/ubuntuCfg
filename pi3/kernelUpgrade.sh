@@ -2,6 +2,11 @@
 
 piRoot=/md/pi3
 kernelVersion=4.13
+kernelPath=${piRoot}/kernels/${kernelVersion}
+installPath=${kernelPath}/install/rpi-${kernelVersion}
+
+sdCard_boot=/media/ray/PI_BOOT
+sdCard_root=/media/ray/PI_ROOT
 
 install_dependence()
 {
@@ -17,9 +22,9 @@ install_dependence()
 
 build_kernel_func()
 {
-    mkdir -p ${piRoot}/kernels/${kernelVersion}
+    mkdir -p ${kernelPath}
 
-    cd ${piRoot}/kernels/${kernelVersion}
+    cd ${kernelPath}
     git clone -b rpi-${kernelVersion}.y --depth=1 https://github.com/raspberrypi/linux
     cd linux
 
@@ -29,18 +34,28 @@ build_kernel_func()
     make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bcm2709_defconfig
     make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- zImage modules dtbs -j4
 
-    mkdir -p ${piRoot}/kernels/${kernelVersion}/install
+    mkdir -p ${kernelPath}/install
 
-    sudo make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- modules_install INSTALL_MOD_PATH=${piRoot}/kernels/${kernelVersion}/install/rpi-${kernelVersion}
+    sudo make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- modules_install INSTALL_MOD_PATH=${installPath}
 
-    sudo scripts/mkknlimg arch/arm/boot/zImage ${piRoot}/kernels/${kernelVersion}/install/rpi-${kernelVersion}/kernel7.img
+    sudo scripts/mkknlimg arch/arm/boot/zImage ${installPath}/kernel7.img
+}
 
-
+update_sdcard_func()
+{
+    sudo cp ${installPath}/kernel7.img ${sdCard_boot}/
+    sudo cp -a ${installPath}/lib/modules/${kernelVersion}* ${sdCard_root}/lib/modules
+    sudo cp -a ${kernelPath}/linux/arch/arm/boot/dts/*.dtb ${sdCard_boot}/
+    sudo cp -a ${kernelPath}/linux/arch/arm/boot/dts/overlays/*.dtb* ${sdCard_boot}/overlays/
+    sudo cp ${kernelPath}/linux/arch/arm/boot/dts/overlays/README ${sdCard_boot}/overlays/
 }
 
 case $1 in
 	"build_kernel") echo "Kernel building..."
         build_kernel_func
+	;;
+	"update_sdcard") echo "update_sdcard for kernel upgrade..."
+        update_sdcard_func
 	;;
 	*) echo "unknow cmd"
 esac
