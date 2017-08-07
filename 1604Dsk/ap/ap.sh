@@ -19,6 +19,13 @@ sstListenPort=1053
 sstListenPort1=1053
 sstListenPort2=2053
 
+sstListenPortv1=44221
+sstListenPortv2=44222
+sstListenPortv3=44223
+sstListenPortv4=44224
+sstListenPortv5=44225
+sstListenPortv6=44226
+
 kcpPort=52483
 
 outInterface=eth0
@@ -221,10 +228,52 @@ service_sstunel_config()
 	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
 	sed -i "s/1053/${sstListenPort2}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
 	
+	cp configs/ss-tunnel-4.2.2.1.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
+	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
+	sed -i "s/1053/${sstListenPortv1}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
+
+	cp configs/ss-tunnel-4.2.2.2.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
+	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
+	sed -i "s/1053/${sstListenPortv2}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
+
+	cp configs/ss-tunnel-4.2.2.3.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
+	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
+	sed -i "s/1053/${sstListenPortv3}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
+
+	cp configs/ss-tunnel-4.2.2.4.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
+	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
+	sed -i "s/1053/${sstListenPortv4}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
+
+	cp configs/ss-tunnel-4.2.2.5.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
+	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
+	sed -i "s/1053/${sstListenPortv5}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
+
+	cp configs/ss-tunnel-4.2.2.6.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
+	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
+	sed -i "s/1053/${sstListenPortv6}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
+
 	echo "=================== after config ./tmpConfigs/ss-tunnel.service start ================="
 	cat ./tmpConfigs/ss-tunnel-8.8.8.8.service
 	echo "--------------------------------------------------------------------------------"
 	cat ./tmpConfigs/ss-tunnel-8.8.4.4.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-4.2.2.1.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-4.2.2.2.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-4.2.2.3.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-4.2.2.4.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-4.2.2.5.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-4.2.2.6.service
 	echo "=================== after config ./tmpConfigs/ss-tunnel.service end ================="
 }
 
@@ -336,6 +385,13 @@ commit_all_configs()
 	sudo cp ./tmpConfigs/dnsmasq_AP.conf /etc/
 	sudo cp ./tmpConfigs/AP.service /lib/systemd/system/
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
+		sudo cp ./tmpConfigs/ss-tunnel-4.2.2.1.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-4.2.2.2.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-4.2.2.3.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-4.2.2.4.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-4.2.2.5.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-4.2.2.6.service /lib/systemd/system/
+
 		sudo cp ./tmpConfigs/ss-tunnel-8.8.8.8.service /lib/systemd/system/
 		sudo cp ./tmpConfigs/ss-tunnel-8.8.4.4.service /lib/systemd/system/
 		#sudo cp ./tmpConfigs/chinaDns.service /lib/systemd/system/
@@ -352,6 +408,13 @@ enableAP_service()
 
 	sudo systemctl enable AP.service
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
+		sudo systemctl enable ss-tunnel-4.2.2.1.service
+		sudo systemctl enable ss-tunnel-4.2.2.2.service
+		sudo systemctl enable ss-tunnel-4.2.2.3.service
+		sudo systemctl enable ss-tunnel-4.2.2.4.service
+		sudo systemctl enable ss-tunnel-4.2.2.5.service
+		sudo systemctl enable ss-tunnel-4.2.2.6.service
+
 		sudo systemctl enable ss-tunnel-8.8.8.8.service
 		sudo systemctl enable ss-tunnel-8.8.4.4.service
 		#sudo systemctl enable chinaDns.service
