@@ -425,6 +425,69 @@ enableAP_service()
 	fi
 }
 
+disableAP_service()
+{
+
+	sudo systemctl enable AP.service
+
+	sudo systemctl enable ss-tunnel-4.2.2.1.service
+	sudo systemctl enable ss-tunnel-4.2.2.2.service
+	sudo systemctl enable ss-tunnel-4.2.2.3.service
+	sudo systemctl enable ss-tunnel-4.2.2.4.service
+	sudo systemctl enable ss-tunnel-4.2.2.5.service
+	sudo systemctl enable ss-tunnel-4.2.2.6.service
+
+	sudo systemctl enable ss-tunnel-8.8.8.8.service
+	sudo systemctl enable ss-tunnel-8.8.4.4.service
+	sudo systemctl enable chinaDns.service
+	sudo systemctl enable ss-redir.service
+	sudo systemctl enable kcp-tunnel.service
+
+	sudo systemctl daemon-reload	
+}
+
+remove_all_configs()
+{
+
+	sudo rm -rf /etc/hostapd/hostapd.conf 
+	sudo rm -rf /etc/dnsmasq_AP.conf 
+	sudo rm -rf /lib/systemd/system/AP.service 
+
+	sudo rm -rf /lib/systemd/system/ss-tunnel-4.2.2.1.service 
+	sudo rm -rf /lib/systemd/system/ss-tunnel-4.2.2.2.service 
+	sudo rm -rf /lib/systemd/system/ss-tunnel-4.2.2.3.service 
+	sudo rm -rf /lib/systemd/system/ss-tunnel-4.2.2.4.service 
+	sudo rm -rf /lib/systemd/system/ss-tunnel-4.2.2.5.service 
+	sudo rm -rf /lib/systemd/system/ss-tunnel-4.2.2.6.service 
+
+	sudo rm -rf /lib/systemd/system/ss-tunnel-8.8.8.8.service 
+	sudo rm -rf /lib/systemd/system/ss-tunnel-8.8.4.4.service 
+	sudo rm -rf /lib/systemd/system/chinaDns.service 
+	sudo rm -rf /lib/systemd/system/ss-redir.service 
+	sudo rm -rf /lib/systemd/system/kcp-tunnel.service 
+
+	sudo rm -rf /etc/iptables.ipv4.nat
+
+	sed -i '/\[keyfile\]/d' ./tmpConfigs/NetworkManager.conf
+	sed -i '/unmanaged-devices/d' ./tmpConfigs/NetworkManager.conf
+
+	sed -i '/unmanaged-devices/d' /etc/NetworkManager/NetworkManager.conf
+	sed -i '/iptables-restore < \/etc\/iptables.ipv4.nat/d' /etc/network/interfaces
+}
+
+uninstall_all()
+{
+	disableAP_service
+	remove_all_configs
+
+	echo "uninstall finished..."
+	echo "press any key to reboot system"
+
+	read rb
+
+	sudo reboot
+}
+
 if [ $UID -ne 0 ]
 then
     echo "Superuser privileges are required to run this script."
@@ -510,6 +573,9 @@ case $1 in
 		dnsmasq_config
 		encapsulate_service
 
+	;;
+	"uninstall") echo "Uninstalling..."
+		uninstall_all
 	;;
 	*) echo "unknow cmd"
 esac
