@@ -26,6 +26,16 @@ sstListenPortv4=44224
 sstListenPortv5=44225
 sstListenPortv6=44226
 
+sstSrvPort1=54001
+sstSrvPort1=54002
+sstSrvPort1=54003
+sstSrvPort1=54004
+sstSrvPort1=54005
+sstSrvPort1=54006
+sstSrvPort1=54007
+sstSrvPort1=54008
+sstSrvPort1=54009
+
 kcpPort=52483
 
 outInterface=eth0
@@ -36,8 +46,8 @@ get_ssArgs()
 	read ssIP
 	echo "Please input your SS server Port:"
 	read ssPort
-	echo "Please input your ss-tunnel Port:"
-	read sstPort
+	#echo "Please input your ss-tunnel Port:"
+	#read sstPort
 	echo "Enable ss-redir tcp fast open[y/N]:"
 	read ssTcpFast
 
@@ -52,7 +62,8 @@ get_ssArgs()
 	fi
 	
 
-	echo "Your SS IP:${ssIP} Port:${ssPort} ss-tunnel Port:${sstPort} ssTcpFast:${ssTcpFast}"
+	#echo "Your SS IP:${ssIP} Port:${ssPort} ss-tunnel Port:${sstPort} ssTcpFast:${ssTcpFast}"
+	echo "Your SS IP:${ssIP} Port:${ssPort} ssTcpFast:${ssTcpFast}"
 
 	echo "Is it correct? [y/N]"
 	read isCorrect
@@ -220,42 +231,42 @@ service_sstunel_config()
 {
 	cp configs/ss-tunnel-8.8.8.8.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
-	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
+	sed -i "s/9001/${sstSrvPort1}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
 	sed -i "s/1053/${sstListenPort1}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
 
 	cp configs/ss-tunnel-8.8.4.4.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
-	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
+	sed -i "s/9001/${sstSrvPort2}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
 	sed -i "s/1053/${sstListenPort2}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
 	
 	cp configs/ss-tunnel-4.2.2.1.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
-	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
+	sed -i "s/9001/${sstSrvPort3}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
 	sed -i "s/1053/${sstListenPortv1}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
 
 	cp configs/ss-tunnel-4.2.2.2.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
-	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
+	sed -i "s/9001/${sstSrvPort4}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
 	sed -i "s/1053/${sstListenPortv2}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
 
 	cp configs/ss-tunnel-4.2.2.3.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
-	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
+	sed -i "s/9001/${sstSrvPort5}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
 	sed -i "s/1053/${sstListenPortv3}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
 
 	cp configs/ss-tunnel-4.2.2.4.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
-	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
+	sed -i "s/9001/${sstSrvPort6}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
 	sed -i "s/1053/${sstListenPortv4}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
 
 	cp configs/ss-tunnel-4.2.2.5.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
-	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
+	sed -i "s/9001/${sstSrvPort7}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
 	sed -i "s/1053/${sstListenPortv5}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
 
 	cp configs/ss-tunnel-4.2.2.6.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
-	sed -i "s/9001/${sstPort}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
+	sed -i "s/9001/${sstSrvPort8}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
 	sed -i "s/1053/${sstListenPortv6}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
 
 	echo "=================== after config ./tmpConfigs/ss-tunnel.service start ================="
