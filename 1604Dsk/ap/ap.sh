@@ -27,14 +27,14 @@ sstListenPortv5=44225
 sstListenPortv6=44226
 
 sstSrvPort1=54001
-sstSrvPort1=54002
-sstSrvPort1=54003
-sstSrvPort1=54004
-sstSrvPort1=54005
-sstSrvPort1=54006
-sstSrvPort1=54007
-sstSrvPort1=54008
-sstSrvPort1=54009
+sstSrvPort2=54002
+sstSrvPort3=54003
+sstSrvPort4=54004
+sstSrvPort5=54005
+sstSrvPort6=54006
+sstSrvPort7=54007
+sstSrvPort8=54008
+sstSrvPort9=54009
 
 kcpPort=52483
 
