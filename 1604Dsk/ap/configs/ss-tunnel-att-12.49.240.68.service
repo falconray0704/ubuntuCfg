@@ -1,0 +1,12 @@
+[Unit]
+Description=ss-tunnel-att-12.49.240.68
+After=sshd.service
+ 
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/ss-tunnel -s 127.0.0.1 -p 9001 -m aes-256-cfb -k '&Fuckgfw' -u -b '192.168.11.1' -l 1053 -L '12.49.240.68:53'
+  
+[Install]
+WantedBy=multi-user.target
+

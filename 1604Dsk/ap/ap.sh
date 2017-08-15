@@ -25,6 +25,20 @@ sstListenPortv3=44223
 sstListenPortv4=44224
 sstListenPortv5=44225
 sstListenPortv6=44226
+sstListenPortv7=44227
+sstListenPortv8=44228
+sstListenPortv9=44229
+sstListenPortv10=44210
+sstListenPortv11=44211
+sstListenPortv12=44212
+sstListenPortv13=44213
+sstListenPortv14=44214
+sstListenPortv15=44215
+sstListenPortv16=44216
+sstListenPortv17=44217
+sstListenPortv18=44218
+sstListenPortv19=44219
+sstListenPortv20=44220
 
 sstSrvPort1=54001
 sstSrvPort2=54002
@@ -229,45 +243,90 @@ service_chinadns_config()
 
 service_sstunel_config()
 {
-	cp configs/ss-tunnel-8.8.8.8.service ./tmpConfigs/
-	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
-	sed -i "s/9001/${sstSrvPort1}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
-	sed -i "s/1053/${sstListenPort1}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
-
-	cp configs/ss-tunnel-8.8.4.4.service ./tmpConfigs/
-	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
-	sed -i "s/9001/${sstSrvPort2}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
-	sed -i "s/1053/${sstListenPort2}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
-	
 	cp configs/ss-tunnel-4.2.2.1.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
-	sed -i "s/9001/${sstSrvPort3}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
+	sed -i "s/9001/${sstSrvPort1}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
 	sed -i "s/1053/${sstListenPortv1}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
 
 	cp configs/ss-tunnel-4.2.2.2.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
-	sed -i "s/9001/${sstSrvPort4}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
+	sed -i "s/9001/${sstSrvPort2}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
 	sed -i "s/1053/${sstListenPortv2}/g" ./tmpConfigs/ss-tunnel-4.2.2.2.service
 
 	cp configs/ss-tunnel-4.2.2.3.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
-	sed -i "s/9001/${sstSrvPort5}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
+	sed -i "s/9001/${sstSrvPort3}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
 	sed -i "s/1053/${sstListenPortv3}/g" ./tmpConfigs/ss-tunnel-4.2.2.3.service
 
 	cp configs/ss-tunnel-4.2.2.4.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
-	sed -i "s/9001/${sstSrvPort6}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
+	sed -i "s/9001/${sstSrvPort4}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
 	sed -i "s/1053/${sstListenPortv4}/g" ./tmpConfigs/ss-tunnel-4.2.2.4.service
 
 	cp configs/ss-tunnel-4.2.2.5.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
-	sed -i "s/9001/${sstSrvPort7}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
+	sed -i "s/9001/${sstSrvPort5}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
 	sed -i "s/1053/${sstListenPortv5}/g" ./tmpConfigs/ss-tunnel-4.2.2.5.service
 
 	cp configs/ss-tunnel-4.2.2.6.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
-	sed -i "s/9001/${sstSrvPort8}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
+	sed -i "s/9001/${sstSrvPort6}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
 	sed -i "s/1053/${sstListenPortv6}/g" ./tmpConfigs/ss-tunnel-4.2.2.6.service
+
+	cp configs/ss-tunnel-8.8.8.8.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
+	sed -i "s/9001/${sstSrvPort7}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
+	sed -i "s/1053/${sstListenPortv7}/g" ./tmpConfigs/ss-tunnel-8.8.8.8.service
+
+	cp configs/ss-tunnel-8.8.4.4.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
+	sed -i "s/9001/${sstSrvPort8}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
+	sed -i "s/1053/${sstListenPortv8}/g" ./tmpConfigs/ss-tunnel-8.8.4.4.service
+	
+	cp configs/ss-tunnel-att-12.166.30.2.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-att-12.166.30.2.service
+	sed -i "s/9001/${sstSrvPort9}/g" ./tmpConfigs/ss-tunnel-att-12.166.30.2.service
+	sed -i "s/1053/${sstListenPortv9}/g" ./tmpConfigs/ss-tunnel-att-12.166.30.2.service
+
+	cp configs/ss-tunnel-att-12.32.34.33.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-att-12.32.34.33.service
+	sed -i "s/9001/${sstSrvPort1}/g" ./tmpConfigs/ss-tunnel-att-12.32.34.33.service
+	sed -i "s/1053/${sstListenPortv10}/g" ./tmpConfigs/ss-tunnel-att-12.32.34.33.service
+
+	cp configs/ss-tunnel-att-12.49.240.68.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-att-12.49.240.68.service
+	sed -i "s/9001/${sstSrvPort2}/g" ./tmpConfigs/ss-tunnel-att-12.49.240.68.service
+	sed -i "s/1053/${sstListenPortv11}/g" ./tmpConfigs/ss-tunnel-att-12.49.240.68.service
+
+	cp configs/ss-tunnel-CA-192.5.5.241.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-CA-192.5.5.241.service
+	sed -i "s/9001/${sstSrvPort3}/g" ./tmpConfigs/ss-tunnel-CA-192.5.5.241.service
+	sed -i "s/1053/${sstListenPortv12}/g" ./tmpConfigs/ss-tunnel-CA-192.5.5.241.service
+
+	cp configs/ss-tunnel-cogent-38.98.1.5.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-cogent-38.98.1.5.service
+	sed -i "s/9001/${sstSrvPort4}/g" ./tmpConfigs/ss-tunnel-cogent-38.98.1.5.service
+	sed -i "s/1053/${sstListenPortv13}/g" ./tmpConfigs/ss-tunnel-cogent-38.98.1.5.service
+
+	cp configs/ss-tunnel-MLLZ-128.63.2.53.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-MLLZ-128.63.2.53.service
+	sed -i "s/9001/${sstSrvPort5}/g" ./tmpConfigs/ss-tunnel-MLLZ-128.63.2.53.service
+	sed -i "s/1053/${sstListenPortv14}/g" ./tmpConfigs/ss-tunnel-MLLZ-128.63.2.53.service
+
+	cp configs/ss-tunnel-MS-65.54.238.70.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-MS-65.54.238.70.service
+	sed -i "s/9001/${sstSrvPort6}/g" ./tmpConfigs/ss-tunnel-MS-65.54.238.70.service
+	sed -i "s/1053/${sstListenPortv15}/g" ./tmpConfigs/ss-tunnel-MS-65.54.238.70.service
+
+	cp configs/ss-tunnel-L3-209.244.0.3.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-L3-209.244.0.3.service
+	sed -i "s/9001/${sstSrvPort7}/g" ./tmpConfigs/ss-tunnel-L3-209.244.0.3.service
+	sed -i "s/1053/${sstListenPortv16}/g" ./tmpConfigs/ss-tunnel-L3-209.244.0.3.service
+
+	cp configs/ss-tunnel-L3-209.244.0.4.service ./tmpConfigs/
+	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-L3-209.244.0.4.service
+	sed -i "s/9001/${sstSrvPort8}/g" ./tmpConfigs/ss-tunnel-L3-209.244.0.4.service
+	sed -i "s/1053/${sstListenPortv17}/g" ./tmpConfigs/ss-tunnel-L3-209.244.0.4.service
 
 	echo "=================== after config ./tmpConfigs/ss-tunnel.service start ================="
 	cat ./tmpConfigs/ss-tunnel-8.8.8.8.service
@@ -285,6 +344,24 @@ service_sstunel_config()
 	cat ./tmpConfigs/ss-tunnel-4.2.2.5.service
 	echo "--------------------------------------------------------------------------------"
 	cat ./tmpConfigs/ss-tunnel-4.2.2.6.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-att-12.166.30.2.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-att-12.32.34.33.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-att-12.49.240.68.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-CA-192.5.5.241.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-cogent-38.98.1.5.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-MLLZ-128.63.2.53.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-MS-65.54.238.70.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-L3-209.244.0.3.service
+	echo "--------------------------------------------------------------------------------"
+	cat ./tmpConfigs/ss-tunnel-L3-209.244.0.4.service
 	echo "=================== after config ./tmpConfigs/ss-tunnel.service end ================="
 }
 
@@ -405,6 +482,16 @@ commit_all_configs()
 
 		sudo cp ./tmpConfigs/ss-tunnel-8.8.8.8.service /lib/systemd/system/
 		sudo cp ./tmpConfigs/ss-tunnel-8.8.4.4.service /lib/systemd/system/
+
+		sudo cp ./tmpConfigs/ss-tunnel-att-12.166.30.2.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-att-12.32.34.33.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-att-12.49.240.68.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-CA-192.5.5.241.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-cogent-38.98.1.5.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-MLLZ-128.63.2.53.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-MS-65.54.238.70.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-L3-209.244.0.3.service /lib/systemd/system/
+		sudo cp ./tmpConfigs/ss-tunnel-L3-209.244.0.4.service /lib/systemd/system/
 		#sudo cp ./tmpConfigs/chinaDns.service /lib/systemd/system/
 		sudo cp ./tmpConfigs/ss-redir.service /lib/systemd/system/
 		if [ ${isConfigKCP}x = "Y"x ] || [ ${isConfigKCP}x = "y"x ]; then
@@ -428,6 +515,16 @@ enableAP_service()
 
 		sudo systemctl enable ss-tunnel-8.8.8.8.service
 		sudo systemctl enable ss-tunnel-8.8.4.4.service
+
+		sudo systemctl enable ss-tunnel-att-12.166.30.2.service
+		sudo systemctl enable ss-tunnel-att-12.32.34.33.service
+		sudo systemctl enable ss-tunnel-att-12.49.240.68.service
+		sudo systemctl enable ss-tunnel-CA-192.5.5.241.service
+		sudo systemctl enable ss-tunnel-cogent-38.98.1.5.service
+		sudo systemctl enable ss-tunnel-MLLZ-128.63.2.53.service
+		sudo systemctl enable ss-tunnel-MS-65.54.238.70.service
+		sudo systemctl enable ss-tunnel-L3-209.244.0.3.service
+		sudo systemctl enable ss-tunnel-L3-209.244.0.4.service
 		#sudo systemctl enable chinaDns.service
 		sudo systemctl enable ss-redir.service
 		if [ ${isConfigKCP}x = "Y"x ] || [ ${isConfigKCP}x = "y"x ]; then
@@ -439,20 +536,31 @@ enableAP_service()
 disableAP_service()
 {
 
-	sudo systemctl enable AP.service
+	sudo systemctl disable AP.service
 
-	sudo systemctl enable ss-tunnel-4.2.2.1.service
-	sudo systemctl enable ss-tunnel-4.2.2.2.service
-	sudo systemctl enable ss-tunnel-4.2.2.3.service
-	sudo systemctl enable ss-tunnel-4.2.2.4.service
-	sudo systemctl enable ss-tunnel-4.2.2.5.service
-	sudo systemctl enable ss-tunnel-4.2.2.6.service
+	sudo systemctl disable ss-tunnel-4.2.2.1.service
+	sudo systemctl disable ss-tunnel-4.2.2.2.service
+	sudo systemctl disable ss-tunnel-4.2.2.3.service
+	sudo systemctl disable ss-tunnel-4.2.2.4.service
+	sudo systemctl disable ss-tunnel-4.2.2.5.service
+	sudo systemctl disable ss-tunnel-4.2.2.6.service
 
-	sudo systemctl enable ss-tunnel-8.8.8.8.service
-	sudo systemctl enable ss-tunnel-8.8.4.4.service
-	sudo systemctl enable chinaDns.service
-	sudo systemctl enable ss-redir.service
-	sudo systemctl enable kcp-tunnel.service
+	sudo systemctl disable ss-tunnel-8.8.8.8.service
+	sudo systemctl disable ss-tunnel-8.8.4.4.service
+
+	sudo systemctl disable ss-tunnel-att-12.166.30.2.service
+	sudo systemctl disable ss-tunnel-att-12.32.34.33.service
+	sudo systemctl disable ss-tunnel-att-12.49.240.68.service
+	sudo systemctl disable ss-tunnel-CA-192.5.5.241.service
+	sudo systemctl disable ss-tunnel-cogent-38.98.1.5.service
+	sudo systemctl disable ss-tunnel-MLLZ-128.63.2.53.service
+	sudo systemctl disable ss-tunnel-MS-65.54.238.70.service
+	sudo systemctl disable ss-tunnel-L3-209.244.0.3.service
+	sudo systemctl disable ss-tunnel-L3-209.244.0.4.service
+
+	sudo systemctl disable chinaDns.service
+	sudo systemctl disable ss-redir.service
+	sudo systemctl disable kcp-tunnel.service
 
 	sudo systemctl daemon-reload	
 }
@@ -473,6 +581,17 @@ remove_all_configs()
 
 	sudo rm -rf /lib/systemd/system/ss-tunnel-8.8.8.8.service 
 	sudo rm -rf /lib/systemd/system/ss-tunnel-8.8.4.4.service 
+
+	sudo rm -rf /lib/systemd/system/ss-tunnel-att-12.166.30.2.service
+	sudo rm -rf /lib/systemd/system/ss-tunnel-att-12.32.34.33.service
+	sudo rm -rf /lib/systemd/system/ss-tunnel-att-12.49.240.68.service
+	sudo rm -rf /lib/systemd/system/ss-tunnel-CA-192.5.5.241.service
+	sudo rm -rf /lib/systemd/system/ss-tunnel-cogent-38.98.1.5.service
+	sudo rm -rf /lib/systemd/system/ss-tunnel-MLLZ-128.63.2.53.service
+	sudo rm -rf /lib/systemd/system/ss-tunnel-MS-65.54.238.70.service
+	sudo rm -rf /lib/systemd/system/ss-tunnel-L3-209.244.0.3.service
+	sudo rm -rf /lib/systemd/system/ss-tunnel-L3-209.244.0.4.service
+
 	sudo rm -rf /lib/systemd/system/chinaDns.service 
 	sudo rm -rf /lib/systemd/system/ss-redir.service 
 	sudo rm -rf /lib/systemd/system/kcp-tunnel.service 
