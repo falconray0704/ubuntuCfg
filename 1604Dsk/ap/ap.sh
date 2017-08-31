@@ -636,6 +636,21 @@ uninstall_all()
 	sudo reboot
 }
 
+install_dnscrypt_proxy()
+{
+	sudo apt-get install libltdl7-dev
+	sudo apt-get install pkg-config libsystemd-dev
+
+	mkdir -p /opt/github
+	cd /opt/github
+	git clone https://github.com/jedisct1/dnscrypt-proxy.git
+	cd dnscrypt-proxy
+	./autogen.sh
+	./configure --with-systemd
+	make
+	sudo make install
+}
+
 if [ $UID -ne 0 ]
 then
     echo "Superuser privileges are required to run this script."
@@ -649,6 +664,7 @@ case $1 in
 	"install") echo "Installing..."
 		sudo apt-get update
 		sudo apt-get install hostapd dnsmasq
+		install_dnscrypt_proxy
 
 		get_args
 
