@@ -29,6 +29,7 @@ install_ss_latest()
 
 	sudo apt-get -y update 
 	sudo apt-get -y install --no-install-recommends gettext build-essential autoconf libtool libpcre3-dev asciidoc xmlto libev-dev libudns-dev automake
+	sudo apt-get -y install libc-ares-dev
 
 	mkdir -p /opt/github
 	cd /opt/github
@@ -57,12 +58,28 @@ install_ss_latest()
 	cd /opt/github
 
 	git clone https://github.com/shadowsocks/shadowsocks-libev.git
-cd /opt/github/shadowsocks-libev
-git submodule update --init --recursive
+	cd /opt/github/shadowsocks-libev
+	git submodule update --init --recursive
 
 	./autogen.sh && ./configure && make
 	sudo make install
 
+}
+
+update_ss_latest()
+{
+	sudo apt-get -y update 
+	sudo apt-get -y upgrade 
+	sudo apt-get -y dist-upgrade 
+	sudo apt-get -y install libc-ares-dev
+
+	cd /opt/github
+	cd /opt/github/shadowsocks-libev
+	git pull
+	git submodule update --init --recursive
+
+	./autogen.sh && ./configure && make
+	sudo make install
 }
 
 
@@ -74,6 +91,9 @@ case $1 in
 	"install_ss_latest") echo "Installing ss latest..."
 		install_dependence
 		install_ss_latest
+	;;
+	"update_ss_latest") echo "Installing ss latest..."
+		update_ss_latest()
 	;;
 	*) echo "unknow cmd"
 esac
