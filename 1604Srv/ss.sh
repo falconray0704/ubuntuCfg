@@ -93,7 +93,7 @@ case $1 in
 		install_ss_latest
 	;;
 	"update_ss_latest") echo "Installing ss latest..."
-		update_ss_latest()
+		update_ss_latest
 	;;
 	*) echo "unknow cmd"
 esac
