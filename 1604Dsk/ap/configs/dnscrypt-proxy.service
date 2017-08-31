@@ -1,0 +1,12 @@
+[Unit]
+Description=dnscrypt
+After=sshd.service
+ 
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/dnscrypt-proxy /usr/local/etc/dnscrypt-proxy.conf
+  
+[Install]
+WantedBy=multi-user.target
+

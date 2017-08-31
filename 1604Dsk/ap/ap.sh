@@ -241,7 +241,13 @@ service_chinadns_config()
 	echo "=================== after config ./tmpConfigs/chinaDns.service end ================="
 }
 
-service_sstunel_config()
+service_dnscrypt_proxy_config()
+{
+	cp configs/dnscrypt-proxy.service ./tmpConfigs/
+	cp configs/dnscrypt-proxy.conf ./tmpConfigs/
+}
+
+service_sstunnel_config()
 {
 	cp configs/ss-tunnel-4.2.2.1.service ./tmpConfigs/
 	sed -i "s/127.0.0.1/${ssIP}/g" ./tmpConfigs/ss-tunnel-4.2.2.1.service
@@ -378,7 +384,8 @@ service_AP_config()
 ss_config()
 {
 	get_ssArgs
-	service_sstunel_config
+	service_sstunnel_config
+	service_dnscrypt_proxy_config
 	#service_chinadns_config
 	if [ ${isConfigKCP}x = "Y"x ] || [ ${isConfigKCP}x = "y"x ]; then
 		service_kcp_config
@@ -472,6 +479,10 @@ commit_all_configs()
 	sudo cp ./tmpConfigs/hostapd.conf /etc/hostapd/
 	sudo cp ./tmpConfigs/dnsmasq_AP.conf /etc/
 	sudo cp ./tmpConfigs/AP.service /lib/systemd/system/
+
+	sudo cp ./tmpConfigs/dnscrypt-proxy.service /lib/systemd/system/
+	sudo cp ./tmpConfigs/dnscrypt-proxy.conf /usr/local/etc/
+
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
 		sudo cp ./tmpConfigs/ss-tunnel-4.2.2.1.service /lib/systemd/system/
 		sudo cp ./tmpConfigs/ss-tunnel-4.2.2.2.service /lib/systemd/system/
@@ -505,6 +516,9 @@ enableAP_service()
 	sudo systemctl daemon-reload	
 
 	sudo systemctl enable AP.service
+
+	sudo systemctl enable dnscrypt-proxy.service
+
 	if [ ${isConfigSS}x = "Y"x ] || [ ${isConfigSS}x = "y"x ]; then
 		sudo systemctl enable ss-tunnel-4.2.2.1.service
 		sudo systemctl enable ss-tunnel-4.2.2.2.service
@@ -535,8 +549,9 @@ enableAP_service()
 
 disableAP_service()
 {
-
 	sudo systemctl disable AP.service
+
+	sudo systemctl disable dnscrypt-proxy.service
 
 	sudo systemctl disable ss-tunnel-4.2.2.1.service
 	sudo systemctl disable ss-tunnel-4.2.2.2.service
@@ -571,6 +586,9 @@ remove_all_configs()
 	sudo rm -rf /etc/hostapd/hostapd.conf 
 	sudo rm -rf /etc/dnsmasq_AP.conf 
 	sudo rm -rf /lib/systemd/system/AP.service 
+
+	sudo rm -rf /lib/systemd/system/dnscrypt-proxy.service 
+	sudo rm -rf /usr/local/etc/dnscrypt-proxy.conf 
 
 	sudo rm -rf /lib/systemd/system/ss-tunnel-4.2.2.1.service 
 	sudo rm -rf /lib/systemd/system/ss-tunnel-4.2.2.2.service 
@@ -691,7 +709,7 @@ case $1 in
 		enableAP_forward_startup
 	;;
 	"check") echo "Checking AP services..."
-		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*ss-tunnel|.*chinadns|.*ss-redir|.*client_linux_amd64" | grep -v grep
+		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*dnscrypt-proxy|.*ss-tunnel|.*chinadns|.*ss-redir|.*client_linux_amd64" | grep -v grep
 	;;
 	"test") echo "test command..."
 		#unmanaged_devices
