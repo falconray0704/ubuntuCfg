@@ -636,20 +636,6 @@ uninstall_all()
 	sudo reboot
 }
 
-install_dnscrypt_proxy()
-{
-	sudo apt-get -y install libltdl7-dev
-	sudo apt-get -y install pkg-config libsystemd-dev
-
-	mkdir -p /opt/github
-	cd /opt/github
-	git clone https://github.com/jedisct1/dnscrypt-proxy.git
-	cd dnscrypt-proxy
-	./autogen.sh
-	./configure --with-systemd
-	make
-	sudo make install
-}
 
 if [ $UID -ne 0 ]
 then
@@ -664,34 +650,7 @@ case $1 in
 	"install") echo "Installing..."
 		sudo apt-get update
 		sudo apt-get install hostapd dnsmasq
-		install_dnscrypt_proxy
 
-		get_args
-
-		unmanaged_devices
-		hostapd_config
-		dnsmasq_config
-		encapsulate_service
-
-		enableAP_forward_startup
-
-		echo "Please review configuration before enable AP service."
-		echo "Are those correct and reboot for continue?"
-		read isCorrect
-
-		if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]; then
-			echo "correct"
-			commit_all_configs
-			enableAP_service
-			
-			sudo reboot
-		else
-			#echo "incorrect"
-			exit 1
-		fi
-
-	;;
-	"reconfig") echo "Reconfig..."
 		get_args
 
 		unmanaged_devices
