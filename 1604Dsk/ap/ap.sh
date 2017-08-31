@@ -638,8 +638,8 @@ uninstall_all()
 
 install_dnscrypt_proxy()
 {
-	sudo apt-get install libltdl7-dev
-	sudo apt-get install pkg-config libsystemd-dev
+	sudo apt-get -y install libltdl7-dev
+	sudo apt-get -y install pkg-config libsystemd-dev
 
 	mkdir -p /opt/github
 	cd /opt/github
