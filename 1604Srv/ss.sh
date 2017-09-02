@@ -23,6 +23,32 @@ install_ss_2_6_2()
 	sudo make install
 }
 
+install_libsodium_1_0_12()
+{
+	export LIBSODIUM_VER=1.0.12
+	wget https://download.libsodium.org/libsodium/releases/libsodium-$LIBSODIUM_VER.tar.gz
+	tar xvf libsodium-$LIBSODIUM_VER.tar.gz
+	pushd libsodium-$LIBSODIUM_VER
+	./configure --prefix=/usr --enable-shared --enable-static && make
+	sudo make install
+	popd
+	sudo ldconfig
+}
+
+install_libsodium_latest()
+{
+	mkdir -p /opt/github
+	cd /opt/github
+	git clone https://github.com/jedisct1/libsodium.git
+	cd libsodium
+	git pull
+	./autogen.sh
+	./configure --prefix=/usr --enable-shared --enable-static && make
+	sudo make install	
+
+	sudo ldconfig
+}
+
 install_ss_latest()
 {
 	sudo apt-get purge libmbedtls-dev libsodium-dev
@@ -36,14 +62,8 @@ install_ss_latest()
 
 
 	# Installation of Libsodium
-	export LIBSODIUM_VER=1.0.12
-	wget https://download.libsodium.org/libsodium/releases/libsodium-$LIBSODIUM_VER.tar.gz
-	tar xvf libsodium-$LIBSODIUM_VER.tar.gz
-	pushd libsodium-$LIBSODIUM_VER
-	./configure --prefix=/usr --enable-shared --enable-static && make
-	sudo make install
-	popd
-	sudo ldconfig
+	install_libsodium_1_0_12
+	#install_libsodium_latest
 
 	# Installation of MbedTLS
 	export MBEDTLS_VER=2.5.1
