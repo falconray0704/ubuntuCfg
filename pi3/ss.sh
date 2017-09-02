@@ -23,18 +23,8 @@ install_ss_2_6_2()
 	sudo make install
 }
 
-install_ss_latest()
+install_libsodium_1_0_12()
 {
-	sudo apt-get purge libmbedtls-dev libsodium-dev
-
-	sudo apt-get -y update 
-	sudo apt-get -y install --no-install-recommends gettext build-essential autoconf libtool libpcre3-dev asciidoc xmlto libev-dev libudns-dev automake
-
-	mkdir -p /opt/github
-	cd /opt/github
-
-
-	# Installation of Libsodium
 	export LIBSODIUM_VER=1.0.12
 	wget https://download.libsodium.org/libsodium/releases/libsodium-$LIBSODIUM_VER.tar.gz
 	tar xvf libsodium-$LIBSODIUM_VER.tar.gz
@@ -43,16 +33,93 @@ install_ss_latest()
 	sudo make install
 	popd
 	sudo ldconfig
+}
 
+install_libsodium_1_0_8()
+{
+	mkdir -p /opt/github
+	cd /opt/github
+	export LIBSODIUM_VER=1.0.8
+	wget -c -O libsodium-1.0.8.tar.gz https://github.com/jedisct1/libsodium/archive/1.0.8.tar.gz
+	tar -zxf libsodium-1.0.8.tar.gz
+	cd libsodium-1.0.8
+	
+	./autogen.sh
+	./configure
+	make -j4
+	sudo make install
+	
+	sudo ldconfig
+}
+
+install_libsodium_latest()
+{
+	mkdir -p /opt/github
+	cd /opt/github
+	git clone https://github.com/jedisct1/libsodium.git
+	cd libsodium
+	git pull
+	./autogen.sh
+	./configure --prefix=/usr --enable-shared --enable-static && make
+	sudo make install	
+
+	sudo ldconfig
+}
+
+install_mbedtls()
+{
 	# Installation of MbedTLS
+	mkdir -p /opt/github
+	cd /opt/github
 	export MBEDTLS_VER=2.5.1
-	wget https://tls.mbed.org/download/mbedtls-$MBEDTLS_VER-gpl.tgz
+	wget -c https://tls.mbed.org/download/mbedtls-$MBEDTLS_VER-gpl.tgz
 	tar xvf mbedtls-$MBEDTLS_VER-gpl.tgz
 	pushd mbedtls-$MBEDTLS_VER
 	make SHARED=1 STATIC=1 CFLAGS=-fPIC
 	sudo make DESTDIR=/usr install
 	popd
 	sudo ldconfig
+}
+
+install_ss_latest()
+{
+	sudo apt-get purge libmbedtls-dev 
+
+	sudo apt-get -y update 
+	sudo apt-get -y install --no-install-recommends gettext build-essential autoconf libtool libpcre3-dev asciidoc xmlto libev-dev libudns-dev automake
+	sudo apt-get -y install libc-ares-dev
+
+	mkdir -p /opt/github
+	cd /opt/github
+
+
+	# Installation of Libsodium
+	echo "Have you installed libsodium? [y/N]:"
+	read isY
+	if [ ${isY}x = "Y"x ] || [ ${isY}x = "y"x ]; then
+		echo "Continue ...."
+	else
+		install_libsodium_1_0_8
+		#install_libsodium_1_0_12
+		#install_libsodium_latest
+	fi
+
+	# Installation of MbedTLS
+	echo "Have you installed libmbedtls? [y/N]:"
+	read isY
+	if [ ${isY}x = "Y"x ] || [ ${isY}x = "y"x ]; then
+		echo "Continue ...."
+	else
+		install_mbedtls
+		#export MBEDTLS_VER=2.5.1
+		#wget https://tls.mbed.org/download/mbedtls-$MBEDTLS_VER-gpl.tgz
+		#tar xvf mbedtls-$MBEDTLS_VER-gpl.tgz
+		#pushd mbedtls-$MBEDTLS_VER
+		#make SHARED=1 STATIC=1 CFLAGS=-fPIC
+		#sudo make DESTDIR=/usr install
+		#popd
+		#sudo ldconfig
+	fi
 
 	cd /opt/github
 

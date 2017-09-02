@@ -48,10 +48,6 @@ case $1 in
 		wget -c https://github.com/falconray0704/ws/raw/master/ubuntu/160402Dsk/shProxy
 		wget -c https://github.com/falconray0704/ws/raw/master/ubuntu/160402Dsk/ssProxy
 	;;
-	"deploy_ss") echo "Deploying ss ..."
-		install_basic_tools
-		deploy_ss_func
-	;;
 	"deploy_kcp") echo "Deploying kcp ..."
 		install_basic_tools
 		deploy_kcp_func
@@ -59,7 +55,6 @@ case $1 in
 	"deploy_all") echo "Deploying all..."
 		install_basic_tools
 		deploy_kcp_func
-		deploy_ss_func
 	;;
 	*) echo "unknow cmd"
 esac
