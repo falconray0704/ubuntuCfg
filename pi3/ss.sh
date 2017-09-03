@@ -132,6 +132,23 @@ git submodule update --init --recursive
 
 }
 
+update_ss_latest()
+{
+	sudo apt-get -y update 
+	sudo apt-get -y upgrade 
+	sudo apt-get -y dist-upgrade 
+	sudo apt-get -y install libc-ares-dev
+
+	cd /opt/github
+	cd /opt/github/shadowsocks-libev
+	git pull
+	git submodule update --init --recursive
+
+	./autogen.sh && ./configure && make
+	sudo make install
+}
+
+
 check_bbr_func()
 {
     sudo sysctl net.ipv4.tcp_available_congestion_control
@@ -161,6 +178,9 @@ case $1 in
 	"install_ss_latest") echo "Installing ss latest..."
 		install_dependence
 		install_ss_latest
+	;;
+	"update_ss_latest") echo "Installing ss latest..."
+		update_ss_latest
 	;;
 	"enable_bbr") echo "Config for enable bbr..."
         enable_bbr_func
