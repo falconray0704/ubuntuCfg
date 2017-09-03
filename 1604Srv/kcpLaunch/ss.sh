@@ -40,6 +40,10 @@ start()
 	ss-server -s 0.0.0.0 -p 10007 -l 3087 -k "&Fuckgfw" -m aes-256-cfb -a root --fast-open -u -f /var/run/rw10007.pid&
 	ss-server -s 0.0.0.0 -p 10008 -l 3088 -k "&Fuckgfw" -m aes-256-cfb -a root --fast-open -u -f /var/run/rw10008.pid&
 	ss-server -s 0.0.0.0 -p 10009 -l 3089 -k "&Fuckgfw" -m aes-256-cfb -a root --fast-open -u -f /var/run/rw10009.pid&
+
+	
+	ss-server -s 0.0.0.0 -p 443 -l 10443 -k "&Fuckgfw" -m chacha20-ietf-poly1305 -a root --fast-open -u -f /var/run/rw10443.pid&
+	ss-server -s 0.0.0.0 -p 8080 -l 18080 -k "&Fuckgfw" -m chacha20-ietf-poly1305 -a root --fast-open -u -f /var/run/rw18080.pid&
 }
 
 case $1 in
