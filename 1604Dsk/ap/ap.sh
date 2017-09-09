@@ -12,6 +12,7 @@ apPwd=piAP
 ssIP="127.0.0.1"
 ssPort=9000
 ssrListenPort=62586
+ssEncryptMethod="aes-256-cfb" 
 
 ssTcpFast="N"
 sstPort=9001
@@ -60,6 +61,11 @@ get_ssArgs()
 	read ssIP
 	echo "Please input your SS server Port:"
 	read ssPort
+	echo "Please select the ss-redir encrypt method:"
+	echo "a: aes-256-cfb"
+	echo "b: chacha20-ietf-poly1305"
+	echo "Default: 1 [A/b]:"
+	read ssEM
 	#echo "Please input your ss-tunnel Port:"
 	#read sstPort
 	echo "Enable ss-redir tcp fast open[y/N]:"
@@ -75,9 +81,14 @@ get_ssArgs()
 		echo "Your KCP server port is ${kcpPort}"
 	fi
 	
+	if [ ${ssEM}x = "A"x ] || [ ${ssEM}x = "a"x ]; then
+		ssEncryptMethod="aes-256-cfb" 
+	else
+		ssEncryptMethod="chacha20-ietf-poly1305" 
+	fi
 
 	#echo "Your SS IP:${ssIP} Port:${ssPort} ss-tunnel Port:${sstPort} ssTcpFast:${ssTcpFast}"
-	echo "Your SS IP:${ssIP} Port:${ssPort} ssTcpFast:${ssTcpFast}"
+	echo "Your SS IP:${ssIP} Port:${ssPort} ssEncryptMethod:${ssEncryptMethod} ssTcpFast:${ssTcpFast}"
 
 	echo "Is it correct? [y/N]"
 	read isCorrect
@@ -225,6 +236,8 @@ service_ss_redir_config()
 	if [ ${ssTcpFast}x = "Y"x ] || [ ${ssTcpFast}x = "y"x ]; then
 		sed -i "s/isTcpFast/--fast-open/g" ./tmpConfigs/ss-redir.service
 	fi
+
+	sed -i "s/aes-256-cfb/${ssEncryptMethod}/g" ./tmpConfigs/ss-redir.service
 
 	echo "=================== after config ./tmpConfigs/ss-redir.service start ================="
 	cat ./tmpConfigs/ss-redir.service
@@ -661,7 +674,7 @@ case $1 in
 		enableAP_forward_startup
 
 		echo "Please review configuration before enable AP service."
-		echo "Are those correct and reboot for continue?"
+		echo "Are those correct and reboot for continue?[y/N]:"
 		read isCorrect
 
 		if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]; then
