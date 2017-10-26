@@ -1,0 +1,12 @@
+[Unit]
+Description=nginx-rtmp-server
+After=sshd.service
+ 
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/local/nginx/sbin/nginx
+
+[Install]
+WantedBy=multi-user.target
+
