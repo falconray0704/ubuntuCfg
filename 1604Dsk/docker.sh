@@ -56,6 +56,7 @@ reconfig_docker_proxy()
     if [ ${isConfigProxy}x = "y"x ] || [ ${isConfigProxy}x = "Y"x ];then
 	config_proxy
     else
+	echo "No proxy setting."
     fi
     sudo docker run hello-world
 }
