@@ -1,0 +1,12 @@
+[Unit]
+Description=jc_enable
+After=sshd.service
+ 
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/home/nvidia/jetson_clocks.sh
+
+[Install]
+WantedBy=multi-user.target
+

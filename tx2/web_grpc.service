@@ -1,0 +1,12 @@
+[Unit]
+Description=web_grpc
+After=network.target mysql.service
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/opt/javaweb/start-grpc.sh
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,12 @@
+[Unit]
+Description=web_srv
+After=network.target mysql.service
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/opt/javaweb/start-service.sh
+
+[Install]
+WantedBy=multi-user.target
+
