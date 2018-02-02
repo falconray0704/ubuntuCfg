@@ -24,5 +24,10 @@ tar -zxf go1.9.3.src.tar.gz
 cd go/src
 ./all.bash
 
+# set go env
+#export GOROOT=$HOME/go
+#export GOPATH=/md/gows
+#export PATH=$PATH:$GOROOT/bin
+#alias gw='cd $GOPATH'
 
 
