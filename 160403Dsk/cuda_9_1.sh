@@ -1,5 +1,18 @@
 #!/bin/bash
 
+install_cuda_Toolkit_example_func()
+{
+    export PATH=/usr/local/cuda-9.1/bin${PATH:+:${PATH}}
+    export LD_LIBRARY_PATH=/usr/local/cuda-9.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+    sudo apt-get install g++ freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev libglu1-mesa libglu1-mesa-dev
+    cp -a /usr/local/cuda-9.1/samples ~/NVIDIA_CUDA-9.1_Samples
+    cd ~/NVIDIA_CUDA-9.1_Samples
+    make
+    cd -
+
+}
+
 install_cuda_Toolkit_func()
 {
     cd cuda9.1
@@ -65,6 +78,7 @@ checkEnvFunc()
     sudo apt-get install linux-headers-$(uname -r)
 }
 
+
 cd /opt/etmp/cudaSDK9/
 
 case $1 in
@@ -78,6 +92,9 @@ case $1 in
 	;;
 	"install_cuda_Toolkit") echo "Installing install_cuda_Toolkit..."
             install_cuda_Toolkit_func
+	;;
+	"install_cuda_Toolkit_example") echo "Installing install_cuda_Toolkit_example..."
+            install_cuda_Toolkit_example_func
 	;;
 	"install_cuda_cuDNN_5_1") echo "Installing install_cuda_cuDNN_5_1..."
             install_cuda_cuDNN_5_1_func
