@@ -30,6 +30,10 @@ install_cuda_Toolkit_func()
     echo 'export LD_LIBRARY_PATH=/usr/local/cuda-9.1/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}' >> ~/.bashrc
     echo "" >> ~/.bashrc
 
+    sudo dpkg -i cuda-repo-ubuntu1604-9-1-local-cublas-performance-update-1_1.0-1_amd64.deb
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo apt-get dist-upgrade
 }
 
 install_cuda_cuDNN_5_1_func()
