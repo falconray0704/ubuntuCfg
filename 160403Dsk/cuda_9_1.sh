@@ -36,22 +36,24 @@ install_cuda_Toolkit_func()
     sudo apt-get dist-upgrade
 }
 
-install_cuda_cuDNN_5_1_func()
+install_cuda_cuDNN_9_1_func()
 {
-    mkdir -p /md/nvidia/cuDNNs/cuDNN_5_1
-    cd /md/nvidia/cuDNNs/cuDNN_5_1
+    rm -rf /opt/nvidia/cuDNNs/cuDNN_9_1
+    mkdir -p /opt/nvidia/cuDNNs/cuDNN_9_1
 
-    cp /md/etmp/nvidia/cudnn_5.1/cudnn-8.0-linux-x64-v5.1.tgz ./
-    rm -rf cuda
-    tar -zxf cudnn-8.0-linux-x64-v5.1.tgz
+    tar -zxf cudnn-9.1/cudnn-9.1-linux-x64-v7.tgz -C /opt/nvidia/cuDNNs/cuDNN_9_1
 
-    echo "" >> ~/.bashrc
-    echo '# cuDNN:' >> ~/.bashrc
-    echo 'export LD_LIBRARY_PATH=/md/nvidia/cuDNNs/cuDNN_5_1/cuda:$LD_LIBRARY_PATH' >> ~/.bashrc
-    echo "" >> ~/.bashrc
+    sudo cp /opt/nvidia/cuDNNs/cuDNN_9_1/cuda/include/cudnn.h /usr/local/cuda/include
+    sudo cp /opt/nvidia/cuDNNs/cuDNN_9_1/cuda/lib64/libcudnn* /usr/local/cuda/lib64
+    sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
 
-    sudo cp -a cuda/include/* /usr/local/cuda/include/
-    sudo cp -a cuda/lib64/* /usr/local/cuda/lib64/
+    #echo "" >> ~/.bashrc
+    #echo '# cuDNN:' >> ~/.bashrc
+    #echo 'export LD_LIBRARY_PATH=/md/nvidia/cuDNNs/cuDNN_5_1/cuda:$LD_LIBRARY_PATH' >> ~/.bashrc
+    #echo "" >> ~/.bashrc
+
+    #sudo cp -a cuda/include/* /usr/local/cuda/include/
+    #sudo cp -a cuda/lib64/* /usr/local/cuda/lib64/
 
 }
 
@@ -89,22 +91,22 @@ case $1 in
     "checkEnv") echo "Checking environment ..."
             checkEnvFunc
     ;;
-	"install") echo "Installing all..."
-            install_cuda_Toolkit_func
-            install_cuda_cuDNN_5_1_func
-            install_cuda_Video_Codec_SDK
-	;;
 	"install_cuda_Toolkit") echo "Installing install_cuda_Toolkit..."
             install_cuda_Toolkit_func
 	;;
 	"install_cuda_Toolkit_example") echo "Installing install_cuda_Toolkit_example..."
             install_cuda_Toolkit_example_func
 	;;
-	"install_cuda_cuDNN_5_1") echo "Installing install_cuda_cuDNN_5_1..."
-            install_cuda_cuDNN_5_1_func
+	"install_cuda_cuDNN_9_1") echo "Installing install_cuda_cuDNN_9_1..."
+            install_cuda_cuDNN_9_1_func
 	;;
 	"install_Video_Codec_SDK") echo "Installing install_Video_Codec_SDK..."
             install_cuda_Video_Codec_SDK_func
+	;;
+	"install") echo "Installing all..."
+            install_cuda_Toolkit_func
+            install_cuda_cuDNN_9_1_func
+            install_cuda_Video_Codec_SDK
 	;;
 	*) echo "unknow cmd"
 esac
