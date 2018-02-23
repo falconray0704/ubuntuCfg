@@ -22,17 +22,35 @@ install_dnscrypt_proxy()
 {
     rm -rf dnscrypt-proxy
     git clone https://github.com/jedisct1/dnscrypt-proxy.git
-    pushd dnscrypt-proxy/dnscrypt-proxy
+    pushd /opt/github/dnscrypt-proxy/dnscrypt-proxy
+    git pull
+
     go clean
 
     # Linux
     go build -ldflags="-s -w" -o dnscrypt-proxy
 
+    mkdir -p ~/dnsCryptProxy
+    cp ./dnscrypt-proxy ~/dnsCryptProxy/
+    cp ./example-* ~/dnsCryptProxy/
+    cp ../systemd/* ~/dnsCryptProxy/
+
     popd
+
+    cp dnsCryptSrc/*.md ~/dnsCryptProxy/
 }
 
-cd /opt/github
+config_dnscrypt_proxy()
+{
+    sudo apt-get remove dnsmasq
+    sudo apt-get purge dnsmasq
+}
 
 install_dependency
 install_dnscrypt_proxy
+config_dnscrypt_proxy
+
+
+
+
 
