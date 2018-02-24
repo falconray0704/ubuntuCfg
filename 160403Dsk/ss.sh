@@ -1,5 +1,40 @@
 #!/bin/bash
 
+isCorrect="N"
+
+ssServerIP="127.0.0.1"
+ssServerPort=8388
+ssServerPassword="ss-redir"
+ssRedirLocalPort=1080
+
+get_ss_redir_config_args()
+{
+	echo "Please input your ss server IP:"
+	read ssServerIP
+	echo "Please input your ss server port:"
+	read ssServerPort
+	#echo "Please input your ss server password:"
+	#read ssServerPassword
+	echo "Please input your ss-redir local port:"
+	read ssRedirLocalPort
+
+	echo "Your server IP is: ${ssServerIP}"
+	echo "Your server Port is: ${ssServerPort}"
+	#echo "Your server password is: ${ssServerPassword}"
+	echo "Your ss-redir local port is: ${ssRedirLocalPort}"
+
+    isCorrect="N"
+	echo "Is it correct? [y/N]"
+	read isCorrect
+
+	if [ ${isCorrect}x = "Y"x ] || [ ${isCorrect}x = "y"x ]; then
+		echo "correct"
+	else
+		echo "incorrect"
+		exit 1
+	fi
+}
+
 install_dependence()
 {
 	sudo apt-get -y update && sudo apt-get -y dist-upgrade
@@ -106,10 +141,58 @@ install_ss_latest()
     popd
 }
 
+build_ss_redir_configs()
+{
+    sudo rm -rf tmpSSConfigs
+    mkdir -p tmpSSConfigs
+    pushd shadowsocks-libev_configs
+    #cp shadowsocks-libev-redir.service ../tmpSSConfigs
+    cp config.json ../tmpSSConfigs
+    popd
+
+    pushd tmpSSConfigs
+	sudo sed -i "s/127\.0\.0\.1/${ssServerIP}/" config.json
+	sudo sed -i "s/8388/${ssServerPort}/" config.json
+	sudo sed -i "s/1080/${ssRedirLocalPort}/" config.json
+
+    echo "=== config.json is : ==="
+    cat config.json
+    echo "========================"
+    popd
+}
+
+
+commit_ss_configs()
+{
+    sudo mkdir -p /etc/shadowsocks-libev
+
+    sudo cp tmpSSConfigs/config.json /etc/shadowsocks-libev/
+    sudo cp shadowsocks-libev_configs/shadowsocks-libev-redir.service /lib/systemd/system/
+}
+
+enable_ss_service_func()
+{
+	sudo systemctl enable shadowsocks-libev-redir.service
+}
+
+
+if [ $UID -ne 0 ]
+then
+    echo "Superuser privileges are required to run this script."
+    echo "e.g. \"sudo $0\""
+    exit 1
+fi
+
 case $1 in
 	"install_ss_latest") echo "Installing ss latest..."
 		install_dependence
 		install_ss_latest
+	;;
+	"enable_ss_service") echo "Enable ss-redir service..."
+        get_ss_redir_config_args
+        build_ss_redir_configs
+        commit_ss_configs
+        enable_ss_service_func
 	;;
 	"update_ss_latest") echo "Installing ss latest..."
 		update_ss_latest
@@ -119,6 +202,8 @@ case $1 in
 	;;
 	"check_bbr") echo "Checking for enable bbr..."
         check_bbr_func
+	;;
+	"test") echo "Testing ..."
 	;;
 	*) echo "unknow cmd"
 esac
