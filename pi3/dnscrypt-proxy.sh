@@ -62,7 +62,8 @@ config_dnscrypt_proxy_func()
 {
     pushd ~/dnsCryptProxy
     cp example-dnscrypt-proxy.toml dnscrypt-proxy.toml
-	sed -i "s/.*server_names =.*/server_names = \['cisco', 'cisco-ipv6'\]/" dnscrypt-proxy.toml
+	#sed -i "s/.*server_names =.*/server_names = \['cisco', 'cisco-ipv6'\]/" dnscrypt-proxy.toml
+	sed -i "s/.*server_names =.*/server_names = \['cisco', 'opennic-onic', 'opennic-tumabox', 'scaleway-fr', 'yandex', 'doh-crypto-sx'\]/" dnscrypt-proxy.toml
 	sed -i "s/.*ignore_system_dns =.*/ignore_system_dns = true/" dnscrypt-proxy.toml
 	sed -i "s/.*force_tcp =.*/force_tcp = true/" dnscrypt-proxy.toml
 	sed -i "s/.*timeout =.*/timeout = 3000/" dnscrypt-proxy.toml
