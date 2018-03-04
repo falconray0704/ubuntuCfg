@@ -16,6 +16,10 @@ install_dependency_func()
     go get github.com/kardianos/service
     go get github.com/miekg/dns
     go get github.com/pquerna/cachecontrol/cacheobject
+
+    go get github.com/facebookgo/pidfile
+    go get gopkg.in/natefinch/lumberjack.v2
+
 }
 
 build_latest_dnscrypt_proxy_func()
@@ -83,6 +87,16 @@ deploy_dnscrypt_proxy_func()
     config_dnscrypt_proxy_func
 }
 
+deploy_dnscrypt_proxy206_func()
+{
+    cp -a ./dnsCryptProxy206 ~/dnsCryptProxy
+
+    pushd ~/dnsCryptProxy
+    sudo ./dnscrypt-proxy -service install
+    sudo ./dnscrypt-proxy -service start
+    popd
+}
+
 
 uninstall_dnscrypt_proxy_func()
 {
@@ -90,6 +104,7 @@ uninstall_dnscrypt_proxy_func()
     sudo ./dnscrypt-proxy -service stop
     sudo ./dnscrypt-proxy -service uninstall
     popd
+    sudo rm -rf ~/dnsCryptProxy
 }
 
 
@@ -110,6 +125,10 @@ case $1 in
     "install_dnscrypt_proxy") echo "Install dnscrypt proxy..."
         install_dnscrypt_proxy_func
         echo "Install dnscrypt finished."
+    ;;
+    "deploy_dnscrypt_proxy206") echo "Deploy dnscrypt proxy 2.0.6..."
+        deploy_dnscrypt_proxy206_func
+        echo "Deploy dnscrypt 2.0.6 finished."
     ;;
     "deploy_dnscrypt_proxy") echo "Deploy dnscrypt proxy..."
         deploy_dnscrypt_proxy_func
