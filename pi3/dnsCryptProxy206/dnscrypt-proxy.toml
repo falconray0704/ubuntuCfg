@@ -23,7 +23,7 @@
 ## Remove the leading # first to enable this; lines starting with # are ignored.
 
 #server_names = ['yandex', 'doh-crypto-sx']
-server_names = ['cisco', 'opennic-onic']
+server_names = ['cisco', 'opennic-onic', 'opennic-tumabox', 'scaleway-fr', 'yandex', 'doh-crypto-sx']
 
 
 ## List of local addresses and ports to listen to. Can be IPv4 and/or IPv6.
@@ -67,7 +67,7 @@ require_nofilter = true
 
 ## Always use TCP to connect to upstream servers
 
-force_tcp = false
+force_tcp = true
 
 
 ## How long a DNS query will wait for a response, in milliseconds
