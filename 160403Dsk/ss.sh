@@ -145,24 +145,28 @@ build_ss_redir_configs()
 {
     sudo rm -rf tmpSSConfigs
     mkdir -p tmpSSConfigs
-    pushd shadowsocks-libev_configs
-    #cp shadowsocks-libev-redir.service ../tmpSSConfigs
-    cp config.json ../tmpSSConfigs
-    popd
+    cp ./shadowsocks-libev_configs/config.json ./tmpSSConfigs
 
-    pushd tmpSSConfigs
-	sudo sed -i "s/127\.0\.0\.1/${ssServerIP}/" config.json
-	sudo sed -i "s/8388/${ssServerPort}/" config.json
-	sudo sed -i "s/1080/${ssRedirLocalPort}/" config.json
+	sudo sed -i "s/127\.0\.0\.1/${ssServerIP}/" ./tmpSSConfigs/config.json
+	sudo sed -i "s/8388/${ssServerPort}/" ./tmpSSConfigs/config.json
+	sudo sed -i "s/1080/${ssRedirLocalPort}/" ./tmpSSConfigs/config.json
 
     echo "=== config.json is : ==="
-    cat config.json
+    cat ./tmpSSConfigs/config.json
     echo "========================"
-    popd
+    echo ""
+    echo "You can change default password in in ./tmpSSConfigs/config.json tmpSSConfigs/config.json before install service"
+    echo ""
+    echo "========================"
 }
 
+make_ss_configs_func()
+{
+    get_ss_redir_config_args
+    build_ss_redir_configs
+}
 
-commit_ss_configs()
+install_ss_service_func()
 {
     sudo mkdir -p /etc/shadowsocks-libev
 
@@ -170,9 +174,24 @@ commit_ss_configs()
     sudo cp shadowsocks-libev_configs/shadowsocks-libev-redir.service /lib/systemd/system/
 }
 
+uninstall_ss_service_func()
+{
+    disable_ss_service_func
+
+    sudo rm -rf /etc/shadowsocks-libev_bak
+    sudo mv /etc/shadowsocks-libev /etc/shadowsocks-libev_bak
+}
+
 enable_ss_service_func()
 {
 	sudo systemctl enable shadowsocks-libev-redir.service
+	sudo systemctl start shadowsocks-libev-redir.service
+}
+
+disable_ss_service_func()
+{
+	sudo systemctl stop shadowsocks-libev-redir.service
+	sudo systemctl disable shadowsocks-libev-redir.service
 }
 
 
@@ -185,23 +204,40 @@ fi
 
 case $1 in
 	"install_ss_latest") echo "Installing ss latest..."
-		install_dependence
-		install_ss_latest
+            install_dependence
+            install_ss_latest
+	;;
+	"make_ss_configs") echo "Make ss config files..."
+            make_ss_configs_func
+	;;
+	"install_ss_service") echo "Install ss-redir service..."
+            install_ss_service_func
+            enable_ss_service_func
+	;;
+	"uninstall_ss_service") echo "Uninstall ss-redir service..."
+            disable_ss_service_func
 	;;
 	"enable_ss_service") echo "Enable ss-redir service..."
-        get_ss_redir_config_args
-        build_ss_redir_configs
-        commit_ss_configs
-        enable_ss_service_func
+            enable_ss_service_func
+	;;
+	"disable_ss_service") echo "Disable ss-redir service..."
+            disable_ss_service_func
 	;;
 	"update_ss_latest") echo "Installing ss latest..."
-		update_ss_latest
+            update_ss_latest
+	;;
+	"deploy_ss") echo "Deploy ss latest..."
+            install_dependence
+            install_ss_latest
+            make_ss_configs_func
+            install_ss_service_func
+            enable_ss_service_func
 	;;
 	"enable_bbr") echo "Config for enable bbr..."
-        enable_bbr_func
+            enable_bbr_func
 	;;
 	"check_bbr") echo "Checking for enable bbr..."
-        check_bbr_func
+            check_bbr_func
 	;;
 	"test") echo "Testing ..."
 	;;
