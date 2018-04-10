@@ -473,3 +473,49 @@ sdns://AQcAAAAAAAAADTEwNy4xNzAuNTcuMzQg6YXxGK1OPMZf8iUgGJDG9Vi3W1pS9WsXz-rBAFyLm
 ## yandex
 Yandex public DNS server (anycast)
 sdns://AQQAAAAAAAAAEDc3Ljg4LjguNzg6MTUzNTMg04TAccn3RmKvKszVe13MlxTUB7atNgHhrtwG1W1JYyciMi5kbnNjcnlwdC1jZXJ0LmJyb3dzZXIueWFuZGV4Lm5ldA
+OTguMTEwLjExNTo0NDMgg2u3HcgDDo2XsrKL05-UK3r6Z7RGMKwymuTIQ4fQZegkMi5kbnNjcnlwdC1jZXJ0LmRucy5xdWFsaXR5b2xvZ3kuY29t
+
+
+## scaleway-fr
+DNSSEC/Non-logged/Uncensored - ARM server donated by Scaleway.com
+Maintained by Frank Denis - https://fr.dnscrypt.info
+This server used to be called `dnscrypt.org-fr`.
+
+sdns://AQcAAAAAAAAADjIxMi40Ny4yMjguMTM2IOgBuE6mBr-wusDOQ0RbsV66ZLAvo8SqMa4QY2oHkDJNHzIuZG5zY3J5cHQtY2VydC5mci5kbnNjcnlwdC5vcmc
+
+
+## securedns
+Uncensored and no logging
+sdns://AQcAAAAAAAAAEzE0Ni4xODUuMTY3LjQzOjUzNTMgs6WXaRRXWwSJ4Z-unEPmefryjFcYlwAxf3u0likfsJUcMi5kbnNjcnlwdC1jZXJ0LnNlY3VyZWRucy5ldQ
+
+
+## securedns-ipv6
+Uncensored and no logging
+sdns://AQcAAAAAAAAAIVsyYTAzOmIwYzA6MDoxMDEwOjplOWE6MzAwMV06NTM1MyCzpZdpFFdbBInhn66cQ-Z5-vKMVxiXADF_e7SWKR-wlRwyLmRuc2NyeXB0LWNlcnQuc2VjdXJlZG5zLmV1
+
+
+## soltysiak
+Public DNSCrypt server in Poland
+sdns://AQcAAAAAAAAAFDE3OC4yMTYuMjAxLjIyMjoyMDUzICXE4YgpFUaXj5wrvbanr6QB7aBRBQhdUwPnGSjAZo8hHTIuZG5zY3J5cHQtY2VydC5zb2x0eXNpYWsuY29t
+
+
+## trashvpn
+dnscrypt-server Docker image : DNSSEC/Non-logged/Uncensored
+Hosted in Germany
+sdns://AQcAAAAAAAAAEzM3LjIyMS4xOTUuMTgxOjg0NDMgeWFZIMbyef83QDyIdD3cE9Fe_4QcTDw4nKWJDSacGvYbMi5kbnNjcnlwdC1jZXJ0LnRyYXNodnBuLmRl
+
+
+## ventricle.us
+Public DNSCrypt resolver provided by Jacob Henner
+sdns://AQcAAAAAAAAADTEwNy4xNzAuNTcuMzQg6YXxGK1OPMZf8iUgGJDG9Vi3W1pS9WsXz-rBAFyLm6olMi5kbnNjcnlwdC1jZXJ0LmRuc2NyeXB0LnZlbnRyaWNsZS51cw
+
+
+## yandex
+Yandex public DNS server (anycast)
+sdns://AQQAAAAAAAAAEDc3Ljg4LjguNzg6MTUzNTMg04TAccn3RmKvKszVe13MlxTUB7atNgHhrtwG1W1JYyciMi5kbnNjcnlwdC1jZXJ0LmJyb3dzZXIueWFuZGV4Lm5ldA
+
+
+## zeroaim-ipv6
+dnscrypt-server Docker image : DNSSEC/Non-logged/Uncensored
+Hosted in Germany
+sdns://AQcAAAAAAAAAGVsyYTAzOjQwMDA6YjoyMjM6OjFdOjg0NDMgcrQcuGXx2fhX6rmtaP6aPXj8gumVIrn4GIrn6aTB1fUfMi5kbnNjcnlwdC1jZXJ0Lnplcm9haW0uZGUtaXB2Ng
