@@ -19,6 +19,11 @@ install_dependency_func()
 
     go get github.com/facebookgo/pidfile
     go get gopkg.in/natefinch/lumberjack.v2
+    go get github.com/jedisct1/go-clocksmith
+    go get github.com/jedisct1/go-dnsstamps
+    go get github.com/k-sone/critbitgo
+    go get golang.org/x/text/secure/bidirule
+    go get golang.org/x/text/unicode/norm
 
 }
 
@@ -44,7 +49,6 @@ install_dnscrypt_proxy_func()
     mkdir -p ~/dnsCryptProxy
     cp ./dnscrypt-proxy ~/dnsCryptProxy/
     cp ./example-* ~/dnsCryptProxy/
-    cp ../systemd/* ~/dnsCryptProxy/
     popd
 
     cp dnsCryptSrc/*.md ~/dnsCryptProxy/
