@@ -325,9 +325,9 @@ mkdir -p ./tmpConfigs
 
 case $1 in
 	"install") echo "Installing..."
-		#sudo apt-get update
-		#sudo apt-get install hostapd
-        #sudo apt-get install isc-dhcp-server
+		sudo apt-get update
+		sudo apt-get install hostapd
+        sudo apt-get install isc-dhcp-server
 
 		get_args
 
@@ -337,9 +337,7 @@ case $1 in
         isc_DHCP_Server_config
         service_AP_config
 
-        #ss_AP_forward_startup_config
-        AP_forward_startup_config
-
+        ss_AP_forward_startup_config
 
 		echo "Please review configuration before enable AP service."
 		echo "Are those correct and reboot for continue?[y/N]:"
