@@ -93,6 +93,7 @@ deploy_dnscrypt_proxy206_func()
 
     pushd ~/dnsCryptProxy
     sudo ./dnscrypt-proxy -service install
+    sleep 1
     sudo ./dnscrypt-proxy -service start
     popd
 }

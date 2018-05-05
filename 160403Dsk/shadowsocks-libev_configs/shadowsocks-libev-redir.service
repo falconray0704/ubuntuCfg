@@ -17,7 +17,7 @@ After=network.target
 [Service]
 Type=simple
 RemainAfterExit=yes
-ExecStart=/usr/local/bin/ss-redir -c /etc/shadowsocks-libev/config.json -a root --fast-open --mptcp  -u
+ExecStart=/usr/local/bin/ss-redir -c /etc/shadowsocks-libev/config.json -a root --fast-open --mptcp  -u -b '0.0.0.0'
 
 [Install]
 WantedBy=multi-user.target
