@@ -138,6 +138,14 @@ dnsmasq_config()
 	sudo systemctl disable dnsmasq.service
 }
 
+dnscrypt_proxy_config()
+{
+    pushd ~/dnsCryptProxy/
+	#sed -i "s/.*server_names =.*/server_names = \['cisco', 'opennic-onic', 'opennic-tumabox', 'scaleway-fr', 'yandex', 'doh-crypto-sx'\]/" dnscrypt-proxy.toml
+	sed -i "s/.*listen_addresses =.*/listen_addresses = \['192.168.11.1:53', '127.0.0.1:53', '[::1]:53'\]/" ./dnscrypt-proxy.toml
+    popd
+}
+
 isc_DHCP_Server_config()
 {
     cp ./configs/dhcpd.conf ./tmpConfigs/
@@ -343,6 +351,7 @@ case $1 in
 		unmanaged_devices
 		hostapd_config
 		dnsmasq_config
+        dnscrypt_proxy_config
         isc_DHCP_Server_config
         service_AP_config
 
@@ -376,9 +385,10 @@ case $1 in
 		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*dnscrypt-proxy|.*ss-tunnel|.*chinadns|.*ss-redir|.*client_linux_amd64" | grep -v grep
 	;;
 	"test") echo "test command..."
+        dnscrypt_proxy_config
+        exit 1
 		get_args
 		unmanaged_devices
-        exit 1
 		#echo "$apName"
 		#echo "$apMac"
 		unmanaged_devices
