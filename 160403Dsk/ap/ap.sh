@@ -141,7 +141,6 @@ dnsmasq_config()
 dnscrypt_proxy_config()
 {
     pushd ~/dnsCryptProxy/
-	#sed -i "s/.*server_names =.*/server_names = \['cisco', 'opennic-onic', 'opennic-tumabox', 'scaleway-fr', 'yandex', 'doh-crypto-sx'\]/" dnscrypt-proxy.toml
 	sed -i "s/.*listen_addresses =.*/listen_addresses = \['192.168.11.1:53', '127.0.0.1:53', '[::1]:53'\]/" ./dnscrypt-proxy.toml
     popd
 }
@@ -318,9 +317,14 @@ remove_all_configs()
 
 	sudo rm -rf /etc/iptables.ipv4.nat
 
-	sudo sed -i '/\[keyfile\]/d' ./tmpConfigs/NetworkManager.conf
-	sudo sed -i '/unmanaged-devices/d' ./tmpConfigs/NetworkManager.conf
+    pushd ~/dnsCryptProxy/
+	sed -i "s/.*listen_addresses =.*/listen_addresses = \['127.0.0.1:53', '[::1]:53'\]/" ./dnscrypt-proxy.toml
+    popd
 
+	#sudo sed -i '/\[keyfile\]/d' ./tmpConfigs/NetworkManager.conf
+	#sudo sed -i '/unmanaged-devices/d' ./tmpConfigs/NetworkManager.conf
+
+	sudo sed -i '/\[keyfile\]/d' /etc/NetworkManager/NetworkManager.conf
 	sudo sed -i '/unmanaged-devices/d' /etc/NetworkManager/NetworkManager.conf
 	sudo sed -i '/iptables-restore < \/etc\/iptables.ipv4.nat/d' /etc/network/interfaces
 }
