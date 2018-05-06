@@ -9,7 +9,7 @@ ssPort=443
 ssrListenPort=42581
 ssEncryptMethod="aes-256-cfb"
 
-outInterface=enx9cebe8105d32
+outInterface=ens33
 
 get_args()
 {

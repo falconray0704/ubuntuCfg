@@ -70,11 +70,20 @@ get_args()
 	echo "Please input your AP password:"
 	read apPwd
 
+	echo "Please input your ss server IP:"
+	read ssIP
+	echo "Please input your ss-redir local port:"
+	read ssrListenPort
+
+
 	echo "Your AP name is: ${apName}"
 	echo "Your AP Mac address is: ${apMac}"
 	echo "Your AP channel is: ${apCh}"
 	echo "Your AP SSID is: ${apSSID}"
 	echo "Your AP password is: ${apPwd}"
+
+	echo "Your server IP is: ${ssIP}"
+	echo "Your ss-redir local port is: ${ssrListenPort}"
 
 	echo "Is it correct? [y/N]"
 	read isCorrect
