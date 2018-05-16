@@ -5,10 +5,8 @@ install_basic_tools()
 	sudo chown -hR ray /opt
 	sudo chgrp -hR ray /opt
 
-
 	sudo apt-get -y update && sudo apt-get -y dist-upgrade
-	sudo apt-get -y install build-essential automake autogen autoconf zlib1g-dev libssl-dev install libpcre3 libpcre3-dev asciidoc git wget curl htop
-
+	sudo apt-get -y install build-essential automake autogen autoconf zlib1g-dev libssl-dev libpcre3 libpcre3-dev asciidoc git wget curl htop
 
 }
 
