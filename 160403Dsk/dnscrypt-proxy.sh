@@ -24,6 +24,11 @@ install_dependency_func()
     go get github.com/k-sone/critbitgo
     go get golang.org/x/text/secure/bidirule
     go get golang.org/x/text/unicode/norm
+    go get golang.org/x/crypto/curve25519
+    go get golang.org/x/crypto/ed25519
+    go get golang.org/x/crypto/nacl/box
+    go get golang.org/x/crypto/nacl/secretbox
+    go get golang.org/x/net/http2
 
 }
 
@@ -126,6 +131,11 @@ case $1 in
     "install_dependency") echo "Install dependency..."
         install_dependency_func
         echo "Install dependency finished."
+    ;;
+    "build_latest_dnscrypt_proxy") echo "Build latest dnscrypt proxy ..."
+	install_dependency_func
+	build_latest_dnscrypt_proxy_func
+        echo "Build latest dnscrypt finished."
     ;;
     "install_dnscrypt_proxy") echo "Install dnscrypt proxy..."
         install_dnscrypt_proxy_func
