@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LATEST_VERSION="2.0.14"
+LATEST_VERSION="2.0.12"
 
 install_dependency_func()
 {
