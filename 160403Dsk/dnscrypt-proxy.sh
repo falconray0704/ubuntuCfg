@@ -1,5 +1,7 @@
 #!/bin/bash
 
+LATEST_VERSION="2.0.14"
+
 install_dependency_func()
 {
     go get github.com/BurntSushi/toml
@@ -34,12 +36,17 @@ install_dependency_func()
 
 build_latest_dnscrypt_proxy_func()
 {
-    pushd /opt/github/
-    rm -rf dnscrypt-proxy
+    cp dnscrypt-proxy-src.$(LATEST_VERSION).tar.gz /opt/github/
 
-    git clone https://github.com/jedisct1/dnscrypt-proxy.git
-    pushd /opt/github/dnscrypt-proxy/dnscrypt-proxy
-    git pull
+    pushd /opt/github/
+    #rm -rf dnscrypt-proxy
+    rm -rf dnscrypt-proxy-$(LATEST_VERSION)
+    tar -zxf dnscrypt-proxy-src.$(LATEST_VERSION).tar.gz
+
+    #git clone https://github.com/jedisct1/dnscrypt-proxy.git
+    #pushd /opt/github/dnscrypt-proxy/dnscrypt-proxy
+    pushd dnscrypt-proxy-$(LATEST_VERSION)
+    #git pull
     go clean
     # Linux
     go build -ldflags="-s -w" -o dnscrypt-proxy
@@ -133,8 +140,8 @@ case $1 in
         echo "Install dependency finished."
     ;;
     "build_latest_dnscrypt_proxy") echo "Build latest dnscrypt proxy ..."
-	install_dependency_func
-	build_latest_dnscrypt_proxy_func
+        install_dependency_func
+        build_latest_dnscrypt_proxy_func
         echo "Build latest dnscrypt finished."
     ;;
     "install_dnscrypt_proxy") echo "Install dnscrypt proxy..."
