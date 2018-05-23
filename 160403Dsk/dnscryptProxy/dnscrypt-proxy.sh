@@ -82,7 +82,6 @@ release_latest_func()
 
 install_func()
 {
-
     rm -rf ~/dnsCryptProxy
 
     pushd releasePkg
@@ -116,21 +115,25 @@ config_func()
 	sed -i "s/.*server_names =.*/server_names = \['cisco', 'opennic-onic', 'opennic-tumabox', 'scaleway-fr', 'yandex', 'doh-crypto-sx'\]/" dnscrypt-proxy.toml
 	sed -i "s/.*ignore_system_dns =.*/ignore_system_dns = true/" dnscrypt-proxy.toml
 	sed -i "s/.*force_tcp =.*/force_tcp = true/" dnscrypt-proxy.toml
-	sed -i "s/.*timeout =.*/timeout = 3000/" dnscrypt-proxy.toml
+	sed -i "s/^timeout =.*/timeout = 3000/" dnscrypt-proxy.toml
 
+    popd
+}
+
+enable_service_func()
+{
+    pushd ~/dnsCryptProxy
     sudo ./dnscrypt-proxy -service install
     sudo ./dnscrypt-proxy -service start
-
     popd
 }
 
 deploy_func()
 {
-    install_dependency_func
-    build_latest_dnscrypt_proxy_func
-    install_dnscrypt_proxy_func
+    install_func
     disable_dnsmasq_func
-    config_dnscrypt_proxy_func
+    config_func
+    enable_service_func
 }
 
 deploy_dnscrypt_proxy206_func()
@@ -152,15 +155,6 @@ uninstall_func()
     sudo ./dnscrypt-proxy -service uninstall
     popd
     sudo rm -rf ~/dnsCryptProxy
-}
-
-
-update_func()
-{
-    build_latest_dnscrypt_proxy_func
-    uninstall_dnscrypt_proxy_func
-    install_dnscrypt_proxy_func
-    config_dnscrypt_proxy_func
 }
 
 case $1 in
@@ -185,6 +179,18 @@ case $1 in
         install_func
         echo "Install dnscrypt finished."
     ;;
+    "config") echo "Config dnscrypt proxy..."
+        config_func
+        echo "Config dnscrypt finished."
+    ;;
+    "disable_dnsmasq") echo "Disable dnsmasq as default dns..."
+        disable_dnsmasq_func
+        echo "Disable dnsmasq as default dns finished."
+    ;;
+    "enable_service") echo "Enable dnscrypt proxy..."
+	enable_service_func
+        echo "Enalble dnscrypt finished."
+    ;;
     "deploy_dnscrypt_proxy206") echo "Deploy dnscrypt proxy 2.0.6..."
         deploy_dnscrypt_proxy206_func
         echo "Deploy dnscrypt 2.0.6 finished."
@@ -193,23 +199,11 @@ case $1 in
         deploy_func
         echo "Deploy dnscrypt finished."
     ;;
-    "update") echo "Update dnscrypt proxy..."
-        update_func
-        echo "Update dnscrypt finished."
-    ;;
     "uninstall") echo "Uninstall dnscrypt proxy..."
         uninstall_func
         echo "Uninstall dnscrypt finished."
     ;;
-    "disable_dnsmasq") echo "Disable dnsmasq as default dns..."
-        disable_dnsmasq_func
-        echo "Disable dnsmasq as default dns finished."
-    ;;
-    "config") echo "Config dnscrypt proxy..."
-        config_func
-        echo "Config dnscrypt finished."
-    ;;
-	*) echo "unknow cmd"
+    *) echo "unknow cmd"
 esac
 
 
