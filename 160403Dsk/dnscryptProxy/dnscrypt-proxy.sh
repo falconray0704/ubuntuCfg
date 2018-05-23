@@ -124,6 +124,8 @@ enable_service_func()
 {
     pushd ~/dnsCryptProxy
     sudo ./dnscrypt-proxy -service install
+    sudo sed -i "s/^RestartSec=.*/RestartSec=5/" /etc/systemd/system/dnscrypt-proxy.service
+    #sudo ./dnscrypt-proxy -service restart
     sudo ./dnscrypt-proxy -service start
     popd
 }
@@ -140,11 +142,7 @@ deploy_dnscrypt_proxy206_func()
 {
     cp -a ./dnsCryptProxy206 ~/dnsCryptProxy
 
-    pushd ~/dnsCryptProxy
-    sudo ./dnscrypt-proxy -service install
-    sleep 1
-    sudo ./dnscrypt-proxy -service start
-    popd
+    enable_service_func
 }
 
 
