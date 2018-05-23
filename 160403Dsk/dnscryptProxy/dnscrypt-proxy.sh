@@ -71,19 +71,24 @@ release_latest_func()
     pushd releasePkg
 
     mkdir -p ${LATEST_VERSION}
-    cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-386 ${LATEST_VERSION}/
-    cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-amd64 ${LATEST_VERSION}/
-    cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-arm ${LATEST_VERSION}/
+    #cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-386 ${LATEST_VERSION}/
+    #cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-amd64 ${LATEST_VERSION}/
+    #cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-arm ${LATEST_VERSION}/
+
+    cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/example-* ${LATEST_VERSION}/
 
     popd
 }
 
 install_func()
 {
-    pushd /opt/github/dnscrypt-proxy/dnscrypt-proxy
-    mkdir -p ~/dnsCryptProxy
-    cp ./dnscrypt-proxy ~/dnsCryptProxy/
-    cp ./example-* ~/dnsCryptProxy/
+
+    pushd releasePkg
+    cp -a ${LATEST_VERSION} ~/dnsCryptProxy
+    pushd
+    cd ~/dnsCryptProxy
+    mv dnscrypt-proxy-${DEPLOY_ARCH} dnscrypt-proxy
+    popd
     popd
 
     cp dnsCryptSrc/*.md ~/dnsCryptProxy/
