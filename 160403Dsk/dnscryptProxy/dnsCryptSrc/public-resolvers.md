@@ -42,19 +42,13 @@ Remove ads and protect your computer from malware
 sdns://AQIAAAAAAAAAGVsyYTAwOjVhNjA6OmFkMjowZmZdOjU0NDMggdAC02pMpQxHO3R5ZQ_hLgKzIcthOFYqII5APf3FXpQiMi5kbnNjcnlwdC5kZWZhdWx0Lm5zMi5hZGd1YXJkLmNvbQ
 
 
-## bn-fr0
-Non-logging, uncensored DNS resolver provided by Babylon Network
-sdns://AQYAAAAAAAAAETUuMTM1LjY2LjIyMjo1MzUzIIeUBwoUPTXKHKYy57GJMChOrl2v67QB499S6fA3q9GCHzIuZG5zY3J5cHQtY2VydC5iYWJ5bG9uLm5ldHdvcms
+## arvind-io
+Public resolver by EnKrypt (https://arvind.io).
+Hosted in Bangalore, India.
 
+Non-logging, non-filtering, supports DNSSEC.
 
-## bn-fr0-ipv6
-Non-logging, uncensored IPv6 DNS resolver provided by Babylon Network
-sdns://AQYAAAAAAAAAHFsyMDAxOjQxZDA6ODo0NDgwOjoyMjJdOjUzNTMgh5QHChQ9NcocpjLnsYkwKE6uXa_rtAHj31Lp8Der0YIfMi5kbnNjcnlwdC1jZXJ0LmJhYnlsb24ubmV0d29yaw
-
-
-## bn-nl0
-Non-logging, uncensored DNS resolver provided by Babylon Network
-sdns://AQYAAAAAAAAAEzg3LjI1My4xNTIuMTkwOjUzNTMgh5QHChQ9NcocpjLnsYkwKE6uXa_rtAHj31Lp8Der0YIfMi5kbnNjcnlwdC1jZXJ0LmJhYnlsb24ubmV0d29yaw
+sdns://AQcAAAAAAAAAEjEzOS41OS4xNi4xMzA6NTM1MyCORifHOIOoUQMIIbpa5-XQQfSq75W3gpAWy2Udh8MoyRkyLmRuc2NyeXB0LWNlcnQuYXJ2aW5kLmlv
 
 
 ## captnemo-in
@@ -95,16 +89,26 @@ By https://cleanbrowsing.org/
 sdns://AQMAAAAAAAAAEzE4NS4yMjguMTY4LjEwOjg0NDMgvKwy-tVDaRcfCDLWB1AnwyCM7vDo6Z-UGNx3YGXUjykRY2xlYW5icm93c2luZy5vcmc
 
 
-## cleanbrowsing-family-ipv6
-Family filter - Blocks adult content + mixed content sites + proxies + enforces safe search engine mode.
+## doh-cleanbrowsing-family
+Family filter - Blocks adult content on all languages + mixed content sites + proxies + enforces Safe Search engine on Google, Bing and Youtube.
 By https://cleanbrowsing.org/
-sdns://AQMAAAAAAAAAFFsyYTBkOjJhMDA6MTo6XTo4NDQzILysMvrVQ2kXHwgy1gdQJ8MgjO7w6OmflBjcd2Bl1I8pEWNsZWFuYnJvd3Npbmcub3Jn
+sdns://AgMAAAAAAAAAAAAVZG9oLmNsZWFuYnJvd3Npbmcub3JnEy9kb2gvZmFtaWx5LWZpbHRlci8
 
 
-## cleanbrowsing-adult-ipv6
-Family filter - Blocks adult content + mixed content sites + proxies + enforces safe search engine mode.
+## doh-cleanbrowsing-adult
+Adult filter - Blocks adult content + enforces Safe Search engine mode.
 By https://cleanbrowsing.org/
-sdns://AQMAAAAAAAAAFVsyYTBkOjJhMDA6MTo6MV06ODQ0MyC8rDL61UNpFx8IMtYHUCfDIIzu8Ojpn5QY3HdgZdSPKRFjbGVhbmJyb3dzaW5nLm9yZw
+sdns://AgMAAAAAAAAAAAAVZG9oLmNsZWFuYnJvd3Npbmcub3JnEi9kb2gvYWR1bHQtZmlsdGVyLw
+
+
+## cloudflare
+Cloudflare DNS (anycast) - aka 1.1.1.1 / 1.0.0.1
+sdns://AgcAAAAAAAAABzEuMC4wLjGgENk8mGSlIfMGXMOlIlCcKvq7AVgcrZxtjon911-ep0cg63Ul-I8NlFj4GplQGb_TTLiczclX57DvMV8Q-JdjgRgSZG5zLmNsb3VkZmxhcmUuY29tCi9kbnMtcXVlcnk
+
+
+## cloudflare-ipv6
+Cloudflare DNS over IPv6 (anycast)
+sdns://AgcAAAAAAAAAGVsyNjA2OjQ3MDA6NDcwMDo6MTExMV06NTOgENk8mGSlIfMGXMOlIlCcKvq7AVgcrZxtjon911-ep0cg63Ul-I8NlFj4GplQGb_TTLiczclX57DvMV8Q-JdjgRgSZG5zLmNsb3VkZmxhcmUuY29tCi9kbnMtcXVlcnk
 
 
 ## comodo-02
@@ -152,11 +156,6 @@ provided by cryptostorm.is
 sdns://AQIAAAAAAAAADzE4NS4yMTIuMTY5LjEzOSAxM3KtWVYywkFrhy8Jj4Ub3bllKExsvppPGQlkMNupWh4yLmRuc2NyeXB0LWNlcnQuY3J5cHRvc3Rvcm0uaXM
 
 
-## cs-es
-provided by cryptostorm.is
-sdns://AQIAAAAAAAAADjE4NS4xNDAuMTE0LjUxIDEzcq1ZVjLCQWuHLwmPhRvduWUoTGy-mk8ZCWQw26laHjIuZG5zY3J5cHQtY2VydC5jcnlwdG9zdG9ybS5pcw
-
-
 ## cs-fi
 provided by cryptostorm.is
 sdns://AQIAAAAAAAAADjE4NS4xMTcuMTE4LjIwIDEzcq1ZVjLCQWuHLwmPhRvduWUoTGy-mk8ZCWQw26laHjIuZG5zY3J5cHQtY2VydC5jcnlwdG9zdG9ybS5pcw
@@ -175,11 +174,6 @@ sdns://AQIAAAAAAAAADTIxMi4xMjkuNDYuMzIgMTNyrVlWMsJBa4cvCY-FG925ZShMbL6aTxkJZDDbq
 ## cs-lv
 provided by cryptostorm.is
 sdns://AQIAAAAAAAAADTgwLjIzMy4xMzQuNTIgMTNyrVlWMsJBa4cvCY-FG925ZShMbL6aTxkJZDDbqVoeMi5kbnNjcnlwdC1jZXJ0LmNyeXB0b3N0b3JtLmlz
-
-
-## cs-md
-provided by cryptostorm.is
-sdns://AQIAAAAAAAAADTE3Ni4xMjMuMy4yNDkgMTNyrVlWMsJBa4cvCY-FG925ZShMbL6aTxkJZDDbqVoeMi5kbnNjcnlwdC1jZXJ0LmNyeXB0b3N0b3JtLmlz
 
 
 ## cs-nl
@@ -222,11 +216,6 @@ provided by cryptostorm.is
 sdns://AQIAAAAAAAAADjE3My4yMzQuNTYuMTE1IDEzcq1ZVjLCQWuHLwmPhRvduWUoTGy-mk8ZCWQw26laHjIuZG5zY3J5cHQtY2VydC5jcnlwdG9zdG9ybS5pcw
 
 
-## cs-ussouth
-provided by cryptostorm.is
-sdns://AQIAAAAAAAAACzcwLjMyLjM4LjY3IDEzcq1ZVjLCQWuHLwmPhRvduWUoTGy-mk8ZCWQw26laHjIuZG5zY3J5cHQtY2VydC5jcnlwdG9zdG9ybS5pcw
-
-
 ## cs-ussouth2
 provided by cryptostorm.is
 sdns://AQIAAAAAAAAADTEwOC42Mi4xOS4xMzEgMTNyrVlWMsJBa4cvCY-FG925ZShMbL6aTxkJZDDbqVoeMi5kbnNjcnlwdC1jZXJ0LmNyeXB0b3N0b3JtLmlz
@@ -247,34 +236,14 @@ provided by cryptostorm.is
 sdns://AQIAAAAAAAAADTE3My4yMDguOTUuNzUgMTNyrVlWMsJBa4cvCY-FG925ZShMbL6aTxkJZDDbqVoeMi5kbnNjcnlwdC1jZXJ0LmNyeXB0b3N0b3JtLmlz
 
 
-## d0wn-fr-ns1
-Server provided by Martin 'd0wn' Albus
-sdns://AQcAAAAAAAAAETE1MS44MC43LjExNToxMDUzIFioItMp68FPvOtFr0LrL1jHlwrT7TE5fR00hjYjdXJRGzIuZG5zY3J5cHQtY2VydC5mci5kMHduLmJpeg
-
-
 ## d0wn-is-ns2
 Server provided by Martin 'd0wn' Albus
 sdns://AQcAAAAAAAAADTkzLjk1LjIyNi4xNjUghGA0qcYwyjwErEqQFiXxeoeyrLlBgKxIHiwQ6M7eGm8cMi5kbnNjcnlwdC1jZXJ0LmlzMi5kMHduLmJpeg
 
 
-## d0wn-lv-ns2
-Server provided by Martin 'd0wn' Albus
-sdns://AQcAAAAAAAAADTE4NS44Ni4xNTEuMjggsRH4DOPgHDbMcwmVAJ5jUe8IBQMwnZQXeqOMZ5FtDN8cMi5kbnNjcnlwdC1jZXJ0Lmx2Mi5kMHduLmJpeg
-
-
-## d0wn-lv-ns2-ipv6
-Server provided by Martin 'd0wn' Albus
-sdns://AQcAAAAAAAAAG1syYTAyOjdhYTA6MTIwMTo6ZjYwZToyNzE5XSCxEfgM4-AcNsxzCZUAnmNR7wgFAzCdlBd6o4xnkW0M3xwyLmRuc2NyeXB0LWNlcnQubHYyLmQwd24uYml6
-
-
 ## d0wn-nl-ns4
 Server provided by Martin 'd0wn' Albus
 sdns://AQcAAAAAAAAADTMxLjIyMC40My4xMDUgKk9DiVzmMjC0xXalrDhkGE0SaUmxYP2wkWartM7GBnIcMi5kbnNjcnlwdC1jZXJ0Lm5sNC5kMHduLmJpeg
-
-
-## d0wn-se-ns2
-Server provided by Martin 'd0wn' Albus
-sdns://AQcAAAAAAAAADDMxLjIyMC41LjE4NiDFfdakF46t4tDAsTik1AdK31kUiIcRXKzrYKN7NJLaFRwyLmRuc2NyeXB0LWNlcnQuc2UyLmQwd24uYml6
 
 
 ## d0wn-tz-ns1
@@ -287,11 +256,6 @@ Server provided by Martin 'd0wn' Albus
 sdns://AQcAAAAAAAAAGFsyYzBmOmZkYTg6NTo6MmVkMTpkMmVjXSDWBhX70UU7oU52ij5cXLOsF0YTMUY9oK-M998E2k11bRsyLmRuc2NyeXB0LWNlcnQudHouZDB3bi5iaXo
 
 
-## d0wn-za-ns1
-Server provided by Martin 'd0wn' Albus
-sdns://AQcAAAAAAAAADTE2OS4yMzkuMTgxLjMg-70POq8rsbvNj5Mk1famjOciOJCLkJLP9tK_fJ7BE2gbMi5kbnNjcnlwdC1jZXJ0LnphLmQwd24uYml6
-
-
 ## de.dnsmaschine.net
 DNSSEC/Non-logged/Uncensored
 Hosted by vultr.com (Frankfurt Germany)
@@ -300,20 +264,17 @@ sdns://AQcAAAAAAAAAEzIwOS4yNTAuMjM1LjE3MDo0NDMgz0wbvISl_NVCSe0wDJMS79BAFZoWth1dj
 
 ## dnscrypt.ca-1
 Uncensored DNSSEC validating and log-free
-Warning: forwards queries to Quad9
 sdns://AQcAAAAAAAAAFDE5OS4xNjcuMTMwLjExODo1MzUzIHT3RVUXvCb3EXflbXKTJ4hscpFbP0YoMD-RDEfDjoJ5HTIuZG5zY3J5cHQtY2VydC5kbnNjcnlwdC5jYS0x
 
 
 ## dnscrypt.ca-2
 Uncensored DNSSEC validating and log-free
-Warning: forwards queries to Quad9
 sdns://AQcAAAAAAAAAFDE5OS4xNjcuMTI4LjExMjo1MzUzIEPVLIJZIpbC22-NSM4iT9zHJibhBvbjiGGT-gCQKWMbHTIuZG5zY3J5cHQtY2VydC5kbnNjcnlwdC5jYS0y
 
 
-## dnscrypt.ca-3
+## dnscrypt.ca-2-ipv6
 Uncensored DNSSEC validating and log-free
-Warning: forwards queries to Quad9
-sdns://AQcAAAAAAAAAEzY5LjE2NS4yMjAuMjIxOjUzNTMgH5iH2E7cxcehI8hiCm1La8uRRaGZT2v2ZkPrLJ4z3lsdMi5kbnNjcnlwdC1jZXJ0LmRuc2NyeXB0LmNhLTM
+sdns://AQcAAAAAAAAAH1syNjA1OjIxMDA6MDoxOjpiNWFkOjE4ZTJdOjUzNTMgQ9UsglkilsLbb41IziJP3McmJuEG9uOIYZP6AJApYxsdMi5kbnNjcnlwdC1jZXJ0LmRuc2NyeXB0LmNhLTI
 
 
 ## dnscrypt.eu-dk
@@ -331,11 +292,11 @@ Free, non-logged, uncensored. Hosted by RamNode.
 sdns://AQcAAAAAAAAADjE3Ni41Ni4yMzcuMTcxIGfADywhxVSBRd18tGonGvLrlpkxQKMJtiuNFlMRhZxmJTIuZG5zY3J5cHQtY2VydC5yZXNvbHZlcjEuZG5zY3J5cHQuZXU
 
 
-## dnscrypt.name
-Free, non-logged, uncensored. Hosted by DigitalOcean in San Francisco, CA, USA.
-Maintained by Justin Paine (@xxdesmus).
+## dnscrypt.me
+DNSSEC / no logs / no filter, Germany
+http://dnscrypt.me
 
-sdns://AQcAAAAAAAAADTE1OS44OS4xNDYuNjEg5jy2Azpv99MphoHuK-5YnZZxGtPbiMZpA1r4d7FnujsdMi5kbnNjcnlwdC1jZXJ0LmRuc2NyeXB0Lm5hbWU
+sdns://AQcAAAAAAAAADjk0LjE5OS4yMTMuMTcyIGBM5f1Wb-7SLs4vAJ7gc4hyFSmM5OOLWOvI3Hu5gRVOGzIuZG5zY3J5cHQtY2VydC5kbnNjcnlwdC5tZQ
 
 
 ## dnscrypt.nl-ns0
@@ -349,10 +310,34 @@ sdns://AQcAAAAAAAAAJlsyMDAxOjE5ZjA6NTAwMTozMGE6NTQwMDpmZjpmZTU4OjcxNDBdIEyE-4wFE
 
 
 ## doh-crypto-sx
-Experimental DNS-over-HTTPS server, globally cached via Cloudflare.
+DNS-over-HTTPS server. Backend hosted by Scaleway, globally cached via Cloudflare.
 Maintained by Frank Denis.
 
-sdns://AgcAAAAAAAAAACAd2FCKjFZZBDl8eGRR4I9XYTzzyKcj9vN5_Uw4WLbznw1kb2guY3J5cHRvLnN4Ci9kbnMtcXVlcnk
+sdns://AgcAAAAAAAAADTEwNC4xOS4xOTguMjkgHdhQioxWWQQ5fHhkUeCPV2E888inI_bzef1MOFi2858NZG9oLmNyeXB0by5zeAovZG5zLXF1ZXJ5
+
+
+## ev-us
+Non-logging, uncensored DNS resolver provided by evilvibes.com
+Hosted by: vultr.com - Location: Seattle, USA
+https://www.evilvibes.com/dnscrypt
+
+sdns://AQcAAAAAAAAADzEwNC4xNTYuMjUzLjExMyDnaC_jr-UyTXQYQ8OkLyMQ5lhGKZas3QyMC0tati69MB0yLmRuc2NyeXB0LWNlcnQuZXZpbHZpYmVzLmNvbQ
+
+
+## ev-us2
+Non-logging, uncensored DNS resolver provided by evilvibes.com
+Hosted by: vultr.com - Location: New Jersey, USA
+https://www.evilvibes.com/dnscrypt
+
+sdns://AQcAAAAAAAAADjE0NC4yMDIuMTUuMTMxIKLp-jrtojXjQzK9muKwWgO0lqJSmO0zpghDgjMIytQiHTIuZG5zY3J5cHQtY2VydC5ldmlsdmliZXMuY29t
+
+
+## ev-us3
+Non-logging, uncensored DNS resolver provided by evilvibes.com
+Hosted by: vultr.com - Location: Dallas, USA
+https://www.evilvibes.com/dnscrypt
+
+sdns://AQcAAAAAAAAADjE0NC4yMDIuNjguMjMxIH8qiHvAoGoZn5vybGUnxy0eKCJY-62SZDGowYxzmiYQHTIuZG5zY3J5cHQtY2VydC5ldmlsdmliZXMuY29t
 
 
 ## freetsa.org
@@ -380,7 +365,7 @@ sdns://AQcAAAAAAAAAEjE5NS4yMDEuMTYuNjE6NDQzNCDQEZd7QrwiKuovLQjd7swAmeD2i5R-4YLdU
 
 ## google
 Google DNS (anycast)
-sdns://AgUAAAAAAAAAACDyXGrcc5eNecJ8nomJCJ-q6eCLTEn6bHic0hWGUwYQaA5kbnMuZ29vZ2xlLmNvbQ0vZXhwZXJpbWVudGFs
+sdns://AgUAAAAAAAAAACAe9iTP_15r07rd8_3b_epWVGfjdymdx-5mdRZvMAzBuQ5kbnMuZ29vZ2xlLmNvbQ0vZXhwZXJpbWVudGFs
 
 
 ## ipredator
@@ -388,15 +373,10 @@ Public DNSCrypt server in Sweden provided by Ipredator.se
 sdns://AQcAAAAAAAAADTE5NC4xMzIuMzIuMzIgxExWaqjWRsQysQT1PQCWGzLccc8cBL2esBPkgOekeCgcMi5kbnNjcnlwdC1jZXJ0LmlwcmVkYXRvci5zZQ
 
 
-## lazarus-dns
-Public DNSCrypt server in Amsterdam, Netherlands. Supports DNSSEC and no logs are kept.
-Maintained by @tuttimann.
-sdns://AQcAAAAAAAAACzUxLjE1LjQ3LjUxIIy7xPO4BKIjlZhWiAZkNX8as04yzdovGiyL1eXBtmrGGzIuZG5zY3J5cHQtY2VydC5sYXphcnVzLWRucw
-
-
-## opennic-famicoman
-OpenNIC DNS server with DNSCrypt support
-sdns://AQYAAAAAAAAAEzE0Ni4xODUuMTc2LjM2OjUzNTMguI9IYFUXNpaj0r_g7MdhdRmP4BLhAbT-hpwenEw15082Mi5kbnNjcnlwdC1jZXJ0Lm9wZW5uaWMucGVlcjMuZmFtaWNvbWFuLnBoaWxseW1lc2gubmV0
+## nawala-childprotection
+Internet filtering system (anycast), protecting child from inappropriate websites and abusive contents.
+By http://nawala.id in Indonesia.
+sdns://AQAAAAAAAAAADzE4MC4xMzEuMTQ0LjE0NCDGC-b_38Dj4-ikI477AO1GXcLPfETOFpE36KZIHdOzLhkyLmRuc2NyeXB0LWNlcnQubmF3YWxhLmlk
 
 
 ## opennic-luggs
@@ -414,11 +394,6 @@ Public DNS server hosted at MIT (Cambridge, MA, USA) operated by jproulx
 sdns://AQcAAAAAAAAADjEyOC41Mi4xMzAuMjA5IBKNsb3hDHyh1SsJH2M-mcGTfRT1-BKwy1s89cvMBHJyIjIuZG5zY3J5cHQtY2VydC5vbmljLmNzYWlsLm1pdC5lZHU
 
 
-## opennic-onic-ipv6
-Public DNS server hosted at MIT (Cambridge, MA, USA) operated by jproulx
-sdns://AQcAAAAAAAAAFlsyMDAxOjQ3MDoxZjA2OjEwYjo6Ml0gEo2xveEMfKHVKwkfYz6ZwZN9FPX4ErDLWzz1y8wEcnIiMi5kbnNjcnlwdC1jZXJ0Lm9uaWMuY3NhaWwubWl0LmVkdQ
-
-
 ## opennic-tumabox
 Public DNS server operated by TumaBox.org
 sdns://AQYAAAAAAAAAEjEzMC4yNTUuNzMuOTA6NTM1MyDVkXsRajUxFMI4qpmm6wwofPdoBUGsXb-ooCOeIoxbBg0yLnR1bWFib3gub3Jn
@@ -429,51 +404,30 @@ Public DNS server operated by TumaBox.org
 sdns://AQYAAAAAAAAAG1syYTAyOmUwMDpmZmZkOjEzOTo6OV06NTM1MyDVkXsRajUxFMI4qpmm6wwofPdoBUGsXb-ooCOeIoxbBg0yLnR1bWFib3gub3Jn
 
 
-## qag.me
-Plain Vanilla setup of dnscrypt-server-docker on a headless box. NO LOGGING.
-Home Server running on a static IP in Bangalore / Bengaluru, INDIA.
-Maintained by Cruisemaniac (https://cruisemaniac.com) aka Ashwin Murali.
+## publicarray-au
+DNSSEC • OpenNic • Non-logging • Uncensored - hosted at vultr.com
+Maintained by publicarray - https://dns.seby.io
 
-sdns://AQcAAAAAAAAAEjEwNi41MS4xMjguNzg6NDQzNCCm-rdko9ehxyCNEdoBhIYCgaUIh7xCPd79M893C3rv_xYyLmRuc2NyeXB0LWNlcnQucWFnLm1l
+sdns://AQcAAAAAAAAADDQ1Ljc2LjExMy4zMSAIVGh4i6eKXqlF6o9Fg92cgD2WcDvKQJ7v_Wq4XrQsVhsyLmRuc2NyeXB0LWNlcnQuZG5zLnNlYnkuaW8
 
+## publicarray-au2
+DNSSEC • OpenNic • Non-logging • Uncensored - hosted on GCP
+Maintained by publicarray
 
-## scaleway-fr
-DNSSEC/Non-logged/Uncensored - ARM server donated by Scaleway.com
-Maintained by Frank Denis - https://fr.dnscrypt.info
-This server used to be called `dnscrypt.org-fr`.
+sdns://AQcAAAAAAAAAEjM1LjIwMS4yMC4xNzk6ODQ0MyDbu252PopUsAoQmpOFc8eYC4rkr2nWINwVQPMlc8lN8xsyLmRuc2NyeXB0LWNlcnQuZG5zLnNlYnkuaW8
 
-sdns://AQcAAAAAAAAADjIxMi40Ny4yMjguMTM2IOgBuE6mBr-wusDOQ0RbsV66ZLAvo8SqMa4QY2oHkDJNHzIuZG5zY3J5cHQtY2VydC5mci5kbnNjcnlwdC5vcmc
+## publicarray-au-doh
+DNSSEC • OpenNic • Non-logging • Uncensored - hosted on GCP
+Maintained by publicarray
 
+sdns://AgcAAAAAAAAAETM1LjIwMS4yMC4xNzk6NDQzAAtkb2guc2VieS5pbwovZG5zLXF1ZXJ5
 
-## securedns
-Uncensored and no logging
-sdns://AQcAAAAAAAAAEzE0Ni4xODUuMTY3LjQzOjUzNTMgs6WXaRRXWwSJ4Z-unEPmefryjFcYlwAxf3u0likfsJUcMi5kbnNjcnlwdC1jZXJ0LnNlY3VyZWRucy5ldQ
+## qualityology.com
+Non-logging, non-filtering, DNSSEC validating server in Mountain View,
+California.
+Maintained by Evan Xu (@ex-git)
 
-
-## securedns-ipv6
-Uncensored and no logging
-sdns://AQcAAAAAAAAAIVsyYTAzOmIwYzA6MDoxMDEwOjplOWE6MzAwMV06NTM1MyCzpZdpFFdbBInhn66cQ-Z5-vKMVxiXADF_e7SWKR-wlRwyLmRuc2NyeXB0LWNlcnQuc2VjdXJlZG5zLmV1
-
-
-## soltysiak
-Public DNSCrypt server in Poland
-sdns://AQcAAAAAAAAAFDE3OC4yMTYuMjAxLjIyMjoyMDUzICXE4YgpFUaXj5wrvbanr6QB7aBRBQhdUwPnGSjAZo8hHTIuZG5zY3J5cHQtY2VydC5zb2x0eXNpYWsuY29t
-
-
-## soltysiak-ipv6
-Public DNSCrypt server in Poland
-sdns://AQcAAAAAAAAAGVsyMDAxOjQ3MDo3MDo0ZmY6OjJdOjIwNTMgJcThiCkVRpePnCu9tqevpAHtoFEFCF1TA-cZKMBmjyEdMi5kbnNjcnlwdC1jZXJ0LnNvbHR5c2lhay5jb20
-
-
-## ventricle.us
-Public DNSCrypt resolver provided by Jacob Henner
-sdns://AQcAAAAAAAAADTEwNy4xNzAuNTcuMzQg6YXxGK1OPMZf8iUgGJDG9Vi3W1pS9WsXz-rBAFyLm6olMi5kbnNjcnlwdC1jZXJ0LmRuc2NyeXB0LnZlbnRyaWNsZS51cw
-
-
-## yandex
-Yandex public DNS server (anycast)
-sdns://AQQAAAAAAAAAEDc3Ljg4LjguNzg6MTUzNTMg04TAccn3RmKvKszVe13MlxTUB7atNgHhrtwG1W1JYyciMi5kbnNjcnlwdC1jZXJ0LmJyb3dzZXIueWFuZGV4Lm5ldA
-OTguMTEwLjExNTo0NDMgg2u3HcgDDo2XsrKL05-UK3r6Z7RGMKwymuTIQ4fQZegkMi5kbnNjcnlwdC1jZXJ0LmRucy5xdWFsaXR5b2xvZ3kuY29t
+sdns://AQcAAAAAAAAAEzEwNC4xOTguMTEwLjExNTo0NDMgg2u3HcgDDo2XsrKL05-UK3r6Z7RGMKwymuTIQ4fQZegkMi5kbnNjcnlwdC1jZXJ0LmRucy5xdWFsaXR5b2xvZ3kuY29t
 
 
 ## scaleway-fr
@@ -492,6 +446,14 @@ sdns://AQcAAAAAAAAAEzE0Ni4xODUuMTY3LjQzOjUzNTMgs6WXaRRXWwSJ4Z-unEPmefryjFcYlwAxf
 ## securedns-ipv6
 Uncensored and no logging
 sdns://AQcAAAAAAAAAIVsyYTAzOmIwYzA6MDoxMDEwOjplOWE6MzAwMV06NTM1MyCzpZdpFFdbBInhn66cQ-Z5-vKMVxiXADF_e7SWKR-wlRwyLmRuc2NyeXB0LWNlcnQuc2VjdXJlZG5zLmV1
+
+
+## sfw.scaleway-fr
+Uses deep learning to block adult websites. Free, DNSSEC, no logs.
+Hosted in Paris, running on a 1-XS server donated by Scaleway.com
+Maintained by Frank Denis - https://fr.dnscrypt.info/sfw.html
+
+sdns://AQMAAAAAAAAADzE2My4xNzIuMTgwLjEyNSDfYnO_x1IZKotaObwMhaw_-WRF1zZE9mJygl01WPGh_x8yLmRuc2NyeXB0LWNlcnQuc2Z3LnNjYWxld2F5LWZy
 
 
 ## soltysiak
