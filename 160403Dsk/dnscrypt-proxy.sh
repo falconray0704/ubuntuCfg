@@ -36,16 +36,16 @@ install_dependency_func()
 
 build_latest_dnscrypt_proxy_func()
 {
-    cp dnscrypt-proxy-src.$(LATEST_VERSION).tar.gz /opt/github/
+    cp dnscrypt-proxy-src.${LATEST_VERSION}.tar.gz /opt/github/
 
     pushd /opt/github/
     #rm -rf dnscrypt-proxy
-    rm -rf dnscrypt-proxy-$(LATEST_VERSION)
-    tar -zxf dnscrypt-proxy-src.$(LATEST_VERSION).tar.gz
+    rm -rf dnscrypt-proxy-${LATEST_VERSION}
+    tar -zxf dnscrypt-proxy-src.${LATEST_VERSION}.tar.gz
 
     #git clone https://github.com/jedisct1/dnscrypt-proxy.git
     #pushd /opt/github/dnscrypt-proxy/dnscrypt-proxy
-    pushd dnscrypt-proxy-$(LATEST_VERSION)
+    pushd dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy
     #git pull
     go clean
     # Linux
