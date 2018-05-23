@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LATEST_VERSION="2.0.14"
-DEPLOY_ARCH="386" # 386 amd64 arm
+DEPLOY_ARCH="arm" # 386 amd64 arm
 
 install_dependency_func()
 {
@@ -71,9 +71,9 @@ release_latest_func()
     pushd releasePkg
 
     mkdir -p ${LATEST_VERSION}
-    #cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-386 ${LATEST_VERSION}/
-    #cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-amd64 ${LATEST_VERSION}/
-    #cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-arm ${LATEST_VERSION}/
+    cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-386 ${LATEST_VERSION}/
+    cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-amd64 ${LATEST_VERSION}/
+    cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/dnscrypt-proxy-arm ${LATEST_VERSION}/
 
     cp /opt/github/dnscrypt-proxy-${LATEST_VERSION}/dnscrypt-proxy/example-* ${LATEST_VERSION}/
 
@@ -83,11 +83,13 @@ release_latest_func()
 install_func()
 {
 
+    rm -rf ~/dnsCryptProxy
+
     pushd releasePkg
     cp -a ${LATEST_VERSION} ~/dnsCryptProxy
-    pushd
+    pushd ${LATEST_VERSION}
     cd ~/dnsCryptProxy
-    mv dnscrypt-proxy-${DEPLOY_ARCH} dnscrypt-proxy
+    cp dnscrypt-proxy-${DEPLOY_ARCH} dnscrypt-proxy
     popd
     popd
 
