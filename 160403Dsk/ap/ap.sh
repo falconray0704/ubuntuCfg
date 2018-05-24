@@ -342,13 +342,20 @@ uninstall_all()
 	sudo reboot
 }
 
+install_dependence_func()
+{
+	sudo apt-get update
+	sudo apt-get install hostapd
+        sudo apt-get install isc-dhcp-server
+}
+
 mkdir -p ./tmpConfigs
 
 case $1 in
+	"install_dependence") echo "Install dependence..."
+		install_dependence_func
+	;;
 	"install") echo "Installing..."
-		sudo apt-get update
-		sudo apt-get install hostapd
-        sudo apt-get install isc-dhcp-server
 
 		get_args
 
