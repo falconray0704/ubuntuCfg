@@ -203,27 +203,27 @@ then
 fi
 
 case $1 in
-	"install_ss_latest") echo "Installing ss latest..."
+	"install") echo "Installing ss latest..."
             install_dependence
             install_ss_latest
 	;;
-	"make_ss_configs") echo "Make ss config files..."
+	"make_configs") echo "Make ss config files..."
             make_ss_configs_func
 	;;
-	"install_ss_service") echo "Install ss-redir service..."
+	"install_service") echo "Install ss-redir service..."
             install_ss_service_func
             enable_ss_service_func
 	;;
-	"uninstall_ss_service") echo "Uninstall ss-redir service..."
+	"uninstall_service") echo "Uninstall ss-redir service..."
             disable_ss_service_func
 	;;
-	"enable_ss_service") echo "Enable ss-redir service..."
+	"enable_service") echo "Enable ss-redir service..."
             enable_ss_service_func
 	;;
-	"disable_ss_service") echo "Disable ss-redir service..."
+	"disable_service") echo "Disable ss-redir service..."
             disable_ss_service_func
 	;;
-	"update_ss_latest") echo "Installing ss latest..."
+	"update_latest") echo "Installing ss latest..."
             update_ss_latest
 	;;
 	"deploy_ss") echo "Deploy ss latest..."
