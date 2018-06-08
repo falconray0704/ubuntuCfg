@@ -4,14 +4,14 @@ restore_from_image_func()
 {
     echo "How to restore:"
     echo "sudo umount /dev/disk1 /dev/disk2"
-    echo "sudo dd if=image.img of=/dev/disk"
+    echo "sudo dd if=image.img of=/dev/disk status=progress"
 }
 
 backup_from_sdCard_func()
 {
     echo "How to backup:"
     echo "sudo fdisk -l"
-    echo "sudo dd if=/dev/sdz of=image-\`date +%d%m%y\`.img"
+    echo "sudo dd if=/dev/sdz of=image-\`date +%d%m%y\`.img status=progress"
 }
 
 shrink_image_func()
