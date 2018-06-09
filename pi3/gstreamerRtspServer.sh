@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Reference https://www.stev.org/post/raspberrypisimplertspserver
+
 install_dependence_func()
 {
     sudo apt-get install gstreamer1.0-plugins-bad gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-tools libgstreamer1.0-dev libgstreamer1.0-0-dbg libgstreamer1.0-0 gstreamer1.0-omx gstreamer1.0-omx-dbg libgstreamer-plugins-base1.0-dev gtk-doc-tools
