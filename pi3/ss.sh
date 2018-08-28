@@ -1,4 +1,10 @@
 #!/bin/bash
+set -o nounset
+set -o errexit
+# trace each command execute, same as `bash -v myscripts.sh`
+#set -o verbose
+# trace each command execute with attachment infomations, same as `bash -x myscripts.sh`
+#set -o xtrace
 
 install_dependence()
 {
@@ -6,25 +12,26 @@ install_dependence()
 	sudo apt-get -y install build-essential automake autogen autoconf zlib1g-dev libssl-dev libpcre3 libpcre3-dev asciidoc git
 
 	mkdir -p /opt/github
-	cd /opt/github
 }
 
 install_ss_2_6_2()
 {
-	mkdir -p /opt/github
-	cd /opt/github
+	pushd /opt/github
 	wget https://github.com/shadowsocks/shadowsocks-libev/archive/v2.6.2.tar.gz
 	tar -zxf v2.6.2.tar.gz
-	cd shadowsocks-libev-2.6.2
+	pushd shadowsocks-libev-2.6.2
 	# static link
 	LIBS="-lpthread -lm" LDFLAGS="-Wl,-static -static -static-libgcc" ./configure
 	#./configure
 	make
 	sudo make install
+    popd
+    popd
 }
 
 install_libsodium_1_0_12()
 {
+	pushd /opt/github
 	export LIBSODIUM_VER=1.0.12
 	wget https://download.libsodium.org/libsodium/releases/libsodium-$LIBSODIUM_VER.tar.gz
 	tar xvf libsodium-$LIBSODIUM_VER.tar.gz
@@ -33,44 +40,46 @@ install_libsodium_1_0_12()
 	sudo make install
 	popd
 	sudo ldconfig
+    popd
 }
 
 install_libsodium_1_0_8()
 {
-	mkdir -p /opt/github
-	cd /opt/github
+	pushd /opt/github
 	export LIBSODIUM_VER=1.0.8
 	wget -c -O libsodium-1.0.8.tar.gz https://github.com/jedisct1/libsodium/archive/1.0.8.tar.gz
 	tar -zxf libsodium-1.0.8.tar.gz
-	cd libsodium-1.0.8
-	
+	pushd libsodium-1.0.8
+
 	./autogen.sh
 	./configure
 	make -j4
 	sudo make install
-	
+
 	sudo ldconfig
+    popd
+    popd
 }
 
 install_libsodium_latest()
 {
-	mkdir -p /opt/github
-	cd /opt/github
+	pushd /opt/github
 	git clone https://github.com/jedisct1/libsodium.git
-	cd libsodium
+	pushd libsodium
 	git pull
 	./autogen.sh
 	./configure --prefix=/usr --enable-shared --enable-static && make
 	sudo make install	
 
 	sudo ldconfig
+    popd
+    popd
 }
 
 install_mbedtls()
 {
 	# Installation of MbedTLS
-	mkdir -p /opt/github
-	cd /opt/github
+	pushd /opt/github
 	export MBEDTLS_VER=2.5.1
 	wget -c https://tls.mbed.org/download/mbedtls-$MBEDTLS_VER-gpl.tgz
 	tar xvf mbedtls-$MBEDTLS_VER-gpl.tgz
@@ -79,6 +88,7 @@ install_mbedtls()
 	sudo make DESTDIR=/usr install
 	popd
 	sudo ldconfig
+    popd
 }
 
 install_ss_latest()
@@ -89,9 +99,7 @@ install_ss_latest()
 	sudo apt-get -y install --no-install-recommends gettext build-essential autoconf libtool libpcre3-dev asciidoc xmlto libev-dev libudns-dev automake
 	sudo apt-get -y install libc-ares-dev
 
-	mkdir -p /opt/github
-	cd /opt/github
-
+	pushd /opt/github
 
 	# Installation of Libsodium
 	echo "Have you installed libsodium? [y/N]:"
@@ -121,31 +129,33 @@ install_ss_latest()
 		#sudo ldconfig
 	fi
 
-	cd /opt/github
-
 	git clone https://github.com/shadowsocks/shadowsocks-libev.git
-cd /opt/github/shadowsocks-libev
-git submodule update --init --recursive
+    pushd /opt/github/shadowsocks-libev
+    git submodule update --init --recursive
 
 	./autogen.sh && ./configure && make
 	sudo make install
+    popd
 
+    popd
 }
 
 update_ss_latest()
 {
-	sudo apt-get -y update 
-	sudo apt-get -y upgrade 
-	sudo apt-get -y dist-upgrade 
+	sudo apt-get -y update
+	sudo apt-get -y upgrade
+	sudo apt-get -y dist-upgrade
 	sudo apt-get -y install libc-ares-dev
 
-	cd /opt/github
-	cd /opt/github/shadowsocks-libev
+	pushd /opt/github
+	pushd /opt/github/shadowsocks-libev
 	git pull
 	git submodule update --init --recursive
 
 	./autogen.sh && ./configure && make
 	sudo make install
+    popd
+    popd
 }
 
 
@@ -169,6 +179,15 @@ enable_bbr_func()
 
     sudo reboot
 }
+
+init_operation_dirs_func()
+{
+    mkdir -p /opt/github
+	mkdir -p /opt/github/falconray0704
+    mkdir -p /opt/etmp
+}
+
+init_operation_dirs_func
 
 case $1 in
 	"install_ss_262") echo "Installing ss 2.6.2..."
