@@ -30,6 +30,13 @@ install_Latest_grpc()
     popd
 }
 
+init_operation_dirs_func()
+{
+    mkdir -p /opt/github
+	mkdir -p /opt/github/falconray0704
+    mkdir -p /opt/etmp
+}
+
 
 sudo apt-get -y update
 sudo apt-get -y upgrade
@@ -40,6 +47,9 @@ sudo apt-get -y install git wget curl
 sudo apt-get -y install tree htop vim
 sudo apt-get -y install libicu-dev libboost-all-dev libncurses5-dev
 #sudo apt-get -y install openssh-server
+
+
+init_operation_dirs_func
 
 install_Latest_grpc
 
