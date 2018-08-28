@@ -1,5 +1,13 @@
 #!/bin/bash
 
+set -o nounset
+set -o errexit
+# trace each command execute, same as `bash -v myscripts.sh`
+#set -o verbose
+# trace each command execute with attachment infomations, same as `bash -x myscripts.sh`
+#set -o xtrace
+
+
 
 #[install samba server]
 sudo apt-get -y install samba
