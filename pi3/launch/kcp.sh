@@ -1,4 +1,13 @@
 #!/bin/bash
+
+set -o nounset
+set -o errexit
+# trace each command execute, same as `bash -v myscripts.sh`
+#set -o verbose
+# trace each command execute with attachment infomations, same as `bash -x myscripts.sh`
+
+#set -o xtrace
+
 #/usr/local/kcp-server/kcp-server -l ":47369" -t "127.0.0.1:47147" --key "&Fuckgfw" &
 #/opt/gows/src/github.com/xtaci/kcptun/server_linux_amd64 -t "127.0.0.1:47147" -l ":14369" -mode fast2 &
 #./client_linux_amd64 -r "23.106.154.150:14369" -l ":47140" -mode fast2 &
