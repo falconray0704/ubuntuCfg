@@ -12,7 +12,20 @@ sudo apt-get -y upgrade
 sudo apt-get -y install automake autogen autoconf build-essential
 sudo apt-get -y install git wget curl tree
 
-sudo apt-get -y install vim
+#sudo apt-get -y install vim
+sudo apt autoremove vim
+
+mkdir -p /opt/github/vim
+pushd /opt/github/vim
+wget -c https://github.com/vim/vim/archive/v8.1.0329.tar.gz
+tar -zxf v8.1.0329.tar.gz
+pushd vim-8.1.0329
+./configure --prefix=/usr/local --enable-gui=gtk2 --with-features=huge --enable-luainterp=yes --enable-mzschemeinterp --enable-perlinterp=yes --enable-pythoninterp=yes --with-python-config-dir=/usr/lib/python2.7/config-arm-linux-gnueabihf --enable-python3interp=yes --with-python3-config-dir=/usr/lib/python3.5/config-3.5m-arm-linux-gnueabihf --enable-tclinterp=yes --enable-rubyinterp=yes --enable-cscope
+make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
+sudo make install
+popd
+popd
+
 sudo apt-get -y install ctags
 cd ~/
 rm -rf .vimrc vim generate.vim
