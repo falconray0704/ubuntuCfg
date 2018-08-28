@@ -20,7 +20,7 @@ wget -c https://dl.google.com/go/go1.4-bootstrap-20171003.tar.gz
 tar -zxf go1.4-bootstrap-20171003.tar.gz
 mv go go1.4
 pushd ~/go1.4/src
-sudo update-alternatives --set go /usr/bin/go-5
+#sudo update-alternatives --set go /usr/bin/go-5
 GOROOT_BOOTSTRAP=/usr ./make.bash
 popd
 
