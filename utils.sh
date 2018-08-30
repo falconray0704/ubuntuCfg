@@ -6,6 +6,11 @@ set -o errexit
 # trace each command execute with attachment infomations, same as `bash -x myscripts.sh`
 #set -o xtrace
 
+config_swap_size_func()
+{
+    echo "How to configure system swap size:"
+    echo "sudo vim /etc/dphys-swapfile"
+}
 
 restore_from_image_func()
 {
@@ -28,7 +33,19 @@ shrink_image_func()
     echo "./pishrink.sh image.img"
 }
 
+print_help_func()
+{
+    echo "Supported utils commands:"
+    echo "configSwapSize"
+    echo "restore"
+    echo "backup"
+    echo "shrink"
+}
+
 case $1 in
+	"configSwapSize") echo "How to configure swap size ..."
+        config_swap_size_func
+	;;
 	"restore") echo "Recovering ..."
         restore_from_image_func
 	;;
@@ -38,6 +55,8 @@ case $1 in
 	"shrink") echo "Shrink image ..."
         shrink_image_func
 	;;
-	*) echo "unknow cmd"
+	*|-h) echo "Unknow cmd"
+        print_help_func
+    ;;
 esac
 
