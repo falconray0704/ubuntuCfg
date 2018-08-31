@@ -30,6 +30,103 @@ install_Latest_grpc()
     popd
 }
 
+deploy_boost_1_59_0_without_install_func()
+{
+    local Version="1.59.0"
+    local VersionFile="1_59_0"
+    fetch_boost_src_func ${Version} ${VersionFile}
+    build_boost_version_without_install_func ${Version} ${VersionFile}
+}
+
+build_boost_1_59_0_without_install_func()
+{
+    local Version="1.59.0"
+    local VersionFile="1_59_0"
+    build_boost_version_without_install_func ${Version} ${VersionFile}
+}
+
+install_boost_src_1_59_0_func()
+{
+    local Version="1.59.0"
+    local VersionFile="1_59_0"
+
+    install_boost_version_func ${Version} ${VersionFile}
+}
+
+install_boost_version_func()
+{
+    local Version=$1
+    local VersionFile=$2
+    local RootDir=/opt/github/boostorg
+    #local RootDir=/opt/etmp/boostorg
+    pushd ${RootDir}
+
+    pushd boost_${VersionFile}
+    sudo mkdir -p /usr/local/boost_${VersionFile}
+	sudo ./b2 --prefix=/usr/local/boost_${VersionFile} --with=all install
+
+    #sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/local.conf'
+    #sudo ldconfig
+    popd
+
+    popd
+}
+
+fetch_boost_src_1_59_0_func()
+{
+    local Version="1.59.0"
+    local VersionFile="1_59_0"
+    fetch_boost_src_func ${Version} ${VersionFile}
+}
+
+build_boost_version_without_install_func()
+{
+    local Version=$1
+    local VersionFile=$2
+    local RootDir=/opt/github/boostorg
+    #local RootDir=/opt/etmp/boostorg
+    pushd ${RootDir}
+
+    pushd boost_${VersionFile}
+    ./bootstrap.sh --prefix=/usr/local/boost_${VersionFile}
+	#user_configFile=`find $PWD -name user-config.jam`
+	#echo "using mpi ;" >> $user_configFile
+	#local nCPU=$(nproc --all) # limit for low memory system
+	local nCPU=1
+	echo "nCPU:${nCPU}"
+	./b2 --prefix=/usr/local/boost_${VersionFile} --with=all -j${nCPU}
+    popd
+
+    popd
+}
+
+fetch_boost_src_func()
+{
+    local Version=$1
+    local VersionFile=$2
+    local RootDir=/opt/github/boostorg
+    #local RootDir=/opt/etmp/boostorg
+    mkdir -p ${RootDir}
+    pushd ${RootDir}
+
+    wget -O boost_${VersionFile}.tar.gz http://sourceforge.net/projects/boost/files/boost/${Version}/boost_${VersionFile}.tar.gz/download
+
+    tar -zxf boost_${VersionFile}.tar.gz
+	popd
+}
+
+deploy_general_repo_pkgs()
+{
+    sudo apt-get -y update
+    sudo apt-get -y upgrade
+    sudo apt-get -y dist-upgrade
+    sudo apt-get -y install git wget curl tree htop
+    sudo apt-get -y install automake autogen autoconf cmake
+    sudo apt-get -y install build-essential g++ python-dev python-bzutils autotools-dev libicu-dev libbz2-dev
+    sudo apt-get -y install libicu-dev libboost-all-dev libncurses5-dev
+    #sudo apt-get -y install openssh-server
+}
+
 init_operation_dirs_func()
 {
     mkdir -p /opt/github
@@ -37,20 +134,55 @@ init_operation_dirs_func()
     mkdir -p /opt/etmp
 }
 
-
-sudo apt-get -y update
-sudo apt-get -y upgrade
-sudo apt-get -y dist-upgrade
-sudo apt-get -y install automake autogen autoconf
-sudo apt-get -y install build-essential
-sudo apt-get -y install git wget curl
-sudo apt-get -y install tree htop vim
-sudo apt-get -y install libicu-dev libboost-all-dev libncurses5-dev
-#sudo apt-get -y install openssh-server
-
-
 init_operation_dirs_func
 
-install_Latest_grpc
+case $1 in
+    "deployGenRepoPkgs") echo "Deploy general repo pkgs ..."
+        deploy_general_repo_pkgs
+        ;;
+    "grpc") echo "Deploy grpc ..."
+        deploy_general_repo_pkgs
+        install_Latest_grpc
+        ;;
+    "fetchBoost") echo "Fetching boost 1.59.0 ..."
+		fetch_boost_src_1_59_0_func
+        ;;
+    "buildBoost") echo "Building boost 1.59.0 ..."
+        deploy_general_repo_pkgs
+		build_boost_1_59_0_without_install_func
+        ;;
+    "installBoost") echo "Installing boost 1.59.0 ..."
+        install_boost_src_1_59_0_func
+        ;;
+    "deployBoost") echo "Deploying boost 1.59.0 ..."
+        deploy_general_repo_pkgs
+		deploy_boost_1_59_0_without_install_func
+        ;;
+    "all") echo "Deploy all general packets ..."
+        deploy_general_repo_pkgs
+        install_Latest_grpc
+		deploy_boost_1_59_0_without_install_func
+        ;;
+    *|-h) echo "Unknow command, supported commands:"
+        echo "deployGenRepoPkgs"
+        echo "grpc"
+        echo "fetchBoost"
+		echo "buildBoost"
+        echo "installBoost"
+		echo "deployBoost"
+        echo "all"
+        ;;
+esac
+
+
+
+
+
+
+
+
+
+
+
 
 
