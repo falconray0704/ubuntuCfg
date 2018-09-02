@@ -153,7 +153,7 @@ deploy_general_repo_pkgs()
 init_operation_dirs_func()
 {
     mkdir -p /opt/github
-	mkdir -p /opt/github/falconray0704
+	mkdir -p /opt/github/falcon
     mkdir -p /opt/etmp
 }
 

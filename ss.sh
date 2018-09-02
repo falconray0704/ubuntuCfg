@@ -183,7 +183,7 @@ enable_bbr_func()
 init_operation_dirs_func()
 {
     mkdir -p /opt/github
-	mkdir -p /opt/github/falconray0704
+	mkdir -p /opt/github/falcon
     mkdir -p /opt/etmp
 }
 
