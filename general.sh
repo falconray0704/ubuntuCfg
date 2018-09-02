@@ -6,6 +6,29 @@ set -o errexit
 # trace each command execute with attachment infomations, same as `bash -x myscripts.sh`
 #set -o xtrace
 
+install_numactl_func()
+{
+    local Version="2.0.12"
+
+    pushd /opt/github
+
+    mkdir -p numactl
+    pushd numactl
+    wget -O numactl-${Version}.tar.gz https://codeload.github.com/numactl/numactl/tar.gz/v${Version}
+    rm -rf numactl-${Version}
+    tar -zxf numactl-${Version}.tar.gz
+
+    pushd numactl-${Version}
+    ./autogen.sh
+    ./configure
+    make
+    sudo make install
+    popd
+
+    popd
+
+    popd
+}
 
 install_Latest_grpc()
 {
@@ -122,8 +145,8 @@ deploy_general_repo_pkgs()
     sudo apt-get -y dist-upgrade
     sudo apt-get -y install git wget curl tree htop
     sudo apt-get -y install automake autogen autoconf cmake
-    sudo apt-get -y install build-essential g++ python-dev python-bzutils autotools-dev libicu-dev libbz2-dev
-    sudo apt-get -y install libicu-dev libboost-all-dev libncurses5-dev
+    sudo apt-get -y install build-essential g++ python-dev python-bzutils autotools-dev mecab mecab-ipadic
+    sudo apt-get -y install libicu-dev libboost-all-dev libncurses5-dev libaio-dev libicu-dev libbz2-dev
     #sudo apt-get -y install openssh-server
 }
 
@@ -139,6 +162,9 @@ init_operation_dirs_func
 case $1 in
     "deployGenRepoPkgs") echo "Deploy general repo pkgs ..."
         deploy_general_repo_pkgs
+        ;;
+    "install_libnuma") echo "Install libnuma ..."
+        install_numactl_func
         ;;
     "grpc") echo "Deploy grpc ..."
         deploy_general_repo_pkgs
@@ -165,6 +191,7 @@ case $1 in
         ;;
     *|-h) echo "Unknow command, supported commands:"
         echo "deployGenRepoPkgs"
+        echo "install_libnuma"
         echo "grpc"
         echo "fetchBoost"
 		echo "buildBoost"
