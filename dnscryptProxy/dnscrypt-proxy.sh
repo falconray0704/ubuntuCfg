@@ -110,25 +110,13 @@ disable_systemDNS_func()
     sudo systemctl stop systemd-resolved.service
     sudo systemctl disable systemd-resolved.service
 
-
-    #sudo sed -i '/dns-nameservers/d' /etc/network/interfaces
-    #sudo sed -i '$a dns-nameservers 127.0.0.1' /etc/network/interfaces
-	#sudo sed -i 's/.*dns=dnsmasq.*/#dns=dnsmasq/' /etc/NetworkManager/NetworkManager.conf
-
 }
 
 config_func()
 {
-	#sudo sed -i 's/#^static domain_name_servers=.*/static domain_name_servers=127.0.0.1/' /etc/dhcpcd.conf
-	sudo sed -i '/^static domain_name_servers=.*/d' /etc/dhcpcd.conf
-	sudo sed -i '/^#static domain_name_servers=192.168.1.1$/a\static domain_name_servers=127.0.0.1' /etc/dhcpcd.conf
-
-#	sudo sed -i '/^denyinterfaces wlan.$/d' /etc/dhcpcd.conf
-#	sudo sed -i '$a\denyinterfaces wlan0' /etc/dhcpcd.conf
 
     pushd ~/dnsCryptProxy
     cp example-dnscrypt-proxy.toml dnscrypt-proxy.toml
-	#sed -i "s/.*server_names =.*/server_names = \['cisco', 'cisco-ipv6'\]/" dnscrypt-proxy.toml
 	sed -i "s/.*server_names =.*/server_names = \['cisco', 'opennic-onic', 'opennic-tumabox', 'scaleway-fr', 'yandex', 'doh-crypto-sx'\]/" dnscrypt-proxy.toml
 	sed -i "s/.*ignore_system_dns =.*/ignore_system_dns = true/" dnscrypt-proxy.toml
 	sed -i "s/.*force_tcp =.*/force_tcp = true/" dnscrypt-proxy.toml
@@ -139,6 +127,9 @@ config_func()
 
 enable_service_func()
 {
+	sudo sed -i '/^static domain_name_servers=.*/d' /etc/dhcpcd.conf
+	sudo sed -i '/^#static domain_name_servers=192.168.1.1$/a\static domain_name_servers=127.0.0.1' /etc/dhcpcd.conf
+
     pushd ~/dnsCryptProxy
     sudo ./dnscrypt-proxy -service install
     sudo sed -i "s/^RestartSec=.*/RestartSec=5/" /etc/systemd/system/dnscrypt-proxy.service
@@ -173,54 +164,53 @@ uninstall_func()
 
 
 	sudo sed -i '/^static domain_name_servers=.*/d' /etc/dhcpcd.conf
-#	sudo sed -i '/^denyinterfaces wlan.$/d' /etc/dhcpcd.conf
 
 }
 
 case $1 in
-    "install_dependency") echo "Install dependency..."
+    installDep) echo "Install dependency..."
         install_dependency_func
         echo "Install dependency finished."
     ;;
-    "get_latest_src") echo "Get latest dnscrypt proxy source pkg..."
+    get_latest_src) echo "Get latest dnscrypt proxy source pkg..."
         get_latest_src_func
         echo "Get latest dnscrypt proxy source pkg finished."
     ;;
-    "build_latest") echo "Build latest dnscrypt proxy ..."
+    build_latest) echo "Build latest dnscrypt proxy ..."
         install_dependency_func
         build_latest_func
         echo "Build latest dnscrypt finished."
     ;;
-    "release_latest") echo "Release dnscrypt proxy..."
+    release_latest) echo "Release dnscrypt proxy..."
         install_dependency_func
         release_latest_func
         echo "Release dnscrypt finished."
     ;;
-    "install") echo "Install dnscrypt proxy..."
+    install) echo "Install dnscrypt proxy..."
         install_func
         echo "Install dnscrypt finished."
     ;;
-    "config") echo "Config dnscrypt proxy..."
+    config) echo "Config dnscrypt proxy..."
         config_func
         echo "Config dnscrypt finished."
     ;;
-    "disable_systemDNS") echo "Disable dnsmasq as default dns..."
+    disable_systemDNS) echo "Disable dnsmasq as default dns..."
         disable_systemDNS_func
         echo "Disable dnsmasq as default dns finished."
     ;;
-    "enable_service") echo "Enable dnscrypt proxy..."
-	enable_service_func
+    enable_service) echo "Enable dnscrypt proxy..."
+        enable_service_func
         echo "Enalble dnscrypt finished."
     ;;
 #    "deploy_dnscrypt_proxy206") echo "Deploy dnscrypt proxy 2.0.6..."
 #        deploy_dnscrypt_proxy206_func
 #        echo "Deploy dnscrypt 2.0.6 finished."
 #    ;;
-    "deploy") echo "Deploy dnscrypt proxy..."
+    deploy) echo "Deploy dnscrypt proxy..."
         deploy_func
         echo "Deploy dnscrypt finished."
     ;;
-    "uninstall") echo "Uninstall dnscrypt proxy..."
+    uninstall) echo "Uninstall dnscrypt proxy..."
         uninstall_func
         echo "Uninstall dnscrypt finished."
     ;;
