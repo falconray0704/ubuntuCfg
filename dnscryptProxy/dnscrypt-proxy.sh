@@ -141,8 +141,8 @@ enable_service_func()
 deploy_func()
 {
     install_func
-    disable_systemDNS_func
     config_func
+    disable_systemDNS_func
     enable_service_func
 }
 
