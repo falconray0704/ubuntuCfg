@@ -67,10 +67,11 @@ get_args()
 
 unmanaged_devices()
 {
-	sudo cp /etc/dhcpcd.conf ./tmpConfigs/
-	sudo sed -i '$a\interface wlan0' ./tmpConfigs/dhcpcd.conf
-	sudo sed -i '$a\static ip_address=192\.168\.11\.1\/24' ./tmpConfigs/dhcpcd.conf
-	sudo sed -i '$a\nohook wpa_supplicant' ./tmpConfigs/dhcpcd.conf
+	cp /etc/dhcpcd.conf ./tmpConfigs/
+	sed -i '$a\interface wlan0' ./tmpConfigs/dhcpcd.conf
+	sed -i "s/^interface wlan0/interface ${apName}/g" ./tmpConfigs/dhcpcd.conf
+	sed -i '$a\static ip_address=192\.168\.11\.1\/24' ./tmpConfigs/dhcpcd.conf
+	sed -i '$a\nohook wpa_supplicant' ./tmpConfigs/dhcpcd.conf
 
 }
 
@@ -120,7 +121,7 @@ isc_DHCP_Server_config()
 
 enable_DHCP_service()
 {
-    sudo systemctl start isc-dhcp-server.service
+    #sudo systemctl start isc-dhcp-server.service
     sudo systemctl enable isc-dhcp-server.service
 }
 
@@ -163,7 +164,7 @@ service_AP_config()
 
 ss_AP_forward_startup_config()
 {
-	sudo lshw -C network | grep -E "-network|description|logical name"
+	sudo lshw -C network | grep -E "-network|description|logical name|serial"
 
 	#echo "Please input your AP device Name:"
 	#read apName
@@ -237,7 +238,7 @@ remove_all_configs()
 
 	#sudo sed -i '/\[keyfile\]/d' ./tmpConfigs/NetworkManager.conf
 	#sudo sed -i '/unmanaged-devices/d' ./tmpConfigs/NetworkManager.conf
-	sudo sed -i '/^interface wlan0$/d' /etc/dhcpcd.conf
+	sudo sed -i '/^interface wlan.$/d' /etc/dhcpcd.conf
 	sudo sed -i '/^static ip_address=192\.168\.11\.1\/24$/d' /etc/dhcpcd.conf
 	sudo sed -i '/^nohook wpa_supplicant$/d' /etc/dhcpcd.conf
 
@@ -330,15 +331,16 @@ case $1 in
 		ps -ef | grep -E ".*hostapd|.*dnsmasq|.*dnscrypt-proxy|.*ss-tunnel|.*chinadns|.*ss-redir|.*client_linux_amd64" | grep -v grep
 	;;
 	test) echo "test command..."
-        dnscrypt_proxy_config
-        exit 1
-		get_args
+        #dnscrypt_proxy_config
+        #exit 1
+		#get_args
+        apName=wlan1
 		unmanaged_devices
 		#echo "$apName"
 		#echo "$apMac"
-		unmanaged_devices
-		hostapd_config
-		dnsmasq_config
+		#unmanaged_devices
+		#hostapd_config
+		#dnsmasq_config
 
 	;;
 	uninstall) echo "Uninstalling..."
