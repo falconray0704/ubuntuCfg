@@ -145,7 +145,7 @@ deploy_general_repo_pkgs()
     sudo apt-get -y dist-upgrade
     sudo apt-get -y install git wget curl tree htop dnsutils
     sudo apt-get -y install automake autogen autoconf cmake zlib1g-dev gettext asciidoc pkg-config clang xmlto libev-dev libc-ares-dev
-    sudo apt-get -y install build-essential g++ python-dev python-bzutils autotools-dev mecab mecab-ipadic
+    sudo apt-get -y install build-essential g++ python-dev autotools-dev mecab mecab-ipadic
     sudo apt-get -y install libicu-dev libboost-all-dev libncurses5-dev libaio-dev libicu-dev libbz2-dev libssl-dev libpcre3 libpcre3-dev libtool libgflags-dev libgtest-dev libc++-dev
 
     #sudo apt-get -y install openssh-server
