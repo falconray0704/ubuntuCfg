@@ -5,39 +5,65 @@ set -o errexit
 
 install_DockerCompose_func()
 {
-    # refer to https://www.berthon.eu/2017/getting-docker-compose-on-raspberry-pi-arm-the-easy-way/
-    local BuildRoot:="/opt/github/docker"
-    mkdir -p ${BuildRoot}
-    pushd ${BuildRoot}
-    git clone https://github.com/docker/compose.git
-    pushd compose
-    git checkout release
-    docker build -t docker-compose:armhf -f Dockerfile.armhf .
-    docker run --rm --entrypoint="script/build/linux-entrypoint" -v $(pwd)/dist:/code/dist -v $(pwd)/.git:/code/.git "docker-compose:armhf"
-    popd
-    popd
+    # refer to https://docs.docker.com/compose/install/#install-compose
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+
+    # https://docs.docker.com/compose/completion/#install-command-completion
+    sudo curl -L https://raw.githubusercontent.com/docker/compose/1.22.0/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
+
+    # check
+    docker-compose --version
+
 }
 
 install_Docker_func()
 {
-    # refer to https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/
-    curl -sSL https://get.docker.com | sh
+    # https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1
+    sudo apt-get update
+    sudo apt-get install docker-ce
+    sudo docker run hello-world
 
     # use Docker as a non-root user
-    sudo usermod -aG docker pi
+    echo "User:$USER"
+    sudo usermod -aG docker $USER
 
-    sudo reboot
+    #sudo reboot
 }
 
 check_Docker_Env_func()
 {
     docker info
     docker version
-    docker run -i -t resin/rpi-raspbian
+
+    sudo docker run hello-world
 }
 
+uninstall_old_versions_func()
+{
+    sudo apt-get remove docker docker-engine docker.io
+}
+
+install_repo_func()
+{
+    sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    echo "Verify that you now have the key with the fingerprint 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88"
+    sudo apt-key fingerprint 0EBFCD88
+
+    #sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+}
+
+
 case $1 in
-    installDocker) echo "Installing ..."
+    uninstallOldVersions) echo "Unstalling old versions..."
+        uninstall_old_versions_func
+        ;;
+    installRepo) echo "Installing Repo for docker installation..."
+        install_repo_func
+        ;;
+    installDocker) echo "Installing Docker-ce ..."
         install_Docker_func
         ;;
     checkDocker) echo "Checking docker env..."
