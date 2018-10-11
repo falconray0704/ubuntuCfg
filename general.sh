@@ -1,4 +1,6 @@
 #!/bin/bash
+set -x
+
 set -o nounset
 set -o errexit
 # trace each command execute, same as `bash -v myscripts.sh`
@@ -143,6 +145,7 @@ deploy_general_repo_pkgs()
     sudo apt-get -y update
     sudo apt-get -y upgrade
     sudo apt-get -y dist-upgrade
+    sudo apt-get -y install pigz pbzip2 pxz
     sudo apt-get -y install git wget curl tree htop dnsutils
     sudo apt-get -y install automake autogen autoconf cmake zlib1g-dev gettext asciidoc pkg-config clang xmlto libev-dev libc-ares-dev
     sudo apt-get -y install build-essential g++ python-dev autotools-dev mecab mecab-ipadic
@@ -162,31 +165,31 @@ init_operation_dirs_func()
 init_operation_dirs_func
 
 case $1 in
-    "deployGenRepoPkgs") echo "Deploy general repo pkgs ..."
+    deployGenRepoPkgs) echo "Deploy general repo pkgs ..."
         deploy_general_repo_pkgs
         ;;
-    "install_libnuma") echo "Install libnuma ..."
+    install_libnuma) echo "Install libnuma ..."
         install_numactl_func
         ;;
-    "grpc") echo "Deploy grpc ..."
+    grpc) echo "Deploy grpc ..."
         deploy_general_repo_pkgs
         install_Latest_grpc
         ;;
-    "fetchBoost") echo "Fetching boost 1.59.0 ..."
+    fetchBoost) echo "Fetching boost 1.59.0 ..."
 		fetch_boost_src_1_59_0_func
         ;;
-    "buildBoost") echo "Building boost 1.59.0 ..."
+    buildBoost) echo "Building boost 1.59.0 ..."
         deploy_general_repo_pkgs
 		build_boost_1_59_0_without_install_func
         ;;
-    "installBoost") echo "Installing boost 1.59.0 ..."
+    installBoost) echo "Installing boost 1.59.0 ..."
         install_boost_src_1_59_0_func
         ;;
-    "deployBoost") echo "Deploying boost 1.59.0 ..."
+    deployBoost) echo "Deploying boost 1.59.0 ..."
         deploy_general_repo_pkgs
 		deploy_boost_1_59_0_without_install_func
         ;;
-    "all") echo "Deploy all general packets ..."
+    all) echo "Deploy all general packets ..."
         deploy_general_repo_pkgs
         install_Latest_grpc
 		deploy_boost_1_59_0_without_install_func
