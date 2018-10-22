@@ -5,9 +5,6 @@ set -o errexit
 
 VERSION_NVM="v0.33.11"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 tips_nrm_func()
 {
@@ -18,11 +15,20 @@ tips_nrm_func()
 
 install_nrm_func()
 {
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    nvm alias default v10.12.0
+
     npm install -g nrm
 }
 
 install_nodejs_func()
 {
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
     nvm install v4.9.1
     nvm install v6.14.4
     nvm install v8.12.0
@@ -34,6 +40,11 @@ install_nodejs_func()
 install_nvm_func()
 {
     curl -o- https://raw.githubusercontent.com/creationix/nvm/${VERSION_NVM}/install.sh | bash
+
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
     nvm --version
 }
 
