@@ -64,19 +64,48 @@ uninstall_from_source_func()
     set +x
 }
 
+tips_func()
+{
+    echo ""
+    echo ""
+    echo "User gudie for deployment:"
+    echo "http://aide.sourceforge.net/stable/manual.html"
+    echo ""
+    echo ""
+    echo "1) Checking aide version:"
+    echo "sudo aide -v"
+
+    echo "2) Init database:"
+    echo "sudo aide --init"
+    echo "sudo mv /path/to/aide.db.new /path/to/aide.db"
+
+    echo "3) Check with database:"
+    echo "sudo aide --check"
+
+    echo "4) Update database"
+    echo "sudo aide --update"
+    echo "sudo mv /path/to/aide.db.new /path/to/aide.db"
+
+}
+
 
 case $1 in
     installFromRepo) echo "Installing AIDE from Repo..."
-        install_from_repo_func
+        #install_from_repo_func
+        echo "Do not clear what problem result in the running error, do not use this approach for deployment by now."
         ;;
     uninstallFromRepo) echo "Uninstalling AIDE from Repo..."
-        uninstall_from_repo_func
+        #uninstall_from_repo_func
+        echo "Do not clear what problem result in the running error, do not use this approach for deployment by now."
         ;;
     installFromSrc) echo "Installing AIDE from source..."
         install_from_source_func
         ;;
     uninstallFromSrc) echo "Uninstalling AIDE from source..."
         uninstall_from_source_func
+        ;;
+    tips) echo "Using tips:"
+        tips_func
         ;;
     *) echo "Unknown cmd: $1"
 esac
