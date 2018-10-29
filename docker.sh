@@ -55,6 +55,12 @@ install_repo_func()
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
 }
 
+tips_func()
+{
+    echo "1) Fetch logs of the container:"
+    echo "docker logs -f peer0.org1.example.com"
+}
+
 
 case $1 in
     uninstallOldVersions) echo "Unstalling old versions..."
@@ -71,6 +77,9 @@ case $1 in
         ;;
     installDockerCompose) echo "Installing Docker Compose ..."
         install_DockerCompose_func
+        ;;
+    tips) echo "Tips for docker manipulations:"
+        tips_func
         ;;
     *) echo "Unknown cmd: $1"
 esac
