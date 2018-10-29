@@ -18,6 +18,15 @@ case $1 in
         echo "2) Remove repo packets:"
         echo "sudo apt autoremove vim"
 
+        echo "3) List installed packages:"
+        echo "dpkg --list"
+
+        echo "4) Uninstall packages with configuration files:"
+        echo "sudo apt-get --purge remove PACKAGENAME"
+
+        echo "5) Uninstall packages without configuration files removing:"
+        echo "sudo apt-get remove PACKAGENAME"
+
         ;;
     *) echo "Without any tips about: $1"
         echo "--- Available tips: ---"
