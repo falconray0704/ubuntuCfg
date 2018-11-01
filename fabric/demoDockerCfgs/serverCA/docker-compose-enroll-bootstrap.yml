@@ -5,11 +5,11 @@
 #
 fabric-ca-server:
    image: hyperledger/fabric-ca
-   container_name: fabric-ca-server
+   container_name: ca-enroll
    ports:
      - "7054:7054"
    environment:
-     - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+     - FABRIC_CA_CLIENT_HOME=/etc/hyperledger/fabric-ca/clients/admin
    volumes:
      - "$HOME/runEnv:/etc/hyperledger"
-   command: sh -c 'fabric-ca-server init -b admin:adminpw'
+   command: sh -c 'fabric-ca-client enroll -u http://admin:adminpw@172.16.255.130:7054'

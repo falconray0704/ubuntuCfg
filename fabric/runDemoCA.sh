@@ -3,47 +3,79 @@
 set -o nounset
 set -o errexit
 
-RUN_ROOT="${PWD}/runEnv"
+#RUN_ROOT="${PWD}/runEnv"
+RUN_ROOT="${HOME}/runEnv"
 # If you change this, you should change ./demoDockerCfgs/serverCA/docker-compose.yml 
 # for docker running mode as well.
 export FABRIC_CA_HOME="${RUN_ROOT}/fabric-ca-server"
-
-
-SAMHAIN_VERSION="4.3.1"
-SAMHAIN_HOME="/opt/github/samhain"
-
 
 tips_func()
 {
     echo ""
     echo ""
-    echo "User gudie for deployment:"
-    echo "http://aide.sourceforge.net/stable/manual.html"
-    echo ""
-    echo ""
-    echo "1) Checking aide version:"
-    echo "sudo aide -v"
 
-    echo "2) Init database:"
-    echo "sudo aide --init"
-    echo "sudo mv /path/to/aide.db.new /path/to/aide.db"
+}
 
-    echo "3) Check with database:"
-    echo "sudo aide --check"
+enrollPeers_func()
+{
+    mkdir -p ${RUN_ROOT}/demoDockerCfgs/serverCA
 
-    echo "4) Update database"
-    echo "sudo aide --update"
-    echo "sudo mv /path/to/aide.db.new /path/to/aide.db"
+    pushd ${RUN_ROOT}/demoDockerCfgs/serverCA
+    docker-compose -f docker-compose-enrollPeers.yml up
+    docker-compose -f docker-compose-enrollPeers.yml down
+    popd
+
+}
+
+initEnrollPeers_func()
+{
+    mkdir -p ${RUN_ROOT}/demoDockerCfgs/serverCA
+    cp -a demoDockerCfgs/serverCA/docker-compose-enrollPeers.yml ${RUN_ROOT}/demoDockerCfgs/serverCA/
+    cp -a demoDockerCfgs/serverCA/enrollPeers.sh ${RUN_ROOT}/demoDockerCfgs/serverCA/
+
+    echo "Config ${RUN_ROOT}/demoDockerCfgs/serverCA/enrollPeers.sh, and then run:"
+    echo "./runDemoCA.sh enrollPeers"
+}
+
+registerPeers_func()
+{
+    mkdir -p ${RUN_ROOT}/demoDockerCfgs/serverCA
+
+    pushd ${RUN_ROOT}/demoDockerCfgs/serverCA
+    docker-compose -f docker-compose-registerPeers.yml up
+    docker-compose -f docker-compose-registerPeers.yml down
+    popd
+
+}
+
+initRegisterPeers_func()
+{
+    mkdir -p ${RUN_ROOT}/demoDockerCfgs/serverCA
+    cp -a demoDockerCfgs/serverCA/docker-compose-registerPeers.yml ${RUN_ROOT}/demoDockerCfgs/serverCA/
+    cp -a demoDockerCfgs/serverCA/registerPeers.sh ${RUN_ROOT}/demoDockerCfgs/serverCA/
+
+    echo "Config ${RUN_ROOT}/demoDockerCfgs/serverCA/registerPeers.sh, and then run:"
+    echo "./runDemoCA.sh registerPeers"
+}
+
+enrollBootstrapID_func()
+{
+    mkdir -p ${RUN_ROOT}/demoDockerCfgs/serverCA
+    cp -a demoDockerCfgs/serverCA/docker-compose-enroll-bootstrap.yml ${RUN_ROOT}/demoDockerCfgs/serverCA/
+
+
+    pushd ${RUN_ROOT}/demoDockerCfgs/serverCA
+    docker-compose -f docker-compose-enroll-bootstrap.yml up
+    docker-compose -f docker-compose-enroll-bootstrap.yml down
+    popd
 
 }
 
 startFabricCA_Docker_func()
 {
-    pushd demoDockerCfgs/serverCA
-    ln -s ${RUN_ROOT} ./runEnv
+    pushd ${RUN_ROOT}/demoDockerCfgs/serverCA
     docker-compose up
     docker-compose down
-    rm runEnv
     popd
 }
 
@@ -56,14 +88,15 @@ startFabricCA_Native_func()
 initFabricCA_Docker_func()
 {
     sudo rm -rf ${FABRIC_CA_HOME}
-
     mkdir -p ${FABRIC_CA_HOME}
 
-    pushd demoDockerCfgs/serverCA
-    ln -s ${RUN_ROOT} ./runEnv
+    mkdir -p ${RUN_ROOT}/demoDockerCfgs/serverCA
+    cp -a demoDockerCfgs/serverCA/docker-compose-init.yml ${RUN_ROOT}/demoDockerCfgs/serverCA
+    cp -a demoDockerCfgs/serverCA/docker-compose.yml ${RUN_ROOT}/demoDockerCfgs/serverCA
+
+    pushd ${RUN_ROOT}/demoDockerCfgs/serverCA
     docker-compose -f docker-compose-init.yml up
     docker-compose -f docker-compose-init.yml down
-    rm runEnv
     popd
 
     tree ${FABRIC_CA_HOME}
@@ -120,6 +153,21 @@ case $1 in
         ;;
     startDocker) echo "Launching FabricCA server with docker..."
         startFabricCA_Docker_func
+        ;;
+    enrollBootstrapID) echo "Enrolling the bootstrap identity..."
+        enrollBootstrapID_func
+        ;;
+    initRegisterPeers) echo "Initializing peers register configuration files..."
+        initRegisterPeers_func
+        ;;
+    registerPeers) echo "Registering peers ..."
+        registerPeers_func
+        ;;
+    initEnrollPeers) echo "Initializing peers enrollment configuration files..."
+        initEnrollPeers_func
+        ;;
+    enrollPeers) echo "Enrolling peers ..."
+        enrollPeers_func
         ;;
     tips) echo "Using tips:"
         tips_func

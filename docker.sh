@@ -59,6 +59,9 @@ tips_func()
 {
     echo "1) Fetch logs of the container:"
     echo "docker logs -f peer0.org1.example.com"
+
+    echo "2) Enter container's bash:"
+    echo "docker exec -it <container's name> bash"
 }
 
 
