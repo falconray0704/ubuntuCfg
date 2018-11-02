@@ -16,6 +16,27 @@ tips_func()
 
 }
 
+stopAdminCli_func()
+{
+    mkdir -p ${RUN_ROOT}/demoDockerCfgs/serverCA
+
+    pushd ${RUN_ROOT}/demoDockerCfgs/serverCA
+    docker-compose -f docker-compose-adminCli.yml down
+    popd
+}
+
+startAdminCli_func()
+{
+    mkdir -p ${RUN_ROOT}/demoDockerCfgs/serverCA
+    cp -a demoDockerCfgs/serverCA/docker-compose-adminCli.yml ${RUN_ROOT}/demoDockerCfgs/serverCA/
+
+    pushd ${RUN_ROOT}/demoDockerCfgs/serverCA
+    docker-compose -f docker-compose-adminCli.yml up -d
+    echo "Enter container's bash:"
+    echo "docker exec -it ca-adminCli bash"
+    popd
+}
+
 enrollPeers_func()
 {
     mkdir -p ${RUN_ROOT}/demoDockerCfgs/serverCA
@@ -168,6 +189,12 @@ case $1 in
         ;;
     enrollPeers) echo "Enrolling peers ..."
         enrollPeers_func
+        ;;
+    startAdminCli) echo "Launching fabric-ca-client docker container with admin identity..."
+        startAdminCli_func
+        ;;
+    stopAdminCli) echo "Stopping fabric-ca-client docker container with admin identity..."
+        stopAdminCli_func
         ;;
     tips) echo "Using tips:"
         tips_func
