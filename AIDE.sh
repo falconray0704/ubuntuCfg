@@ -5,6 +5,7 @@ set -o errexit
 
 AIDE_VERSION="0.16"
 AIDE_HOME="/opt/github/aide"
+AIDE_INSTALL_PREFIX="/usr/local"
 
 
 install_from_repo_func()
@@ -37,7 +38,7 @@ install_from_source_func()
 
 
     pushd aide-${AIDE_VERSION}
-    ./configure
+    ./configure --prefix=${AIDE_INSTALL_PREFIX}
     make
     sudo make install
     popd
