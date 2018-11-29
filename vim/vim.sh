@@ -11,6 +11,7 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y install automake autogen autoconf build-essential
 sudo apt-get -y install git wget curl tree
+sudo apt-get -y install python3-dev
 
 #sudo apt-get -y install vim
 sudo apt autoremove vim
@@ -27,12 +28,17 @@ popd
 popd
 
 sudo apt-get -y install ctags
-cd ~/
+pushd ~/
 rm -rf .vimrc vim generate.vim
+popd
 
-echo "Fetch generate.vim from http://www.vim-bootstrap.com/"
-echo "mv generate.vim ~/.vimrc"
+cp ./.vimrc* ~/
+
+#echo "Fetch generate.vim from http://www.vim-bootstrap.com/"
+#echo "mv generate.vim ~/.vimrc"
 
 echo "exec following command manually:"
 echo "vim +PlugInstall +qall"
+echo "cd ~/.vim/plugged/YouCompleteMe/"
+echo "python3 install.py --clang-completer --go-completer"
 

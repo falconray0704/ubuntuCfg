@@ -1,0 +1,12 @@
+
+let g:autotagTagsFile="tags"
+"let g:clang_library_path='/usr/lib/llvm-6.0/lib'
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+set foldmethod=syntax
+
+
+
