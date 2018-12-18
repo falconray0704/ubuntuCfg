@@ -175,6 +175,15 @@ case $1 in
         deploy_general_repo_pkgs
         install_Latest_grpc
         ;;
+    grpcUpdate) echo "Updating grpc ..."
+        pushd /opt/github/grpc/third_party/protobuf
+        sudo make uninstall
+        popd
+        pushd /opt/github
+        sudo rm -rf grpc
+        popd
+        install_Latest_grpc
+        ;;
     fetchBoost) echo "Fetching boost 1.59.0 ..."
 		fetch_boost_src_1_59_0_func
         ;;
